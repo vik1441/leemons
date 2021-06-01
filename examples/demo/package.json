@@ -1,5 +1,5 @@
 {
-  "name": "first-app",
+  "name": "demo",
   "version": "1.0.0",
   "scripts": {
     "start": "leemons start -N next",

@@ -1,0 +1,1 @@
+{"compilerOptions":{"baseUrl":".","paths":{"@ui/*":["plugins/ui/*"],"@user-admin/*":["plugins/user-admin/*"],"@plugins":["plugins/plugins.js"]}}}
