@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-function Button({ children, ...rest }) {
+function Button({ fullWidth, children, ...rest }) {
   return (
-    <button className="text-gray-500" {...rest}>
+    <button className="text-gray-500 " {...rest}>
       {children}
     </button>
   );
@@ -10,6 +10,7 @@ function Button({ children, ...rest }) {
 
 Button.propTypes = {
   children: PropTypes.any.isRequired,
+  fullWidth: PropTypes.bool,
 };
 
 export default Button;
