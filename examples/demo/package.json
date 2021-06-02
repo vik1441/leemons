@@ -3,18 +3,16 @@
   "version": "1.0.0",
   "scripts": {
     "start": "leemons start -N next",
+    "dev": "leemons dev -N next",
     "leemons": "leemons"
   },
   "dependencies": {
-    "autoprefixer": "^10.2.6",
     "leemons": "1.0.0",
     "leemons-connector-bookshelf": "1.0.0",
     "leemons-hooks": "1.0.0",
     "leemons-plugin-ui": "1.0.0",
     "leemons-utils": "1.0.0",
-    "mysql": "^2.18.1",
-    "postcss": "^8.3.0",
-    "tailwindcss": "^2.1.2"
+    "mysql": "^2.18.1"
   },
   "license": "MIT"
 }
