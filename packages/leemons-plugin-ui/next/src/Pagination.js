@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import UIColors from './utils/colors';
 
 function Pagination({
   currentPage,
@@ -9,6 +10,7 @@ function Pagination({
   maxPagesToShow = 5,
   showPrevAndNext,
   showFirstAndLast,
+  color = UIColors[0],
 }) {
   const [pages, setPages] = useState([]);
 
@@ -43,8 +45,8 @@ function Pagination({
                 onClick={() => goPage(1)}
                 className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid ${
                   currentPage === 1
-                    ? 'text-white border-pink-200 bg-pink-200'
-                    : 'border-pink-500 bg-white text-pink-500'
+                    ? `text-white border-${color}-200 bg-${color}-200`
+                    : `border-${color}-500 bg-white text-${color}-500`
                 }`}
               >
                 <i className="fas fa-chevron-left -ml-px"></i>
@@ -59,8 +61,8 @@ function Pagination({
                 onClick={() => goPage(currentPage - 1)}
                 className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid ${
                   currentPage === 1
-                    ? 'text-white border-pink-200 bg-pink-200'
-                    : 'border-pink-500 bg-white text-pink-500'
+                    ? `text-white border-${color}-200 bg-${color}-200`
+                    : `border-${color}-500 bg-white text-${color}-500`
                 }`}
               >
                 <i className="fas fa-chevron-left -ml-px"></i>
@@ -72,8 +74,10 @@ function Pagination({
             <li key={value}>
               <div
                 onClick={() => goPage(value)}
-                className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-pink-500 ${
-                  currentPage === value ? 'text-white bg-pink-500' : 'bg-white text-pink-500'
+                className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-${color}-500 ${
+                  currentPage === value
+                    ? `text-white bg-${color}-500`
+                    : `bg-white text-${color}-500`
                 }`}
               >
                 {value}
@@ -87,8 +91,8 @@ function Pagination({
                 onClick={() => goPage(currentPage + 1)}
                 className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid ${
                   currentPage === totalPages
-                    ? 'text-white border-pink-200 bg-pink-200'
-                    : 'border-pink-500 bg-white text-pink-500'
+                    ? `text-white border-${color}-200 bg-${color}-200`
+                    : `border-${color}-500 bg-white text-${color}-500`
                 }`}
               >
                 <i className="fas fa-chevron-right -mr-px"></i>
@@ -102,8 +106,8 @@ function Pagination({
                 onClick={() => goPage(totalPages)}
                 className={`first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid ${
                   currentPage === totalPages
-                    ? 'text-white border-pink-200 bg-pink-200'
-                    : 'border-pink-500 bg-white text-pink-500'
+                    ? `text-white border-${color}-200 bg-${color}-200`
+                    : `border-${color}-500 bg-white text-${color}-500`
                 }`}
               >
                 <i className="fas fa-chevron-right -mr-px"></i>
@@ -124,6 +128,7 @@ Pagination.propTypes = {
   maxPagesToShow: PropTypes.number,
   showPrevAndNext: PropTypes.bool,
   showFirstAndLast: PropTypes.bool,
+  color: PropTypes.oneOf(UIColors),
 };
 
 export default Pagination;

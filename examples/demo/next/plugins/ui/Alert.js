@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import UIColors from './utils/colors';
 
-function Alert({ color, show, closeAlert }) {
+function Alert({ color = UIColors[0], show, closeAlert }) {
   return (
     <>
       {show ? (
@@ -24,7 +25,7 @@ function Alert({ color, show, closeAlert }) {
 }
 
 Alert.propTypes = {
-  color: PropTypes.string.isRequired,
+  color: PropTypes.oneOf(UIColors),
   show: PropTypes.bool,
   closeAlert: PropTypes.func,
 };

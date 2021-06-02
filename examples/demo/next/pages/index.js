@@ -38,7 +38,9 @@ function Home() {
 
       <main>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Button onClick={showAlert}>Mostrar alerta</Button>
+          <Button color="blue" size="regular" outline={true} style="round" onClick={showAlert}>
+            Mostrar alerta
+          </Button>
           <Alert color="red" show={show} closeAlert={closeAlert} />
           <Input leftIcon="G" rightIcon="N" {...register('example')} />
           <Chip color="red">Hola</Chip>
