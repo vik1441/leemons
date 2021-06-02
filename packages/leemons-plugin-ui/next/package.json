@@ -1,0 +1,10 @@
+{
+  "name": "next",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@headlessui/react": "^1.2.0",
+    "@heroicons/react": "^1.0.1",
+    "prop-types": "^15.7.2"
+  }
+}
