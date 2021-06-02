@@ -19,10 +19,11 @@ function Button({
     ? `text-${color}-500 bg-transparent border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white active:bg-${color}-600`
     : `bg-${color}-500 text-white active:bg-${color}-600 hover:shadow-md shadow`;
   const styleCss = style === 'round' ? 'rounded-full' : 'rounded';
+  const fullWidthCss = fullWidth ? 'w-full' : '';
   return (
     <button
       {...rest}
-      className={`${outlineCss} font-bold uppercase ${sizeCss[size]} ${styleCss} outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
+      className={`${outlineCss} font-bold uppercase ${sizeCss[size]} ${styleCss} ${fullWidthCss} outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
       type="button"
     >
       {children}

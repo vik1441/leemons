@@ -7,6 +7,7 @@ import SelectBox from '@ui/SelectBox';
 import { useForm } from 'react-hook-form';
 import Chip from '@ui/Chip';
 import Pagination from '@ui/Pagination';
+import Progressbar from '@ui/Progressbar';
 
 const people = [
   { label: 'Wade Cooper', value: 1 },
@@ -15,7 +16,7 @@ const people = [
   { label: 'Tom Cook', value: 4 },
   { label: 'Tanya Fox', value: 5 },
   { label: 'Hellen Schmidt', value: 6 },
-]
+];
 
 function Home() {
   const {
@@ -26,6 +27,7 @@ function Home() {
   } = useForm();
   const [show, setShow] = useState(false);
   const [paginationPage, setPaginationPage] = useState(1);
+  const [progressbar, setProgressbar] = useState([]);
 
   const toggleAlert = () => setShow(!show);
   const showAlert = () => setShow(true);
@@ -34,6 +36,10 @@ function Home() {
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  function randomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
   const goPage = (page) => {
     setPaginationPage(page);
@@ -47,12 +53,6 @@ function Home() {
       </Head>
 
       <main>
-        <Button onClick={showAlert}>Mostrar alerta</Button>
-        <Alert color="red" show={show} closeAlert={closeAlert}></Alert>
-        <Input leftIcon="G" rightIcon="N"></Input>
-        <Button onClick={showAlert}>Mostrar alerta</Button>
-        <Alert color="red" show={show} closeAlert={closeAlert}></Alert>
-        <Input leftIcon="G" rightIcon="N"></Input>
         <SelectBox options={people} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Button color="blue" size="regular" outline={true} style="round" onClick={showAlert}>
@@ -67,7 +67,8 @@ function Home() {
             totalPages={30}
             showFirstAndLast={true}
           />
-          <input type="submit" />
+          <Button type="submit">Enviar</Button>
+          <Progressbar color="red" percentage={55} />
         </form>
       </main>
     </div>
