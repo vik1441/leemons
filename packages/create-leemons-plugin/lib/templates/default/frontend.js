@@ -41,7 +41,7 @@ export default function Home() {
  *
  * In this function, you can set the hooks your plugin needs to work
  */
-export default function ${config.pluginName}Init() {
+export default function InitPlugin() {
   console.log('The plugin ${config.pluginName} was successfuly loaded');
 }
 `;
@@ -60,53 +60,6 @@ export default function GreetUser() {
   return <p>Hello world from GreetUser component</p>;
 }
 `;
-
-  //   const routesContent = `\
-  // module.exports = [
-  //   {
-  //     // Test it on: [GET] \${leemonsUrl}/api/${config.pluginName}/
-  //     path: '/',
-  //     method: 'GET',
-  //     handler: 'message.helloWorld' // Handled by ${routes.frontend}/message.js function helloWorld
-  //   },
-  //   {
-  //     // Test it on: [GET] \${leemonsUrl}/api/${config.pluginName}/hello/\${nameToGreet}
-  //     path: '/hello/:name',
-  //     method: 'GET',
-  //     handler: 'message.helloName' // Handled by ${routes.frontend}/message.js function helloName
-  //   },
-  // ];
-  // `;
-
-  //   const exampleController = `\
-  // // Gets the ${config.pluginName}' service called saveMessage
-  // const saveMessage = leemons.plugin.services.saveMessage;
-
-  // // The ctx is the KOA.js context object
-  // async function helloWorld(ctx) {
-  //   const message = 'Hello world from ${config.pluginName} :D';
-
-  //   await saveMessage(message);
-  //   ctx.body = message;
-  // }
-
-  // /*
-  //  * Uses rest params to greet a user
-  //  */
-  // function helloName(ctx) {
-  //   const { name } = ctx.req.params;
-
-  //   const message = \`Hello \${name} from ${config.pluginName} :D\`;
-
-  //   await saveMessage(message);
-  //   ctx.body = message;
-  // }
-
-  // module.exports = {
-  //   helloWorld,
-  //   helloName,
-  // }
-  // `;
 
   await Promise.all([
     createFile(path.join(frontendPath, 'package.json'), packageJSON, 'frontend package.json'),

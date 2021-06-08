@@ -1,3 +1,10 @@
+const path = require('path');
+const createFile = require('../../helpers/utils/createFile');
+
+module.exports = (config) => {
+  const routes = config.routes.values;
+
+  const gitignore = `\
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # leemons integrity
@@ -35,3 +42,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+`;
+  const dir = path.join(routes.app, '.gitignore');
+
+  return createFile(dir, gitignore, '.gitignore');
+};
