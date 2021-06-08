@@ -8,7 +8,6 @@ const isFolderEmpty = require('./helpers/validators/isFolderEmpty');
 const validateName = require('./helpers/validators/packageName');
 const shouldUseYarn = require('./helpers/packageManager/shouldUseYarn');
 const installDeps = require('./helpers/packageManager/installDeps');
-const getDatabaseConfig = require('./helpers/utils/getDatabaseConfig');
 const exitWithError = require('./helpers/utils/exitWithError');
 const saveConfigDirs = require('./helpers/utils/saveConfigDirs');
 const createDir = require('./helpers/utils/createDir');
@@ -16,7 +15,6 @@ const createPackageJSON = require('./createPackageJSON');
 const generateFromTemplate = require('./helpers/utils/generateFromTemplate');
 
 module.exports = async (_pluginName, useNPM) => {
-  console.log(_pluginName);
   try {
     const template = 'default';
     const cwd = process.cwd();
