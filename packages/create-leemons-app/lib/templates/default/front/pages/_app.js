@@ -2,6 +2,7 @@ import '@ui/leemons.css';
 import PropTypes from 'prop-types';
 import hooks from 'leemons-hooks';
 import { useEffect } from 'react';
+// eslint-disable-next-line import/no-unresolved
 import { frontPlugins, plugins } from '@plugins';
 
 function MyApp({ Component, pageProps }) {
