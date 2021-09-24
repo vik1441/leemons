@@ -42,6 +42,11 @@ function InputPage() {
             <Input outlined placeholder="username" type="date" />
           </FormControl>
         </Wrapper>
+          <Wrapper title="horizontal layout" className="flex flex-col space-y-2 max-w-xs">
+          <FormControl label="Username" className="fc-h">
+            <Input outlined placeholder="username" type="date" />
+          </FormControl>
+          </Wrapper>
         <Wrapper title="input without border" className="flex flex-col space-y-2 max-w-xs">
           <div className="p-10 card bg-base-200">
             <FormControl label="Username">

@@ -114,4 +114,52 @@ module.exports = {
       action: 'Aceptar',
     },
   },
+  new_family: {
+    name: {
+      placeholder: 'Nombre de la familia',
+      btn_cancel: 'Cancelar',
+      btn_save: 'Guardar',
+    },
+    tutor: {
+      title: 'Tutores',
+      btn_add: 'Añadir tutor',
+      btn_delete: 'Eliminar tutor',
+      msg_empty: 'Todavía no hay tutores',
+    },
+    students: {
+      title: 'Tutors',
+      btn_add: 'Añadir estudiantes',
+      btn_delete: 'Eliminar estudiantes',
+      msg_empty: 'Todavía no hay estudiantes',
+    },
+    emergency_numbers: {
+      title: 'Teléfonos de Emergencia',
+      btn_add: 'Añadir',
+      btn_delete: 'Eliminar',
+      msg_empty: 'Todavía no hay teléfonos de emergencia',
+    },
+    other_information: {
+      title: 'Otra información',
+      label_01: 'Antiguo CRM Id',
+      label_02: 'Dirección familiar',
+      label_03: 'Principal teléfono de contacto',
+      label_04: 'Estado de la visa',
+      label_05: 'Miembro de la administración pública',
+    },
+    permissions: {
+      title: 'Permisos',
+      description: 'Debe agregar miembros para personalizar sus permisos predeterminados ',
+    },
+  },
+  assign_user_to_family: {
+    title: 'Asignar miembro a una familia',
+    action_title: 'Seleccionar un perfil',
+    selection_01: 'Añadir Tutor',
+    selection_02: 'Añadir Estudiante',
+    radio_01: 'Nombre/Apellido',
+    radio_02: 'Email',
+    radio_03: 'Antiguo CRM ID',
+    radio_04: 'Otro tag',
+    btn_search: 'Buscar',
+  },
 };

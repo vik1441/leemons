@@ -113,4 +113,50 @@ module.exports = {
       action: 'Accept',
     },
   },
+  new_family: {
+    name: {
+      placeholder: 'Family Name',
+      btn_cancel: 'Cancel',
+      btn_save: 'Save',
+    },
+    tutor: {
+      title: 'Tutors',
+      btn_add: 'Add tutor',
+      btn_delete: 'Delete tutor',
+      msg_empty: 'No tutors yet',
+    },
+    students: {
+      title: 'Tutors',
+      btn_add: 'Add students',
+      btn_delete: 'Delete students',
+      msg_empty: 'No students yet',
+    },
+    emergency_numbers: {
+      title: 'Emergency Phone numbers',
+      btn_add: 'Add',
+      btn_delete: 'Delete',
+      msg_empty: 'No emergency numbers',
+    },
+    other_information: {
+      title: 'Other information',
+      label_01: 'CRM Old Id',
+      label_02: 'Family address',
+      label_03: 'Main contact phone',
+      label_04: 'Visa Status',
+      label_05: 'Member of public administration',
+    },
+    permissions: {
+      title: 'Permissions',
+      description: 'You need to add members in order to customize theirs default permissions',
+    },
+  },
+  assign_user_to_family: {
+    title: 'Assign user to family',
+    action_title: 'Select a profile',
+    radio_01: 'Username/surename',
+    radio_02: 'Email',
+    radio_03: 'CRM Old ID',
+    radio_04: 'Other tag',
+    btn_search: 'Search'
+  },
 };

@@ -3,6 +3,9 @@
   /* <: */
   .form-control {
     @apply flex flex-col;
+    &.fc-h {
+      @apply flex-row justify-between;
+    }
   }
   .label {
     @apply flex items-center justify-between select-none;

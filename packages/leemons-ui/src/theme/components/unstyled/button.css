@@ -41,7 +41,7 @@
     }
     /* search */
     &.btn-search {
-      @apply btn-xs absolute -left-1;
+      @apply  btn-xs bg-transparent border-0 absolute -left-1;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -67,6 +67,38 @@
     & > input[type='radio'].btn:before {
       content: attr(data-title);
     }
+  }
+  
+  .icon-options-group {
+    @apply grid w-full;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+
+    .icon-option {
+        @apply relative;
+        label { 
+          @apply text-center text-sm border border-solid border-gray-20 cursor-pointer;
+          min-height: 120px;
+        }
+        input {
+           @apply absolute z-0;
+        }
+        .ico-op { 
+          @apply text-gray-200;
+          @apply my-2 mx-auto w-8 h-8;
+        }
+        input:checked+label, {
+          @apply border-primary-500;
+          .ico-op { 
+            @apply text-primary-500;
+          }
+        }
+        label {
+          @apply relative block top-0 right-0 bottom-0 left-0 p-5 z-10;
+          @apply bg-white rounded;
+        }
+        
+    }
+    
   }
   /* :> */
 }
