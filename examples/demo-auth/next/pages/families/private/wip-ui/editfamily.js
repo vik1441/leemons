@@ -273,28 +273,28 @@ export default function Newfamily() {
                   label={t('other_information.label_01')}
                   className="fc-h border-b border-solid border-gray-10 pb-2 mb-2"
                 >
-                  <Input outlined={true} type="date" className="w-full max-w-md" />
+                  <Input outlined={true} className="w-full max-w-md" />
                 </FormControl>
                 <FormControl
                   label={t('other_information.label_02')}
                   className="fc-h border-b border-solid border-gray-10 pb-2 mb-2"
                 >
-                  <Input outlined={true} type="date" className="w-full max-w-md" />
+                  <Input outlined={true} className="w-full max-w-md" />
                 </FormControl>
                 <FormControl
                   label={t('other_information.label_03')}
                   className="fc-h border-b border-solid border-gray-10 pb-2 mb-2"
                 >
-                  <Input outlined={true} type="date" className="w-full max-w-md" />
+                  <Input outlined={true} className="w-full max-w-md" />
                 </FormControl>
                 <FormControl
                   label={t('other_information.label_04')}
                   className="fc-h border-b border-solid border-gray-10 pb-2 mb-2"
                 >
-                  <Input outlined={true} type="date" className="w-full max-w-md" />
+                  <Input outlined={true} className="w-full max-w-md" />
                 </FormControl>
                 <FormControl label={t('other_information.label_05')} className="fc-h pb-2 mb-6">
-                  <Input outlined={true} type="date" className="w-full max-w-md" />
+                  <Input outlined={true} className="w-full max-w-md" />
                 </FormControl>
               </fieldset>
               <fieldset className="w-full items-center mb-4">
