@@ -161,5 +161,13 @@ module.exports = {
     radio_03: 'Antiguo CRM ID',
     radio_04: 'Otro tag',
     btn_search: 'Buscar',
+    btn_search_again: 'Buscar de nuevo',
+    error_search:
+      'No hemos encontrado usuarios con estos datos, por favor inténtelo de nuevo con otra información.',
+    results_title: ' Encontrados ',
+    results_by_name: 'por ',
+    results_by_birthdate: '   nacidos en  ',
+    results_description: 'Select the one you want to assign to this family',
+    btn_add_01: 'Add student',
   },
 };

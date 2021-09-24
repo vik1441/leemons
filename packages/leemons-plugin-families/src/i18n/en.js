@@ -153,10 +153,19 @@ module.exports = {
   assign_user_to_family: {
     title: 'Assign user to family',
     action_title: 'Select a profile',
+    selection_01: 'Add Tutor',
+    selection_02: 'Add Student',
     radio_01: 'Username/surename',
     radio_02: 'Email',
     radio_03: 'CRM Old ID',
     radio_04: 'Other tag',
-    btn_search: 'Search'
+    btn_search: 'Search',
+    btn_search_again: 'Search again',
+    error_search:
+      'We have not found any user associated with this data, please try repeating the search by using another info.',
+    results_by_name: ' by ',
+    results_by_birthdate: ' borned in ',
+    results_description: 'Selecciona el que quieras asignar a esta familia',
+    btn_add_01: 'Add student',
   },
 };

@@ -235,7 +235,7 @@ export default function EditLevelTutor() {
         </div>
         <div className="">
           <Button color="primary" text={true} className="block whitespace-nowrap">
-            <RefreshIcon className="inline-block w-3 h-3 border border-solid rounded-full border-current mr-2" />
+            <RefreshIcon className="inline-block w-3 h-3 mr-2" />
             {t('btn_change')}
           </Button>
         </div>
