@@ -6,6 +6,16 @@
     &.minimal {
       @apply text-sm;
     }
+    &.list-user-card-item {
+      @apply text-xs font-sans text-secondary-300;
+      @apply border border-gray-20 border-solid;
+      &:hover, &:focus, &.selected {
+        @apply  bg-primary-100 border border-primary-300;
+      }
+      strong {
+        @apply text-sm font-medium;
+      }
+    }
     .basic {
       @apply text-secondary-500;
       .user-card-name {
@@ -18,7 +28,11 @@
         @apply text-xs font-inter text-secondary-300;
       }
     }
-
+    .detail {
+      .user-card-name {
+          @apply text-2xl text-secondary-500;
+      }
+    }
     .avatar .rounded-full {
       @apply stroke border border-secondary-50;
     }
@@ -31,6 +45,9 @@
       .msg {
         @apply text-error;
       }
+    }
+    .small {
+      @apply text-xs text-gray-200;
     }
   }
   /* :> */

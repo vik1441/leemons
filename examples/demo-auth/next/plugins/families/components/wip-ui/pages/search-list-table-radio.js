@@ -5,9 +5,9 @@ import { BanIcon, ChevronDownIcon } from '@heroicons/react/solid';
 
 export default function ListTable2() {
   const [translate] = useTranslate({
-    keysStartsWith: 'plugins.families.table',
+    keysStartsWith: 'plugins.families ',
   });
-  const t = tLoader('plugins.families.table', translate);
+  const t = tLoader('plugins.families', translate);
   console.log(translate);
 
   return (
