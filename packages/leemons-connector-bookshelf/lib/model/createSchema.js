@@ -114,12 +114,25 @@ async function createTable(model, ctx, useUpdate = false, storedData, transactin
             col = table.bigInteger(name);
             break;
 
+          case 'number':
           case 'float':
             col = table.float(name, properties.precision, properties.scale);
             break;
 
           case 'decimal':
             col = table.decimal(name, properties.precision, properties.scale);
+            break;
+
+          case 'date':
+            col = table.date(name);
+            break;
+
+          case 'time':
+          case 'datetime':
+          case 'timestamp':
+            const options = {};
+            if (!_.isNil(properties.precision)) options.precision = properties.precision;
+            col = table[properties.type](name, options);
             break;
 
           case 'binary':
@@ -147,9 +160,6 @@ async function createTable(model, ctx, useUpdate = false, storedData, transactin
               case 'unique':
                 col.unique();
                 break;
-              case 'defaultTo':
-                col.defaultTo(property);
-                break;
               case 'unsigned':
                 col.unsigned();
                 break;
@@ -159,10 +169,11 @@ async function createTable(model, ctx, useUpdate = false, storedData, transactin
                 break;
               default:
             }
-          }
-
-          if (property === false) {
+          } else if (property !== undefined) {
             switch (optionName) {
+              case 'defaultTo':
+                col.defaultTo(property);
+                break;
               case 'notNullable':
               case 'notNull':
                 col.nullable();
@@ -238,8 +249,8 @@ async function createSchema(model, ctx, transacting) {
   let storedModel;
 
   // check if the model has been updated
-  if (model.modelName !== 'core_store') {
-    storedModel = await ctx.connector.leemons.core_store.get(
+  if (model.modelName !== 'models::core_store') {
+    storedModel = await ctx.connector.leemons.models.core_store.get(
       `model::${model.modelName}`,
       false,
       transacting
@@ -248,7 +259,7 @@ async function createSchema(model, ctx, transacting) {
 
     // Update the stored model for the next start
     if (hasBeenUpdated || !storedModel) {
-      await ctx.connector.leemons.core_store.set({
+      await ctx.connector.leemons.models.core_store.set({
         key: `model::${model.modelName}`,
         value: JSON.stringify(model),
         type: 'Object',

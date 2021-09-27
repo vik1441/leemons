@@ -7,5 +7,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('leemons-ui/dist/theme'), require('@tailwindcss/line-clamp')],
 };
