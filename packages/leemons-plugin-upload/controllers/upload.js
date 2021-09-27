@@ -1,4 +1,4 @@
-const emailService = require('../services/private/email');
+const uploadService = require('../services/upload');
 
 const validateProviderConfigObj = {
   type: 'object',
@@ -13,29 +13,18 @@ const validateProviderConfigObj = {
 };
 
 async function init(ctx) {
-  await emailService.init();
+  await uploadService.init();
   ctx.body = { status: 200 };
 }
 
 async function providers(ctx) {
-  ctx.body = { providers: emailService.providers() };
-}
-
-async function sendTest(ctx) {
-  const validator = new global.utils.LeemonsValidator(validateProviderConfigObj);
-  if (validator.validate(ctx.request.body)) {
-    await emailService.sendTest(ctx.request.body);
-    ctx.status = 200;
-    ctx.body = { status: 200 };
-  } else {
-    throw new Error(validator.error);
-  }
+  ctx.body = { providers: uploadService.providers() };
 }
 
 async function addProvider(ctx) {
   const validator = new global.utils.LeemonsValidator(validateProviderConfigObj);
   if (validator.validate(ctx.request.body)) {
-    await emailService.addProvider(ctx.request.body);
+    await uploadService.addProvider(ctx.request.body);
     ctx.status = 200;
     ctx.body = { status: 200 };
   } else {
@@ -46,6 +35,5 @@ async function addProvider(ctx) {
 module.exports = {
   addProvider,
   providers,
-  sendTest,
   init,
 };

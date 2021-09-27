@@ -1,4 +1,4 @@
 module.exports = {
   private: true,
-  pluginsCanUseMe: ['emails'],
+  pluginsCanUseMe: ['upload'],
 };
