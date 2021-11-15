@@ -1,4 +1,5 @@
 [
+  {"name": "bubbles-components", "path": "../../../bubbles/packages/components"},
   {"name": "users", "path": "../../packages/leemons-plugin-users/frontend"},
   {"name": "layout", "path": "../../packages/leemons-plugin-layout/frontend"},
   {"name": "common", "path": "../../packages/leemons-plugin-common/frontend"},

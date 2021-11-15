@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Box, Group } from '@bubbles-components';
 
 import { getMenu } from '@menu-builder/helpers';
 
