@@ -1,100 +1,64 @@
 import React from 'react';
-import { forEach } from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
-import { ChevRightIcon } from '@bubbles-ui/icons/outline';
+import { ChevLeftIcon, ChevRightIcon } from '@bubbles-ui/icons/outline';
 import {
   Box,
   Button,
-  CheckBoxGroup,
   ContextContainer,
-  RadioGroup,
+  InputWrapper,
+  NumberInput,
+  Select,
   Stack,
+  Switch,
 } from '@bubbles-ui/components';
 
-export default function ProgramSetupPeriods({
+export default function ProgramSetupTeachers({
   onNext,
+  onPrevious,
   sharedData,
   setSharedData,
   labels,
-  frequencyLabels,
-  program,
 }) {
   const defaultValues = {
-    periodProgram: false,
-    periodCourse: false,
-    periodSubstage: false,
-    periodFinal: null,
+    teacherCanAddCustomAvgNote: false,
+    teacherReminderPeriod: null,
+    teacherReminderNumberOfPeriods: 1,
     ...sharedData,
   };
 
-  function getFormDefaultValues() {
-    const periods = [];
-    if (defaultValues.periodProgram) {
-      periods.push('periodProgram');
-    }
-    if (defaultValues.periodCourse) {
-      periods.push('periodCourse');
-    }
-    if (defaultValues.periodSubstage) {
-      periods.push('periodSubstage');
-    }
-    return {
-      periods,
-    };
-  }
-
   const {
     reset,
+    watch,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: getFormDefaultValues() });
+  } = useForm({ defaultValues });
+
+  const teacherReminderPeriod = watch('teacherReminderPeriod');
+  const max = {
+    days: 365,
+    weeks: 52,
+    months: 24,
+  };
 
   React.useEffect(() => {
-    reset(getFormDefaultValues());
+    reset(defaultValues);
   }, [JSON.stringify(sharedData)]);
 
   const handleOnNext = (e) => {
-    const data = { ...sharedData, ...e };
-    defaultValues.periodFinal = data.periodFinal;
-    forEach(data.periods, (p) => {
-      defaultValues[p] = true;
-    });
-    setSharedData(defaultValues);
-    onNext(defaultValues);
+    setSharedData(e);
+    onNext(e);
   };
-  const datas = React.useMemo(() => {
-    const response = {
-      periods: [{ label: labels.periodProgramLabel, value: 'periodProgram' }],
-      finalPeriods: [{ label: labels.finalPeriodProgramLabel, value: 'program' }],
-    };
-    if (program) {
-      if (program.maxNumberOfCourses > 0) {
-        response.periods.push({
-          label: labels.periodCourseLabel.replace('{i}', program.maxNumberOfCourses),
-          value: 'periodCourse',
-        });
-        response.finalPeriods.push({
-          label: labels.finalPeriodCourseLabel,
-          value: 'course',
-        });
-      }
-      if (program.haveSubstagesPerCourse) {
-        response.periods.push({
-          label: labels.periodSubstageLabel
-            .replace('{i}', program.numberOfSubstages)
-            .replace('{x}', frequencyLabels[program.substagesFrequency]),
-          value: 'periodSubstage',
-        });
-        response.finalPeriods.push({
-          label: labels.finalPeriodSubstage,
-          value: 'substage',
-        });
-      }
-    }
-    return response;
-  }, [program]);
+
+  const periods = React.useMemo(
+    () => [
+      { label: labels.periods.days, value: 'days' },
+      { label: labels.periods.weeks, value: 'weeks' },
+      { label: labels.periods.months, value: 'months' },
+    ],
+    [labels]
+  );
 
   return (
     <form onSubmit={handleSubmit(handleOnNext)}>
@@ -102,64 +66,80 @@ export default function ProgramSetupPeriods({
         <Box>
           <Controller
             control={control}
-            name="periods"
-            rules={{
-              required: labels.periodsRequired,
-              minLength: {
-                value: 1,
-                message: labels.periodsRequired,
-              },
-            }}
+            name="teacherCanAddCustomAvgNote"
             render={({ field }) => (
-              <CheckBoxGroup
-                {...field}
-                label={labels.title}
-                description={labels.description}
-                direction="column"
-                data={datas.periods}
-                error={errors.periods}
-              />
+              <InputWrapper label={labels.title} description={labels.description}>
+                <Switch {...field} label={labels.avgNoteLabel} />
+              </InputWrapper>
             )}
           />
         </Box>
         <Box>
-          <Controller
-            control={control}
-            name="periodFinal"
-            rules={{
-              required: labels.finalPeriodsRequired,
-            }}
-            render={({ field }) => (
-              <RadioGroup
-                {...field}
-                label={labels.finalPeriodTitle}
-                direction="column"
-                data={datas.finalPeriods}
-                error={errors.periodFinal}
-              />
-            )}
-          />
+          <InputWrapper description={labels.reminderDescription} help={labels.reminderNote}>
+            <ContextContainer direction="row">
+              <Box>
+                <Controller
+                  control={control}
+                  name="teacherReminderPeriod"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      data={periods}
+                      disabled={!!defaultValues.id}
+                      placeholder={labels.selectPeriodLabel}
+                    />
+                  )}
+                />
+              </Box>
+              <Box>
+                <Controller
+                  control={control}
+                  name="teacherReminderNumberOfPeriods"
+                  render={({ field }) => (
+                    <NumberInput
+                      {...field}
+                      disabled={!!defaultValues.id}
+                      min={1}
+                      max={max[teacherReminderPeriod] || 365}
+                    />
+                  )}
+                />
+              </Box>
+            </ContextContainer>
+          </InputWrapper>
         </Box>
-        <Stack fullWidth justifyContent="end">
-          <Button type="submit" rightIcon={<ChevRightIcon height={20} width={20} />}>
-            {labels.next}
-          </Button>
+        <Stack fullWidth justifyContent="space-between">
+          <Box>
+            <Button
+              compact
+              variant="light"
+              leftIcon={<ChevLeftIcon height={20} width={20} />}
+              onClick={onPrevious}
+            >
+              {labels.prev}
+            </Button>
+          </Box>
+          <Box>
+            <Button type="submit" rightIcon={<ChevRightIcon height={20} width={20} />}>
+              {labels.next}
+            </Button>
+          </Box>
         </Stack>
       </ContextContainer>
     </form>
   );
 }
 
-ProgramSetupPeriods.propTypes = {
+ProgramSetupTeachers.propTypes = {
   onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
   sharedData: PropTypes.object.isRequired,
   setSharedData: PropTypes.func.isRequired,
   labels: PropTypes.object.isRequired,
-  program: PropTypes.object.isRequired,
-  frequencyLabels: PropTypes.object.isRequired,
 };
 
-ProgramSetupPeriods.defaultProps = {
+ProgramSetupTeachers.defaultProps = {
   setSharedData: () => {},
   onNext: () => {},
+  onPrevious: () => {},
 };

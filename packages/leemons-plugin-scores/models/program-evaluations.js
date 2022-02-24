@@ -1,6 +1,6 @@
 module.exports = {
-  modelName: 'program-configs',
-  collectionName: 'program-configs',
+  modelName: 'program-evaluations',
+  collectionName: 'program-evaluations',
   options: {
     useTimestamps: true,
   },
@@ -10,26 +10,23 @@ module.exports = {
         collection: 'plugins_academic-portfolio::programs',
       },
     },
-    period: {
+    name: {
       type: 'string',
       options: {
         notNull: true,
       },
     },
-    periodFinal: {
-      type: 'string',
-    },
-    teacherCanAddCustomAvgNote: {
-      type: 'boolean',
+    start: {
+      type: 'date',
       options: {
-        defaultTo: false,
+        notNull: true,
       },
     },
-    teacherReminderPeriod: {
-      type: 'string',
-    },
-    teacherReminderNumberOfPeriods: {
-      type: 'integer',
+    end: {
+      type: 'date',
+      options: {
+        notNull: true,
+      },
     },
   },
   primaryKey: {

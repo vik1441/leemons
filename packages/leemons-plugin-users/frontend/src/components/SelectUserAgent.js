@@ -36,6 +36,11 @@ function SelectUserAgent({ profiles, centers, ...props }) {
   });
   const [, , , getErrorMessage] = useRequestErrorMessage();
 
+  React.useEffect(() => {
+    store.data = [];
+    render();
+  }, [profiles, centers]);
+
   async function search(value) {
     try {
       const filters = {

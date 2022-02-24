@@ -29,10 +29,15 @@ const stringSchemaNullable = {
   nullable: true,
 };
 
+const booleanSchema = {
+  type: 'boolean',
+};
+
 module.exports = {
   textSchema,
   stringSchema,
   numberSchema,
+  booleanSchema,
   stringSchemaNullable,
   arrayStringRequiredSchema,
 };

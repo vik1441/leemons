@@ -14,7 +14,7 @@ import { AdminPageHeader } from '@bubbles-ui/leemons';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { SelectCenter } from '@users/components/SelectCenter';
 import { LayoutContext } from '@layout/context/layout';
-import { addErrorAlert } from '@layout/alert';
+import { addErrorAlert, addSuccessAlert } from '@layout/alert';
 import useRequestErrorMessage from '@common/useRequestErrorMessage';
 import prefixPN from '@scores/helpers/prefixPN';
 import { detailProgramRequest, listProgramsRequest } from '@academic-portfolio/request';
@@ -24,6 +24,14 @@ import { useStore } from '@common/useStore';
 import { useFrequencyTranslator } from '@academic-portfolio/helpers/useFrequencyTranslator';
 import ProgramSetup from '../../../components/ProgramSetup';
 import ProgramSetupPeriods from '../../../components/ProgramSetupPeriods';
+import {
+  addProgramConfigRequest,
+  getProgramConfigRequest,
+  haveAcademicCalendarConfigForProgramRequest,
+  updateProgramConfigRequest,
+} from '../../../request';
+import ProgramSetupTeachers from '../../../components/ProgramSetupTeachers';
+import ProgramSetupReviewers from '../../../components/ProgramSetupReviewers';
 
 export default function Setup() {
   const [, fqtTranslations] = useFrequencyTranslator();
@@ -109,18 +117,16 @@ export default function Setup() {
 
   async function handleOnEditProgram(e) {
     scrollTo({ top: 0 });
-    const { program } = await detailProgramRequest(e.program.id);
+    const [{ program }, { installed, configured }, { programConfig }] = await Promise.all([
+      detailProgramRequest(e.program.id),
+      haveAcademicCalendarConfigForProgramRequest(e.program.id),
+      getProgramConfigRequest(e.program.id),
+    ]);
+    store.programConfig = programConfig;
+    store.programCalendar = { installed, configured };
     store.currentProgram = program;
     treeProps.setSelectedNode(e.id);
   }
-
-  const handleOnNext = () => {
-    scrollTo({ top: 110 });
-  };
-
-  const handleOnPrev = () => {
-    scrollTo({ top: 110 });
-  };
 
   // ····················································································
   // STATIC VALUES
@@ -135,7 +141,7 @@ export default function Setup() {
 
   const setupProps = useMemo(() => {
     if (!isNil(setupLabels) && store.currentProgram) {
-      const { periods } = setupLabels;
+      const { periods, teachers, reviewers } = setupLabels;
 
       return {
         labels: { title: store.currentProgram.name },
@@ -144,17 +150,46 @@ export default function Setup() {
             label: periods.step_label,
             content: (
               <ProgramSetupPeriods
+                programCalendar={store.programCalendar}
                 program={store.currentProgram}
                 frequencyLabels={fqtTranslations}
                 {...periods}
               />
             ),
           },
+          {
+            label: teachers.step_label,
+            content: <ProgramSetupTeachers {...teachers} />,
+          },
+          {
+            label: reviewers.step_label,
+            content: <ProgramSetupReviewers {...reviewers} />,
+          },
         ],
       };
     }
     return null;
   }, [setupLabels, store.currentProgram]);
+
+  async function onSave(e) {
+    try {
+      if (e.id) {
+        await updateProgramConfigRequest({
+          reviewers: e.reviewers,
+          teacherCanAddCustomAvgNote: e.teacherCanAddCustomAvgNote,
+          program: store.currentProgram.id,
+        });
+      } else {
+        await addProgramConfigRequest({ ...e, program: store.currentProgram.id });
+      }
+
+      addSuccessAlert(t('programConfigSaved'));
+    } catch (err) {
+      addErrorAlert(getErrorMessage(err));
+    }
+    store.currentProgram = null;
+    treeProps.setSelectedNode(null);
+  }
 
   return (
     <ContextContainer fullHeight>
@@ -189,7 +224,7 @@ export default function Setup() {
               <Col span={7}>
                 {!isNil(setupProps) && (
                   <Paper fullWidth padding={5}>
-                    <ProgramSetup {...setupProps} />
+                    <ProgramSetup {...setupProps} values={store.programConfig} onSave={onSave} />
                   </Paper>
                 )}
               </Col>
