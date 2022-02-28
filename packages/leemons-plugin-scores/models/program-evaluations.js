@@ -10,6 +10,11 @@ module.exports = {
         collection: 'plugins_academic-portfolio::programs',
       },
     },
+    parent: {
+      references: {
+        collection: 'plugins_scores::program-evaluations',
+      },
+    },
     name: {
       type: 'string',
       options: {

@@ -1,3 +1,4 @@
+// Nota del usuario para una tarea de una clase.
 module.exports = {
   modelName: 'user-task-note',
   collectionName: 'user-task-note',
@@ -5,15 +6,20 @@ module.exports = {
     useTimestamps: true,
   },
   attributes: {
-    evaluation: {
+    task: {
       references: {
-        collection: 'plugins_academic-portfolio::programs',
+        collection: 'plugins_tasks::tasks',
       },
     },
-    avgScore: {
+    userAgent: {
+      references: {
+        collection: 'plugins_users::user-agent',
+      },
+    },
+    score: {
       type: 'float',
     },
-    customAvgScore: {
+    customScore: {
       type: 'float',
     },
   },
