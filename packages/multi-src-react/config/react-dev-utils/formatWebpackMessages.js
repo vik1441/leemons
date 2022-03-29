@@ -103,7 +103,7 @@ function formatMessage(message, plugins) {
     ?.map((src) => {
       const plugin = plugins.find(({ name }) => name === path.basename(src));
 
-      return { src, realPath: plugin.path };
+      return { src, realPath: plugin?.path };
     })
     .forEach(({ src, realPath }) => {
       message = message.replace(src, realPath);

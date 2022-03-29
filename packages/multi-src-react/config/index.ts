@@ -64,10 +64,18 @@ async function createMissingPackageJSON(dir: string, config: Object): Promise<bo
   return false;
 }
 
+async function createMissingWorkspaces(dir: string): Promise<boolean> {
+  if (!(await fileExists(dir))) {
+    await copyFile(path.resolve(configDir.src, 'pnpm-workspace.yaml'), dir);
+    return true;
+  }
+  return false;
+}
+
 // Intall front monorepo dependencies
 function installDeps(dir: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    const { stdout, stderr } = execa.command(`yarn --cwd ${dir}`);
+    const { stdout, stderr } = execa.command(`pnpm install -C ${dir}`);
 
     if (stderr) {
       stderr.on('data', (e) => {
@@ -182,6 +190,9 @@ async function generateMonorepo(dir: string, plugins: Plugin[]): Promise<void> {
     name: 'leemons-front',
     version: '1.0.0',
   });
+
+  await createMissingWorkspaces(path.resolve(dir, 'pnpm-workspace.yaml'));
+
 
   // Generate App index.js
   await copyFile(path.resolve(configDir.src, 'index.js'), path.resolve(frontDir, 'index.js'));
