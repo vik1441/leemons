@@ -15,10 +15,10 @@ module.exports = {
         },
       },
     },
-    /*
     mongo: {
       connector: 'mongoose',
       settings: {
+        srv: process.env['NOSQL_SRV'] === 'true',
         database: process.env['NOSQL_DATABASE'],
         authDatabase: process.env['NOSQL_AUTH_DATABASE'],
         username: process.env['NOSQL_USERNAME'],
@@ -32,7 +32,7 @@ module.exports = {
         },
       },
     },
-    */
   },
-  defaultConnection: 'mysql',
+  // defaultConnection: 'mysql',
+  defaultConnection: 'mongo',
 };

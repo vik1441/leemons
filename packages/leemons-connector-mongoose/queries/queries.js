@@ -3,6 +3,39 @@
 const { parseFilters } = require('leemons-utils');
 const buildQuery = require('./buildQuery');
 
+async function timeoutPromise(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}
+
+async function reTry(func, args, time = 10, n = 0) {
+  try {
+    return await func(...args);
+  } catch (e) {
+    const str = `${e.code} ${e.message} ${e.sqlMessage}`.toLowerCase();
+    if (
+      (n < 10000 && (str.indexOf('please retry') >= 0 || str.indexOf('timeout') >= 0)) ||
+      /unable to acquire I?X? ?lock/.test(str)
+    ) {
+      await timeoutPromise(time);
+      return reTry(func, args, time, n + 1);
+    }
+
+    // Mongo retries the transaction on some errors, resuling in a "No transaction in progress" error
+    if (
+      str.indexOf(
+        'does not match any in-progress transactions. The active transaction number is'.toLowerCase()
+      ) >= 0
+    ) {
+      return null;
+    }
+    throw e;
+  }
+}
+
 function transformId(result, reverse = false) {
   const incoming = reverse ? 'id' : '_id';
   const outgoing = reverse ? '_id' : 'id';
@@ -80,12 +113,6 @@ function generateQueries(model) {
     const response = await $extras(
       MongooseModel.findOne(finalQuery, undefined, { session: transacting })
     );
-
-    if (response === null) {
-      const err = new Error('entry.notFound');
-      err.status = 404;
-      throw err;
-    }
 
     return transformId(response);
   }
@@ -238,33 +265,42 @@ function generateQueries(model) {
   }
 
   async function transaction(f) {
-    return new Promise((resolve, reject) => {
-      model.ODM.transaction(
-        (t) =>
-          f(t)
-            .then(resolve)
-            .catch((e) => {
-              reject(e);
-              throw e;
-            })
-        // Catch roll back error, the real error is in the promise
-      ).catch(() => {});
-    });
+    const session = await model.ODM.startSession();
+
+    try {
+      session.startTransaction();
+      const result = await f(session);
+
+      await session.commitTransaction();
+      return result;
+    } catch (err) {
+      if (
+        err.message.includes('Please retry') ||
+        err.message.includes('Unable to acquire IX lock')
+      ) {
+        leemons.log.debug('Retrying transaction');
+        return transaction(f);
+      }
+      await session.abortTransaction();
+      throw err;
+    } finally {
+      session.endSession();
+    }
   }
 
   return {
-    create,
-    createMany,
-    find,
-    findOne,
-    search,
-    count,
-    update,
-    updateMany,
-    set,
-    setMany,
-    delete: deleteOne,
-    deleteMany,
+    create: (...args) => reTry(create, args),
+    createMany: (...args) => reTry(createMany, args),
+    find: (...args) => reTry(find, args),
+    findOne: (...args) => reTry(findOne, args),
+    search: (...args) => reTry(search, args),
+    count: (...args) => reTry(count, args),
+    update: (...args) => reTry(update, args),
+    updateMany: (...args) => reTry(updateMany, args),
+    set: (...args) => reTry(set, args),
+    setMany: (...args) => reTry(setMany, args),
+    delete: (...args) => reTry(deleteOne, args),
+    deleteMany: (...args) => reTry(deleteMany, args),
     transaction,
   };
 }
