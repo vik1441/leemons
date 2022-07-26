@@ -1,9 +1,10 @@
 const {
   Schema: {
-    Types: { Mixed, Decimal128, ObjectId },
+    Types: { Mixed, ObjectId },
   },
   Schema: MongoSchema,
 } = require('mongoose');
+const uuid = require('uuid');
 
 function getType(property, ctx) {
   // Get the mongoose equivalent type
@@ -35,6 +36,9 @@ function getType(property, ctx) {
         type: String,
         validate: {
           validator(v) {
+            if (!property?.options?.notNullable && !property?.options?.notNull && v === null) {
+              return true;
+            }
             return /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gm.test(
               v
             );
@@ -68,7 +72,7 @@ function getType(property, ctx) {
     case 'decimal':
     case 'float':
     case 'double':
-      return { type: Decimal128 };
+      return { type: Number };
     // case 'map':
     default:
       if (ctx.schemas.has(property.type)) {
@@ -112,6 +116,23 @@ function getOptions(property) {
 
 function createSchema(schema, ctx) {
   const attributes = Object.entries(schema.schema.attributes)
+    .map(([name, attribute]) => {
+      if (attribute.references) {
+        return [
+          name,
+          {
+            type: 'uuid',
+            ...attribute,
+            options: {
+              ...attribute.options,
+              notNull: false,
+            },
+          },
+        ];
+      }
+
+      return [name, attribute];
+    })
     .map(([name, attribute]) => ({
       name,
       ...getType(attribute, ctx),
@@ -123,6 +144,11 @@ function createSchema(schema, ctx) {
   attributes.forEach(({ name, ...attribute }) => {
     Schema[name] = attribute;
   });
+
+  Schema._id = {
+    type: String,
+    default: uuid.v4,
+  };
 
   if (schema.schema.options?.useTimestamps) {
     options.timestamps = {

@@ -100,7 +100,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.find(finalQuery, undefined, { session: transacting })
+      MongooseModel.find(finalQuery, undefined, { session: transacting }).lean()
     );
 
     return transformId(response);
@@ -111,7 +111,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.findOne(finalQuery, undefined, { session: transacting })
+      MongooseModel.findOne(finalQuery, undefined, { session: transacting }).lean()
     );
 
     return transformId(response);
@@ -167,7 +167,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const updateResult = await $extras(
-      MongooseModel.updateOne(finalQuery, transformId(item), { session: transacting })
+      MongooseModel.updateOne(finalQuery, transformId(item), { session: transacting }).lean()
     );
 
     if (updateResult.matchedCount === 0) {
@@ -186,7 +186,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.updateMany(finalQuery, transformId(item), { session: transacting })
+      MongooseModel.updateMany(finalQuery, transformId(item), { session: transacting }).lean()
     );
 
     return { count: response.modifiedCount };
@@ -200,7 +200,7 @@ function generateQueries(model) {
       MongooseModel.updateOne(finalQuery, transformId(item), {
         session: transacting,
         upsert: true,
-      })
+      }).lean()
     );
     return transformId(response);
   }
@@ -213,7 +213,7 @@ function generateQueries(model) {
       MongooseModel.updateMany(finalQuery, transformId(item), {
         session: transacting,
         upsert: true,
-      })
+      }).lean()
     );
     return transformId(response);
   }
