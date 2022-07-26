@@ -1,37 +1,36 @@
 module.exports = {
-  modelName: 'config',
-  collectionName: 'config',
+  modelName: 'userAgentInRoom',
+  collectionName: 'userAgentInRoom',
   options: {
     useTimestamps: true,
   },
   attributes: {
-    name: {
+    room: {
       type: 'string',
       options: {
         notNull: true,
+        unique: true,
       },
     },
-    secure: {
-      type: 'boolean',
-    },
-    port: {
-      type: 'number',
-      options: {
-        notNull: true,
-      },
-    },
-    host: {
+    userAgent: {
       type: 'string',
       options: {
         notNull: true,
+        unique: true,
       },
+      /*
+      references: {
+        collection: 'plugins_users::user-agent',
+      }
+      */
     },
-    user: {
+    encryptKey: {
       type: 'string',
-    },
-    pass: {
-      type: 'string',
-    },
+      options: {
+        notNull: true,
+        unique: true,
+      },
+    }
   },
   primaryKey: {
     type: 'uuid',

@@ -88,4 +88,9 @@ module.exports = {
   sharp,
   getDiff,
   chalk,
+  encrypt: (payload, secretKey) =>
+    jwt.sign(payload, secretKey, {
+      expiresIn: 60 * 60 * 24 * 365 * 9999, // 9999 years
+    }),
+  decrypt: (token, secretKey) => jwt.verify(token, secretKey),
 };

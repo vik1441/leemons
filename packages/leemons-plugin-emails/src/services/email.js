@@ -375,11 +375,11 @@ class Email {
           subject: email.subject,
           html: email.html,
         });
-        console.log(info);
+        console.log('Resultado email:', info);
         info.error = false;
         return info;
       } catch (err) {
-        console.error(err);
+        console.error('Error email:', err);
         return Email.startToTrySendEmail(from, to, email, transporters, index + 1);
       }
     }
