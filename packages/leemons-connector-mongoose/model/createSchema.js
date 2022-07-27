@@ -1,9 +1,12 @@
 const {
   Schema: {
-    Types: { Mixed, ObjectId },
+    Types: { Mixed, ObjectId, String: StringType },
   },
   Schema: MongoSchema,
 } = require('mongoose');
+
+StringType.checkRequired((v) => v !== null);
+
 const uuid = require('uuid');
 
 function getType(property, ctx) {
@@ -12,7 +15,7 @@ function getType(property, ctx) {
     case 'string':
     case 'text':
     case 'richtext':
-      return { type: String };
+      return { type: StringType };
     case 'int':
     case 'integer':
     case 'bigint':
@@ -33,7 +36,7 @@ function getType(property, ctx) {
       return { type: ObjectId };
     case 'uuid':
       return {
-        type: String,
+        type: StringType,
         validate: {
           validator(v) {
             if (!property?.options?.notNullable && !property?.options?.notNull && v === null) {
@@ -54,7 +57,7 @@ function getType(property, ctx) {
 
       if (property.enum.every((value) => typeof value === 'string')) {
         return {
-          type: String,
+          type: StringType,
           enum: property.enum,
         };
       }
@@ -146,7 +149,7 @@ function createSchema(schema, ctx) {
   });
 
   Schema._id = {
-    type: String,
+    type: StringType,
     default: uuid.v4,
   };
 
