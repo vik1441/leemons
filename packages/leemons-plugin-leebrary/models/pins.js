@@ -3,7 +3,7 @@ module.exports = {
   collectionName: 'pins',
   attributes: {
     asset: {
-      specificType: 'varchar(255)',
+      specificType: 'string',
     },
     userAgent: {
       references: {

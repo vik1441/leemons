@@ -3,7 +3,7 @@ module.exports = {
   collectionName: 'bookmarks',
   attributes: {
     asset: {
-      specificType: 'varchar(255)',
+      specificType: 'string',
     },
     url: {
       type: 'string',

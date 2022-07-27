@@ -143,7 +143,9 @@ function createSchema(schema, ctx) {
     }))
     .filter((attribute) => attribute.type);
   const Schema = {};
-  const options = {};
+  const options = {
+    minimize: false,
+  };
   attributes.forEach(({ name, ...attribute }) => {
     Schema[name] = attribute;
   });

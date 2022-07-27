@@ -49,6 +49,7 @@ module.exports = {
     },
   },
   primaryKey: {
+    type: 'string',
     specificType: 'varchar(255)',
   },
 };

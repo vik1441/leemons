@@ -27,7 +27,7 @@ function createCoreStore() {
         type: 'string',
       },
       value: {
-        specificType: 'text',
+        type: 'text',
       },
       type: {
         type: 'string',

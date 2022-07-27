@@ -3,7 +3,7 @@ module.exports = {
   collectionName: 'assets-files',
   attributes: {
     asset: {
-      specificType: 'varchar(255)',
+      type: 'string',
     },
     file: {
       references: {
