@@ -271,7 +271,7 @@ function buildQuery(model, filters = {}) {
   if (_.has(filters, 'sort')) {
     const order = filters.sort.map((sort) => ({ column: sort.field, order: sort.order }));
     filters.sort.reduce((sort) => ({ ...sort, [sort.field]: sort.order }), {});
-    extras.push({ key: order, value: order });
+    extras.push({ key: 'sort', value: order });
   }
 
   if (_.has(filters, 'offset')) {
