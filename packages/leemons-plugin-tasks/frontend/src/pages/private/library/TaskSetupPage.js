@@ -81,7 +81,7 @@ export default function TaskSetupPage() {
 
       emitEvent('taskSaved');
     } catch (e) {
-      addErrorAlert(e.message);
+      addErrorAlert(e.message || e.error);
       emitEvent('saveTaskFailed');
     } finally {
       if (loading.current === 'duplicate') {
@@ -131,7 +131,7 @@ export default function TaskSetupPage() {
       });
       return task;
     } catch (e) {
-      addErrorAlert(e.message);
+      addErrorAlert(e.message || e.error);
       return {};
     }
   };
