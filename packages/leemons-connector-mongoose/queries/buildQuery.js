@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 function parseQuery(filter, { query: parentQuery = null, negated = false } = {}) {
   const { operator, value } = filter;
   let { field } = filter;
@@ -104,7 +108,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(value, 'i'),
+          $regex: new RegExp(escapeRegExp(value), 'i'),
         },
       });
       break;
@@ -116,7 +120,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(value, 'i'),
+            $regex: new RegExp(escapeRegExp(value), 'i'),
           },
         },
       });
@@ -129,7 +133,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(value),
+          $regex: new RegExp(escapeRegExp(value)),
         },
       });
       break;
@@ -142,7 +146,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(value),
+            $regex: new RegExp(escapeRegExp(value)),
           },
         },
       });
@@ -154,7 +158,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(`^${value}`, 'i'),
+          $regex: new RegExp(`^${escapeRegExp(value)}`, 'i'),
         },
       });
       break;
@@ -166,7 +170,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`^${value}`, 'i'),
+            $regex: new RegExp(`^${escapeRegExp(value)}`, 'i'),
           },
         },
       });
@@ -178,7 +182,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(`${value}$`, 'i'),
+          $regex: new RegExp(`${escapeRegExp(value)}$`, 'i'),
         },
       });
       break;
@@ -190,7 +194,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`${value}$`, 'i'),
+            $regex: new RegExp(`${escapeRegExp(value)}$`, 'i'),
           },
         },
       });
@@ -203,7 +207,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(`^${value}`),
+          $regex: new RegExp(`^${escapeRegExp(value)}`),
         },
       });
       break;
@@ -216,7 +220,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`^${value}`),
+            $regex: new RegExp(`^${escapeRegExp(value)}`),
           },
         },
       });
@@ -229,7 +233,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(`${value}$`),
+          $regex: new RegExp(`${escapeRegExp(value)}$`),
         },
       });
       break;
@@ -242,7 +246,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`${value}$`),
+            $regex: new RegExp(`${escapeRegExp(value)}$`),
           },
         },
       });
@@ -269,8 +273,8 @@ function buildQuery(model, filters = {}) {
 
   const extras = [];
   if (_.has(filters, 'sort')) {
-    const order = filters.sort.map((sort) => ({ column: sort.field, order: sort.order }));
-    filters.sort.reduce((sort) => ({ ...sort, [sort.field]: sort.order }), {});
+    const order = filters.sort.reduce((sort, item) => ({ ...sort, [item.field]: item.order }), {});
+
     extras.push({ key: 'sort', value: order });
   }
 

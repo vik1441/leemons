@@ -75,7 +75,7 @@ function generateQueries(model) {
   const MongooseModel = model.model;
 
   async function create(newItem, { transacting } = {}) {
-    const item = new MongooseModel(transformId(newItem));
+    const item = new MongooseModel(transformId(newItem, true));
     const response = await item.save({ session: transacting });
     return transformId(response);
   }
@@ -89,7 +89,7 @@ function generateQueries(model) {
       );
     }
 
-    const response = await MongooseModel.insertMany(transformId(newItems), {
+    const response = await MongooseModel.insertMany(transformId(newItems, true), {
       session: transacting,
     });
     return transformId(response);
@@ -167,7 +167,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const updateResult = await $extras(
-      MongooseModel.updateOne(finalQuery, transformId(item), { session: transacting }).lean()
+      MongooseModel.updateOne(finalQuery, transformId(item, true), { session: transacting }).lean()
     );
 
     if (updateResult.matchedCount === 0) {
@@ -186,7 +186,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.updateMany(finalQuery, transformId(item), { session: transacting }).lean()
+      MongooseModel.updateMany(finalQuery, transformId(item, true), { session: transacting }).lean()
     );
 
     return { count: response.modifiedCount };
@@ -197,7 +197,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.updateOne(finalQuery, transformId(item), {
+      MongooseModel.updateOne(finalQuery, transformId(item, true), {
         session: transacting,
         upsert: true,
       }).lean()
@@ -210,7 +210,7 @@ function generateQueries(model) {
     const { $extras, ...finalQuery } = buildQuery(model, filters);
 
     const response = await $extras(
-      MongooseModel.updateMany(finalQuery, transformId(item), {
+      MongooseModel.updateMany(finalQuery, transformId(item, true), {
         session: transacting,
         upsert: true,
       }).lean()

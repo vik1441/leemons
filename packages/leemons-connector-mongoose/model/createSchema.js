@@ -1,6 +1,6 @@
 const {
   Schema: {
-    Types: { Mixed, ObjectId, String: StringType },
+    Types: { Mixed, ObjectId, String: StringType, Date: DateType },
   },
   Schema: MongoSchema,
 } = require('mongoose');
@@ -22,7 +22,12 @@ function getType(property, ctx) {
     case 'biginteger':
       return { type: Number };
     case 'date':
-      return { type: Date };
+    case 'datetime':
+      return {
+        type: DateType,
+        set: (v) => new Date(v),
+        get: (v) => v.toISOString(),
+      };
     case 'buffer':
       return { type: Buffer };
     case 'boolean':
@@ -145,6 +150,9 @@ function createSchema(schema, ctx) {
   const Schema = {};
   const options = {
     minimize: false,
+    toJSON: {
+      getters: true,
+    },
   };
   attributes.forEach(({ name, ...attribute }) => {
     Schema[name] = attribute;
@@ -162,7 +170,7 @@ function createSchema(schema, ctx) {
     };
 
     if (schema.schema.options?.softDelete) {
-      Schema.deleted_at = Date;
+      Schema.deleted_at = DateType;
     }
   }
 

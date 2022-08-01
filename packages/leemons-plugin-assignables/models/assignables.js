@@ -42,6 +42,9 @@ module.exports = {
     },
     relatedAssignables: {
       type: 'json',
+      options: {
+        defaultTo: null,
+      },
     },
     instructionsForStudents: {
       type: 'richtext',
