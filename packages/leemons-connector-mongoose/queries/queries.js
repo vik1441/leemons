@@ -1,15 +1,7 @@
 // TODO: Add columns and select distinct
 
-const { parseFilters } = require('leemons-utils');
+const { parseFilters, timeoutPromise } = require('leemons-utils');
 const buildQuery = require('./buildQuery');
-
-async function timeoutPromise(time) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-}
 
 async function reTry(func, args, time = 10, n = 0) {
   try {
@@ -272,19 +264,21 @@ function generateQueries(model) {
       const result = await f(session);
 
       await session.commitTransaction();
+      session.endSession();
       return result;
     } catch (err) {
       if (
         err.message.includes('Please retry') ||
         err.message.includes('Unable to acquire IX lock')
       ) {
+        await timeoutPromise(10);
         leemons.log.debug('Retrying transaction');
+        session.endSession();
         return transaction(f);
       }
       await session.abortTransaction();
-      throw err;
-    } finally {
       session.endSession();
+      throw err;
     }
   }
 
