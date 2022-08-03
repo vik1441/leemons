@@ -26,7 +26,7 @@ function getType(property, ctx) {
       return {
         type: DateType,
         set: (v) => new Date(v),
-        get: (v) => v.toISOString(),
+        get: (v) => (v ? v.toISOString() : null),
       };
     case 'buffer':
       return { type: Buffer };
