@@ -121,6 +121,16 @@ function initWidgets(isInstalled) {
   }
 }
 
+function initMultilanguage() {
+  leemons.events.once('plugins.multilanguage:pluginDidLoad', async () => {
+    await addLocales(['es', 'en']);
+  });
+
+  leemons.events.on('plugins.multilanguage:newLocale', async (event, locale) => {
+    await addLocales(locale.code);
+  });
+}
+
 async function events(isInstalled) {
   global.utils.cron.schedule('0 * * * *', () => {
     sendRememberEmails();
@@ -128,14 +138,6 @@ async function events(isInstalled) {
 
   leemons.events.once('appDidLoadBack', () => {
     sendRememberEmails();
-  });
-
-  leemons.events.once('plugins.multilanguage:pluginDidLoad', async () => {
-    await addLocales(['es', 'en']);
-  });
-
-  leemons.events.on('plugins.multilanguage:newLocale', async (event, locale) => {
-    await addLocales(locale.code);
   });
 
   leemons.events.on('plugins.academic-portfolio:after-add-class-teacher', async (event, data) => {
@@ -169,6 +171,7 @@ async function events(isInstalled) {
     }
   );
 
+  initMultilanguage();
   initPermissions(isInstalled);
   initMenuBuilder(isInstalled);
   initWidgets(isInstalled);
