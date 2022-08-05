@@ -44,7 +44,7 @@ async function addStudentToInstances({ student, instances, tries = 0, userSessio
         );
         return response;
       } catch (e) {
-        if (createAssignationTries === 2) {
+        if (createAssignationTries === 2 || e.message.includes('already assigned')) {
           throw e;
         }
       }
@@ -56,8 +56,12 @@ async function addStudentToInstances({ student, instances, tries = 0, userSessio
   try {
     return await Promise.all(assignationPromises);
   } catch (e) {
+    if (e.message.includes('already assigned')) {
+      return leemons.log.error(`Error assigning students to activities: ${e.message}`);
+    }
+
     if (tries < 3) {
-      return addStudentToInstances({ student, instances, try: tries + 1 });
+      return addStudentToInstances({ student, instances, try: tries + 1, userSession });
     }
 
     throw e;
