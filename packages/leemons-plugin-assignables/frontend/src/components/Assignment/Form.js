@@ -233,6 +233,13 @@ export default function Form({
         requiresScoring: defaultValues?.requiresScoring,
         allowFeedback: defaultValues?.allowFeedback,
       },
+      dates: Object.entries(defaultValues?.dates).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: value ? new Date(value) : null,
+        }),
+        {}
+      ),
     },
   });
 
@@ -336,6 +343,7 @@ export default function Form({
           render={({ field: alwaysOpenField }) => (
             <ConditionalInput
               {...alwaysOpenField}
+              initialValue={!!defaultValues?.alwaysAvailable}
               label={labels?.alwaysOpenToogle}
               showOnTrue={false}
               render={() => (
@@ -392,6 +400,7 @@ export default function Form({
                   <Grid>
                     <Grid.Col span={6}>
                       <ConditionalInput
+                        initialValue={!!defaultValues?.dates?.visualization}
                         label={labels?.visualizationDateToogle}
                         help={descriptions?.visualizationDate}
                         render={() => (
@@ -443,6 +452,7 @@ export default function Form({
                       </Box>
                       <ConditionalInput
                         label={`${labels?.closeDateToogle}\n `}
+                        initialValue={!!defaultValues?.dates?.close}
                         help={descriptions?.closeDateToogle}
                         render={() => (
                           <ContextContainer direction="row" alignItems="end">
@@ -479,6 +489,7 @@ export default function Form({
         <ConditionalInput
           label={labels?.limitedExecutionToogle}
           help={descriptions?.limitedExecution}
+          initialValue={!!defaultValues?.duration}
           render={() => (
             <Controller
               control={control}
@@ -498,6 +509,7 @@ export default function Form({
         <ConditionalInput
           label={labels?.messageToStudentsToogle}
           help={descriptions?.messageToStudents}
+          initialValue={!!defaultValues?.messageToAssignees}
           render={() => (
             <Controller
               control={control}
@@ -523,6 +535,7 @@ export default function Form({
             render={({ field: showField }) => (
               <ConditionalInput
                 {...showField}
+                // TODO: Initial show if curriculum selected
                 label={labels?.showCurriculumToogle}
                 render={
                   () =>
