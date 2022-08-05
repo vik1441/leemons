@@ -2,6 +2,8 @@ const { map, difference } = require('lodash');
 const { searchAssignableInstancesByClass } = require('../classes');
 const tables = require('../tables');
 
+// TODO: Only add to assignable if student is on all the subjects of the assignableInstance
+
 async function filterByOpenInstances(instances) {
   const alwaysAvailableInstances = await tables.assignableInstances.find(
     {
@@ -13,16 +15,16 @@ async function filterByOpenInstances(instances) {
 
   const alwaysAvailableInstancesIds = map(alwaysAvailableInstances, 'id');
 
-  const archivedInstances = await tables.dates.find(
+  const closedInstances = await tables.dates.find(
     {
       type: 'assignableInstance',
       instance_$in: alwaysAvailableInstancesIds,
-      name: 'archived',
+      name: 'closed',
     },
     { column: ['instance'] }
   );
 
-  const archivedInstancesIds = map(archivedInstances, 'instance');
+  const archivedInstancesIds = map(closedInstances, 'instance');
 
   const openInstances = difference(alwaysAvailableInstancesIds, archivedInstancesIds);
 
