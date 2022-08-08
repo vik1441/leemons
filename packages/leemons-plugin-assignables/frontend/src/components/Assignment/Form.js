@@ -321,6 +321,18 @@ export default function Form({
               labels={labels}
               modes={modes}
               assignTo={assignTo}
+              defaultValue={{
+                assignee: field.value,
+                type: defaultValues?.assignStudents?.type,
+                subjects: defaultValues?.assignStudents?.subjects,
+              }}
+              onChange={(value) => {
+                field.onChange(value.assignee);
+                setValue('assignStudents', {
+                  subjects: value.subjects,
+                  type: value.type,
+                });
+              }}
             />
           )}
         />
@@ -637,4 +649,5 @@ Form.propTypes = {
   watch: PropTypes.func,
   control: PropTypes.object,
   curriculumFields: PropTypes.object,
+  defaultValues: PropTypes.object,
 };

@@ -6,17 +6,26 @@ import SubjectSelector from './AssignStudents/components/SubjectSelector';
 import AssigneeTypeSelector from './AssignStudents/components/AssigneeTypeSelector';
 import AssigneeSelector from './AssignStudents/components/AssigneeSelector';
 
-export default function AssignStudents({ labels, profile, onChange, assignable, ...props }) {
+export default function AssignStudents({
+  labels,
+  profile,
+  onChange,
+  assignable,
+  defaultValue,
+  ...props
+}) {
   const form = useForm({
-    subjects: [],
-    type: null,
-    assignee: [],
+    defaultValues: {
+      subjects: defaultValue?.subjects || [],
+      type: defaultValue?.type || null,
+      assignee: defaultValue?.assignee || [],
+    },
   });
   const { control, watch } = form;
 
   useEffect(() => {
     const subscription = watch((data) => {
-      onChange(data.assignee);
+      onChange(data);
     });
     return () => subscription.unsubscribe();
   }, [watch]);
@@ -57,4 +66,9 @@ AssignStudents.propTypes = {
   profile: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   assignable: PropTypes.shape({}),
+  defaultValue: PropTypes.shape({
+    subjects: PropTypes.arrayOf(PropTypes.string),
+    type: PropTypes.string,
+    assignee: PropTypes.arrayOf(PropTypes.string),
+  }),
 };
