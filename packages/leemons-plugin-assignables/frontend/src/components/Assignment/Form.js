@@ -233,13 +233,15 @@ export default function Form({
         requiresScoring: defaultValues?.requiresScoring,
         allowFeedback: defaultValues?.allowFeedback,
       },
-      dates: Object.entries(defaultValues?.dates).reduce(
-        (acc, [key, value]) => ({
-          ...acc,
-          [key]: value ? new Date(value) : null,
-        }),
-        {}
-      ),
+      dates: defaultValues?.dates
+        ? Object.entries(defaultValues?.dates).reduce(
+            (acc, [key, value]) => ({
+              ...acc,
+              [key]: value ? new Date(value) : null,
+            }),
+            {}
+          )
+        : {},
     },
   });
 
@@ -325,12 +327,14 @@ export default function Form({
                 assignee: field.value,
                 type: defaultValues?.assignStudents?.type,
                 subjects: defaultValues?.assignStudents?.subjects,
+                assignmentSetup: defaultValues?.assignStudents?.assignmentSetup,
               }}
               onChange={(value) => {
                 field.onChange(value.assignee);
                 setValue('assignStudents', {
                   subjects: value.subjects,
                   type: value.type,
+                  assignmentSetup: value.assignmentSetup,
                 });
               }}
             />

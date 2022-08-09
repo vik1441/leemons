@@ -52,11 +52,13 @@ export default function SelectClass({
   profiles,
   onChange,
   value,
+  defaultValue,
   groupedClassesWithSelectedSubjects,
 }) {
   const { control, watch, getValues } = useForm({
     defaultValues: {
       excluded: [],
+      ...defaultValue,
     },
   });
 
@@ -65,6 +67,10 @@ export default function SelectClass({
   useEffect(() => {
     const handleChange = (data) => {
       if (!data?.assignees) {
+        return;
+      }
+
+      if (!classes?.length) {
         return;
       }
 
@@ -82,7 +88,7 @@ export default function SelectClass({
         if (g.type === 'group') {
           return g.classes.map((c) => ({
             group: c.class.id,
-            students: c.assignableStudents,
+            students: _.intersection(c.assignableStudents, g.assignableStudents),
           }));
         }
 
@@ -94,10 +100,10 @@ export default function SelectClass({
 
       if (assignees.length) {
         if (!value || !_.isEqual(value, assignees)) {
-          onChange(assignees);
+          onChange(assignees, data);
         }
       } else if (!value || value?.length) {
-        onChange([]);
+        onChange([], data);
       }
     };
 
@@ -133,6 +139,7 @@ export default function SelectClass({
                   disabled,
                   label: `${c.label} (${c.assignableStudents.length}/${c.totalStudents} ${labels?.matchingStudents})`,
                   _type: c.type,
+                  checked: !disabled && field.value.includes(c.id),
                 };
               })
               // Sort in the following order:
@@ -208,4 +215,8 @@ SelectClass.propTypes = {
     nonAssignableStudents: PropTypes.arrayOf(PropTypes.string).isRequired,
     assignableStudents: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  defaultValue: PropTypes.shape({
+    assignees: PropTypes.arrayOf(PropTypes.string),
+    excluded: PropTypes.arrayOf(PropTypes.string),
+  }),
 };

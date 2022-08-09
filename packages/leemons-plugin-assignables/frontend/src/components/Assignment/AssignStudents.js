@@ -19,9 +19,11 @@ export default function AssignStudents({
       subjects: defaultValue?.subjects || [],
       type: defaultValue?.type || null,
       assignee: defaultValue?.assignee || [],
+      assignmentSetup: null,
     },
   });
-  const { control, watch } = form;
+
+  const { control, watch, setValue } = form;
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -51,7 +53,16 @@ export default function AssignStudents({
               control={control}
               name="assignee"
               render={({ field }) => (
-                <AssigneeSelector {...field} labels={labels} profile={profile} />
+                <AssigneeSelector
+                  {...field}
+                  onChange={(value, data) => {
+                    setValue('assignmentSetup', data);
+                    field.onChange(value);
+                  }}
+                  defaultValue={defaultValue}
+                  labels={labels}
+                  profile={profile}
+                />
               )}
             />
           </PageContainer>
