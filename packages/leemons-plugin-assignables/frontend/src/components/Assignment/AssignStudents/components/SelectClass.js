@@ -59,6 +59,9 @@ export default function SelectClass({
     defaultValues: {
       excluded: [],
       ...defaultValue,
+      showExcluded: _.isNil(defaultValue?.showExcluded)
+        ? defaultValue?.excluded?.length > 0
+        : defaultValue?.showExcluded,
     },
   });
 
@@ -80,7 +83,9 @@ export default function SelectClass({
         // ES: Quitar alumnos excluidos de assignableStudents
         .map((c) => ({
           ...c,
-          assignableStudents: c.assignableStudents.filter((s) => !data.excluded?.includes(s)),
+          assignableStudents: data.showExcluded
+            ? c.assignableStudents.filter((s) => !data.excluded?.includes(s))
+            : c.assignableStudents,
         }))
         .filter((c) => c.assignableStudents.length);
 
@@ -162,18 +167,18 @@ export default function SelectClass({
         <NonAssignableStudents users={nonAssignableStudents} labels={labels} />
       )}
       <Controller
-        name="excluded"
+        name="showExcluded"
         control={control}
-        render={({ field: { value: show } }) => (
+        render={({ field: { value: show, onChange: onToggle } }) => (
           <ConditionalInput
             label={labels?.excludeStudents}
-            value={!!show?.length}
+            value={!!show}
             showOnTrue
+            onChange={onToggle}
             render={() => (
               <Controller
                 name="excluded"
                 control={control}
-                shouldUnregister
                 render={({ field }) => (
                   <SelectUserAgent
                     {...field}
@@ -218,5 +223,6 @@ SelectClass.propTypes = {
   defaultValue: PropTypes.shape({
     assignees: PropTypes.arrayOf(PropTypes.string),
     excluded: PropTypes.arrayOf(PropTypes.string),
+    showExcluded: PropTypes.bool,
   }),
 };
