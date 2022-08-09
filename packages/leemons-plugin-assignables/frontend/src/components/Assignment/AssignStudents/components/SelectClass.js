@@ -144,7 +144,7 @@ export default function SelectClass({
                   disabled,
                   label: `${c.label} (${c.assignableStudents.length}/${c.totalStudents} ${labels?.matchingStudents})`,
                   _type: c.type,
-                  checked: !disabled && field.value.includes(c.id),
+                  checked: !disabled && field.value?.includes(c.id),
                 };
               })
               // Sort in the following order:
