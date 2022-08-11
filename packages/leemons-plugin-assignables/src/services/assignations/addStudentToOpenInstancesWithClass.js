@@ -5,28 +5,36 @@ const tables = require('../tables');
 // TODO: Only add to assignable if student is on all the subjects of the assignableInstance
 
 async function filterByOpenInstances(instances) {
-  const alwaysAvailableInstances = await tables.assignableInstances.find(
+  const autoAssignableInstances = await tables.assignableInstances.find(
     {
       id_$in: instances,
-      alwaysAvailable: true,
+      addNewClassStudents: true,
     },
     { column: ['id'] }
   );
 
-  const alwaysAvailableInstancesIds = map(alwaysAvailableInstances, 'id');
+  const autoAssignableInstancesIds = map(autoAssignableInstances, 'id');
 
-  const closedInstances = await tables.dates.find(
+  const InstanceDates = await tables.dates.find(
     {
       type: 'assignableInstance',
-      instance_$in: alwaysAvailableInstancesIds,
-      name: 'closed',
+      instance_$in: autoAssignableInstancesIds,
+      $or: [
+        {
+          name: 'closed',
+        },
+        {
+          name: 'deadline',
+          date_$lte: global.utils.sqlDatetime(new Date().getTime() + 24 * 60 * 60 * 1000),
+        },
+      ],
     },
-    { column: ['instance'] }
+    { column: ['instance', 'name', 'date'] }
   );
 
-  const archivedInstancesIds = map(closedInstances, 'instance');
+  const expiredInstancesIds = map(InstanceDates, 'instance');
 
-  const openInstances = difference(alwaysAvailableInstancesIds, archivedInstancesIds);
+  const openInstances = difference(autoAssignableInstancesIds, expiredInstancesIds);
 
   return openInstances;
 }
