@@ -494,6 +494,10 @@ async function getCalendarsToFrontend(userSession, { transacting } = {}) {
           if (instanceStatus.status === 'evaluated') {
             event.data.column = kanbanColumnsByOrder[5].id;
           }
+          if (status === 'archived') {
+            event.data.column = kanbanColumnsByOrder[6].id;
+            event.data.hideInCalendar = true;
+          }
 
           if (instanceStatus.dates.archived) {
             event.data.column = kanbanColumnsByOrder[6].id;
