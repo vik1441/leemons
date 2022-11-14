@@ -89,4 +89,11 @@ module.exports = [
     authenticated: true,
     allowedPermissions: getPermissions(permissions.setup, ['admin']),
   },
+  {
+    path: '/organization/jsonTheme',
+    method: 'GET',
+    handler: 'organization.getJsonTheme',
+    authenticated: true,
+    allowedPermissions: getPermissions(permissions.setup, ['admin']),
+  },
 ];
