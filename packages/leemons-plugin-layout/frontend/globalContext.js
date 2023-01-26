@@ -171,7 +171,25 @@ export function Provider({ children }) {
 
       const newTheme = {
         ...BUBBLES_THEME,
-        other: isEmpty(jsonTheme) ? BUBBLES_THEME.other : jsonTheme,
+        other: isEmpty(jsonTheme)
+          ? BUBBLES_THEME.other
+          : {
+              ...jsonTheme,
+              button: {
+                ...jsonTheme.button,
+                content: {
+                  ...jsonTheme.button.content,
+                  color: {
+                    ...jsonTheme.button.content.color,
+                    primary: {
+                      'default--reverse': '#000',
+                      hover: '#000',
+                      down: '#000',
+                    },
+                  },
+                },
+              },
+            },
       };
 
       if (!sameColor) {
