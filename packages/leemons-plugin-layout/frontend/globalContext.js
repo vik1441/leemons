@@ -183,6 +183,13 @@ export function Provider({ children }) {
                     ...jsonTheme.button.content.color,
                     primary: {
                       'default--reverse': '#000',
+                      default: '#000',
+                      hover: '#000',
+                      down: '#000',
+                    },
+                    terciary: {
+                      'default--reverse': '#000',
+                      default: '#000',
                       hover: '#000',
                       down: '#000',
                     },

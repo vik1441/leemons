@@ -56,6 +56,7 @@ export default function HeroBgLayout({ children, quote: quoteProp, dobleQuoted }
         containerColor="#333"
         limitSaturation={false}
         quoteColor="#FFF"
+        logoWidth={250}
       />
       <Box className={classes.content}>{children}</Box>
     </Box>
