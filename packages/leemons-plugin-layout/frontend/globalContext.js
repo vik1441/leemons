@@ -175,6 +175,7 @@ export function Provider({ children }) {
           ? BUBBLES_THEME.other
           : {
               ...jsonTheme,
+              /*
               button: {
                 ...jsonTheme.button,
                 content: {
@@ -196,6 +197,7 @@ export function Provider({ children }) {
                   },
                 },
               },
+              */
             },
       };
 
