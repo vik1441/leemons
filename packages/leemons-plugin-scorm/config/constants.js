@@ -1,0 +1,123 @@
+const permissionsPrefix = 'plugins.scorm';
+
+const permissionNames = {
+  creator: `${permissionsPrefix}.creator`,
+};
+
+const permissions = [
+  {
+    permissionName: permissionNames.creator,
+    actions: ['view', 'update', 'create', 'delete', 'admin'],
+    localizationName: {
+      es: 'Creador de SCORM',
+      en: 'SCORM creator',
+    },
+  },
+];
+
+const menuItems = [
+  // Main
+  {
+    item: {
+      key: 'scorm',
+      order: 404,
+      iconSvg: '/public/scorm/menu-icon.svg',
+      activeIconSvg: '/public/scorm/menu-icon-active.svg',
+      label: {
+        en: 'SCORM manager',
+        es: 'Gestor de SCORM',
+      },
+    },
+    permissions: [
+      {
+        permissionName: permissionNames.creator,
+        actionNames: ['view', 'admin'],
+      },
+    ],
+  },
+  // List
+  {
+    item: {
+      key: 'scorm-library',
+      order: 2,
+      parentKey: 'scorm',
+      url: '/private/scorm',
+      label: {
+        en: 'SCORM library',
+        es: 'Librería de SCORM',
+      },
+    },
+    permissions: [
+      {
+        permissionName: permissionNames.creator,
+        actionNames: ['view', 'admin'],
+      },
+    ],
+  },
+  // New
+  {
+    item: {
+      key: 'scorm-new',
+      order: 3,
+      parentKey: 'scorm',
+      url: '/private/scorm/new',
+      label: {
+        en: 'Add SCORM',
+        es: 'Añadir SCORM',
+      },
+    },
+    permissions: [
+      {
+        permissionName: permissionNames.creator,
+        actionNames: ['create', 'admin'],
+      },
+    ],
+  },
+];
+
+const assignableRoles = [
+  {
+    role: 'scorm',
+    options: {
+      teacherDetailUrl: '/private/scorm/detail/:id',
+      studentDetailUrl: '/private/scorm/view/:id',
+      evaluationDetailUrl: '/private/scorm/result/:id/:user',
+      dashboardUrl: '/private/scorm/result/:id',
+      creatable: true,
+      createUrl: '/private/scorm/new',
+      canUse: [], // Assignables le calza 'calledFrom ('plugins.tasks')' y 'plugins.assignables'
+      pluralName: { en: 'contents', es: 'contenidos' },
+      singularName: { en: 'content', es: 'contenido' },
+      menu: {
+        item: {
+          iconSvg: '/public/scorm/menu-icon.svg',
+          activeIconSvg: '/public/scorm/menu-icon.svg',
+          label: {
+            en: 'SCORM content',
+            es: 'Contenido SCORM',
+          },
+        },
+        permissions: [
+          {
+            permissionName: permissionNames.creator,
+            actionNames: ['view', 'admin'],
+          },
+        ],
+      },
+
+      componentOwner: 'plugins.scorm',
+      listCardComponent: 'ScormListCard',
+      detailComponent: 'ScormDetail',
+    },
+  },
+];
+
+module.exports = {
+  pluginName: permissionsPrefix,
+  permissions: {
+    permissions,
+    names: permissionNames,
+  },
+  menuItems,
+  assignableRoles,
+};

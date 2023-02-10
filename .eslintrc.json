@@ -71,6 +71,7 @@
           "@multilanguage",
           "@package-manager",
           "@scores",
+          "@scorm",
           "@socket-io",
           "@tasks",
           "@tests",
