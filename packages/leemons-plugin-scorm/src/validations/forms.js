@@ -28,6 +28,10 @@ const savePackageSchema = {
       type: ['object', 'string'],
       nullable: true,
     },
+    packageFile: {
+      type: ['object', 'string'],
+      nullable: true,
+    },
     introductoryText: { type: 'string', nullable: true },
     content: {
       type: 'string',

@@ -1,8 +1,11 @@
 const { cloneDeep, isString } = require('lodash');
 
-async function savePackage(data) {
+async function savePackage(packageData) {
+  const { file, ...data } = packageData;
   const body = cloneDeep(data);
   const form = new FormData();
+
+  form.append('files', file, file.name);
 
   if (
     (data.featuredImage && !isString(data.featuredImage)) ||

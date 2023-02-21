@@ -63,7 +63,14 @@ module.exports = {
     shared: 'Compartido',
   },
   scormSetup: {
-    titlePlaceholder: 'Escribe el nombre del documento...',
+    title: 'Añadir nuevo paquete SCORM',
+    description:
+      'Para importar un paquete SCORM, debe estar comprimido (.zip) y debe tener un archivo <strong>imsmanifest.xml</strong> que describa el curso y su contenido.',
+    addFile: 'Subir archivo zip',
+    dropFile: 'Click para buscar un archivo o arrastrar aquí desde el ordenador',
+    fileFormatError:
+      "Paquete SCORM no válido. Debe existir el archivo 'imsmanifest.xml' en la raíz del ZIP",
+    pageTitle: 'Configuración General',
     saveDraft: 'Guardar borrador',
     publish: 'Publicar',
     schemaLabel: 'Esquema',

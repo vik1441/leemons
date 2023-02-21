@@ -1,11 +1,25 @@
-const _ = require('lodash');
+/* eslint-disable no-unreachable */
+const mime = require('mime-types');
 const scormService = require('../src/services/package');
 
 async function savePackage(ctx) {
   const data = JSON.parse(ctx.request.body.data);
-  _.forIn(ctx.request.files, (value, key) => {
-    _.set(data, key, value);
-  });
+  const filesData = ctx.request.files;
+
+  if (filesData?.files) {
+    const files = filesData.files.length ? filesData.files : [filesData.files];
+
+    const [file] = files;
+    const contentType = file.type;
+    const extension = mime.extension(contentType);
+
+    if (extension !== 'zip') {
+      throw new global.utils.HttpError(415, 'File must be a ZIP file');
+    }
+
+    data.packageFile = file;
+  }
+
   const scorm = await scormService.savePackage(data, {
     userSession: ctx.state.userSession,
   });

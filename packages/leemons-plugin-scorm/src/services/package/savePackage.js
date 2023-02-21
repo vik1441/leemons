@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
 const _ = require('lodash');
+const pathSys = require('path');
+const fs = require('fs');
+const mime = require('mime-types');
 const { table } = require('../tables');
 const { validateSavePackage } = require('../../validations/forms');
 const createPackage = require('./createPackage');
@@ -39,8 +42,15 @@ async function savePackage(_data, { userSession, transacting: _transacting } = {
       };
 
       let assignable = null;
+      const isNew = !!data.id;
 
-      if (data.id) {
+      if (isNew) {
+        assignable = await assignableService.createAssignable(toSave, {
+          userSession,
+          transacting,
+          published: false,
+        });
+      } else {
         delete toSave.role;
         assignable = await assignableService.updateAssignable(
           { id: data.id, ...toSave },
@@ -49,12 +59,6 @@ async function savePackage(_data, { userSession, transacting: _transacting } = {
             transacting,
           }
         );
-      } else {
-        assignable = await assignableService.createAssignable(toSave, {
-          userSession,
-          transacting,
-          published,
-        });
       }
 
       let featuredImage = null;
@@ -106,7 +110,7 @@ async function savePackage(_data, { userSession, transacting: _transacting } = {
         {
           userSession,
           transacting,
-          published,
+          published: isNew ? false : published,
         }
       );
 
@@ -119,7 +123,67 @@ async function savePackage(_data, { userSession, transacting: _transacting } = {
       );
 
       let scormPackage = null;
-      const packageData = { content: data.content, assignable: assignable.id };
+      const packageData = { assignable: assignable.id };
+
+      if (data.packageFile) {
+        const file = data.packageFile;
+        const contentType = file.type;
+        const extension = mime.extension(contentType);
+
+        if (extension !== 'zip') {
+          throw new Error('File must be a ZIP file');
+        }
+
+        // Folder creation
+        const packageFolder = pathSys.resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'frontend',
+          'public',
+          'packages'
+        );
+
+        if (!fs.existsSync(packageFolder)) {
+          fs.mkdirSync(packageFolder);
+        }
+
+        const scormPackageFolder = pathSys.resolve(packageFolder, assignable.id);
+
+        if (fs.existsSync(scormPackageFolder)) {
+          fs.rmdirSync(scormPackageFolder, { recursive: true, force: true });
+        }
+
+        await global.utils.decompress(file.path, scormPackageFolder);
+
+        const manifestPath = pathSys.resolve(scormPackageFolder, 'imsmanifest.xml');
+
+        if (!fs.existsSync(manifestPath)) {
+          throw new Error('Manifest XML File missing');
+        }
+
+        const xmlToConvert = fs.readFileSync(manifestPath, {
+          encoding: 'UTF8',
+        });
+
+        const { manifest } = global.utils.xml2json.toJson(xmlToConvert, {
+          object: true,
+        });
+
+        let resource = null;
+
+        if (_.isArray(manifest.resources)) {
+          resource = manifest.resources.find(
+            (item) => item.type === 'webcontent' && (item.href ?? '').indexOf('.html') > 0
+          );
+        } else {
+          resource = manifest.resources.resource;
+        }
+
+        packageData.launchUrl = resource?.href ?? currentPackage?.launchUrl ?? 'index.html';
+      }
+
       if (currentPackage?.id) {
         scormPackage = await updatePackage(currentPackage.id, packageData, { transacting });
       } else {

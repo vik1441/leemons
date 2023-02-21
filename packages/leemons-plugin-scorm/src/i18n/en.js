@@ -61,7 +61,14 @@ module.exports = {
     shared: 'Shared',
   },
   scormSetup: {
-    titlePlaceholder: 'Write the name of the document',
+    title: 'Add new SCORM package',
+    description:
+      'To import a SCORM package, it needs to be zipped up (.zip) and needs to have a <strong>imsmanifest.xml</strong> file which describes the course and its content.',
+    fileFormatError:
+      "Invalid SCORM package. There must be a file 'imsmanifest.xml' in the root of the ZIP file",
+    addFile: 'Upload zip file',
+    dropFile: 'Click to browse files or drop a computer file here',
+    pageTitle: 'General cofig',
     saveDraft: 'Save as draft',
     publish: 'Publish',
     schemaLabel: 'Schema',

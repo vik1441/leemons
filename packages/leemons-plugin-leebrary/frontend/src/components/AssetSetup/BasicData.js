@@ -5,6 +5,7 @@ import { ContextContainer } from '@bubbles-ui/components';
 import { TagsAutocomplete, unflatten, useRequestErrorMessage } from '@common';
 import { addErrorAlert, addSuccessAlert } from '@layout/alert';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
+// eslint-disable-next-line import/no-cycle
 import { LibraryForm } from '../LibraryForm/LibraryForm';
 import prefixPN from '../../helpers/prefixPN';
 import { prepareAsset } from '../../helpers/prepareAsset';
@@ -111,6 +112,7 @@ BasicData.propTypes = {
   asset: PropTypes.instanceOf(Object),
   onSave: PropTypes.func,
   onNext: PropTypes.func,
+  advancedConfig: PropTypes.any,
 };
 
 export { BasicData };

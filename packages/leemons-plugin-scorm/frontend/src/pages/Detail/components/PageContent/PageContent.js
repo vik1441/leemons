@@ -24,6 +24,8 @@ export const PageContentStyles = createStyles((theme) => {
       backgroundColor: globalTheme.background.color.surface.default,
       flex: 1,
       borderRadius: 4,
+      maxWidth: 1280,
+      padding: '32px',
     },
   };
 });

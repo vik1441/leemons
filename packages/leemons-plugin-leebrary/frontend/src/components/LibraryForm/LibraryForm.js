@@ -31,6 +31,7 @@ import {
   LIBRARY_FORM_TYPES,
 } from './LibraryForm.constants';
 import { getUrlMetadataRequest } from '../../request';
+// eslint-disable-next-line import/no-cycle
 import { AssetListDrawer } from '../AssetListDrawer';
 import { getFileUrl, prepareAsset } from '../../helpers/prepareAsset';
 
@@ -189,7 +190,7 @@ const LibraryForm = ({
         }
       }
       const { programs } = await getUserProgramsRequest();
-      store.programs = _.map(programs, (program) => ({ label: program.name, value: program.id }));
+      store.programs = _.map(programs, (item) => ({ label: item.name, value: item.id }));
     }
     render();
   }

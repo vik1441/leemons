@@ -1,14 +1,27 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable camelcase */
 export const SECONDS_PER_SECOND = 1.0;
 export const SECONDS_PER_MINUTE = 60;
 export const SECONDS_PER_HOUR = 60 * SECONDS_PER_MINUTE;
 export const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
 
 const designations = [
-  ["D", SECONDS_PER_DAY],
-  ["H", SECONDS_PER_HOUR],
-  ["M", SECONDS_PER_MINUTE],
-  ["S", SECONDS_PER_SECOND],
+  ['D', SECONDS_PER_DAY],
+  ['H', SECONDS_PER_HOUR],
+  ['M', SECONDS_PER_MINUTE],
+  ['S', SECONDS_PER_SECOND],
 ];
+
+/**
+ * Counts the number of decimal places
+ * @param {number} num
+ * @return {number}
+ */
+export function countDecimals(num) {
+  if (Math.floor(num) === num || String(num).indexOf('.') < 0) return 0;
+  const parts = num.toString().split('.')[1];
+  return parts.length || 0;
+}
 
 /**
  * Converts a Number to a String of HH:MM:SS
@@ -19,7 +32,7 @@ const designations = [
 export function getSecondsAsHHMMSS(totalSeconds) {
   // SCORM spec does not deal with negative durations, give zero back
   if (!totalSeconds || totalSeconds <= 0) {
-    return "00:00:00";
+    return '00:00:00';
   }
 
   const hours = Math.floor(totalSeconds / SECONDS_PER_HOUR);
@@ -29,19 +42,17 @@ export function getSecondsAsHHMMSS(totalSeconds) {
   // make sure we add any possible decimal value
   const seconds = dateObj.getSeconds();
   const ms = totalSeconds % 1.0;
-  let msStr = "";
+  let msStr = '';
   if (countDecimals(ms) > 0) {
     if (countDecimals(ms) > 2) {
       msStr = ms.toFixed(2);
     } else {
       msStr = String(ms);
     }
-    msStr = "." + msStr.split(".")[1];
+    msStr = `.${msStr.split('.')[1]}`;
   }
 
-  return (
-    (hours + ":" + minutes + ":" + seconds).replace(/\b\d\b/g, "0$&") + msStr
-  );
+  return `${hours}:${minutes}:${seconds}`.replace(/\b\d\b/g, '0$&') + msStr;
 }
 
 /**
@@ -53,34 +64,31 @@ export function getSecondsAsHHMMSS(totalSeconds) {
 export function getSecondsAsISODuration(seconds) {
   // SCORM spec does not deal with negative durations, give zero back
   if (!seconds || seconds <= 0) {
-    return "PT0S";
+    return 'PT0S';
   }
 
-  let duration = "P";
+  let duration = 'P';
   let remainder = seconds;
 
   designations.forEach(([sign, current_seconds]) => {
     let value = Math.floor(remainder / current_seconds);
 
-    remainder = remainder % current_seconds;
+    remainder %= current_seconds;
     if (countDecimals(remainder) > 2) {
       remainder = Number(Number(remainder).toFixed(2));
     }
     // If we have anything left in the remainder, and we're currently adding
     // seconds to the duration, go ahead and add the decimal to the seconds
-    if (sign === "S" && remainder > 0) {
+    if (sign === 'S' && remainder > 0) {
       value += remainder;
     }
 
     if (value) {
       if (
-        (duration.indexOf("D") > 0 ||
-          sign === "H" ||
-          sign === "M" ||
-          sign === "S") &&
-        duration.indexOf("T") === -1
+        (duration.indexOf('D') > 0 || sign === 'H' || sign === 'M' || sign === 'S') &&
+        duration.indexOf('T') === -1
       ) {
-        duration += "T";
+        duration += 'T';
       }
       duration += `${value}${sign}`;
     }
@@ -97,14 +105,10 @@ export function getSecondsAsISODuration(seconds) {
  * @return {number}
  */
 export function getTimeAsSeconds(timeString, timeRegex) {
-  if (
-    !timeString ||
-    typeof timeString !== "string" ||
-    !timeString.match(timeRegex)
-  ) {
+  if (!timeString || typeof timeString !== 'string' || !timeString.match(timeRegex)) {
     return 0;
   }
-  const parts = timeString.split(":");
+  const parts = timeString.split(':');
   const hours = Number(parts[0]);
   const minutes = Number(parts[1]);
   const seconds = Number(parts[2]);
@@ -123,7 +127,7 @@ export function getDurationAsSeconds(duration, durationRegex) {
     return 0;
   }
 
-  const [, years, months, , days, hours, minutes, seconds] =
+  const [, years, , , days, hours, minutes, seconds] =
     new RegExp(durationRegex).exec(duration) || [];
 
   let result = 0.0;
@@ -147,8 +151,7 @@ export function getDurationAsSeconds(duration, durationRegex) {
  */
 export function addTwoDurations(first, second, durationRegex) {
   return getSecondsAsISODuration(
-    getDurationAsSeconds(first, durationRegex) +
-      getDurationAsSeconds(second, durationRegex)
+    getDurationAsSeconds(first, durationRegex) + getDurationAsSeconds(second, durationRegex)
   );
 }
 
@@ -184,7 +187,7 @@ export function flatten(data) {
       result[prop] = cur;
     } else if (Array.isArray(cur)) {
       for (let i = 0, l = cur.length; i < l; i++) {
-        recurse(cur[i], prop + "[" + i + "]");
+        recurse(cur[i], `${prop}[${i}]`);
         if (l === 0) result[prop] = [];
       }
     } else {
@@ -192,14 +195,14 @@ export function flatten(data) {
       for (const p in cur) {
         if ({}.hasOwnProperty.call(cur, p)) {
           isEmpty = false;
-          recurse(cur[p], prop ? prop + "." + p : p);
+          recurse(cur[p], prop ? `${prop}.${p}` : p);
         }
       }
       if (isEmpty && prop) result[prop] = {};
     }
   }
 
-  recurse(data, "");
+  recurse(data, '');
   return result;
 }
 
@@ -215,7 +218,7 @@ export function unflatten(data) {
   for (const p in data) {
     if ({}.hasOwnProperty.call(data, p)) {
       let cur = result;
-      let prop = "";
+      let prop = '';
       let m = regex.exec(p);
       while (m) {
         cur = cur[prop] || (cur[prop] = m[2] ? [] : {});
@@ -225,16 +228,41 @@ export function unflatten(data) {
       cur[prop] = data[p];
     }
   }
-  return result[""] || result;
+  return result[''] || result;
 }
 
-/**
- * Counts the number of decimal places
- * @param {number} num
- * @return {number}
- */
-export function countDecimals(num) {
-  if (Math.floor(num) === num || String(num).indexOf(".") < 0) return 0;
-  const parts = num.toString().split(".")[1];
-  return parts.length || 0;
+/*	This work is licensed under Creative Commons GNU LGPL License.
+
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+   Version: 0.9
+	Author:  Stefan Goessner/2006
+	Web:     http://goessner.net/
+*/
+export function xml2json(xml) {
+  let obj = {};
+  try {
+    if (xml.children.length > 0) {
+      for (let i = 0; i < xml.children.length; i++) {
+        const item = xml.children.item(i);
+        const { nodeName } = item;
+
+        if (typeof obj[nodeName] === 'undefined') {
+          obj[nodeName] = xml2json(item);
+        } else {
+          if (typeof obj[nodeName].push === 'undefined') {
+            const old = obj[nodeName];
+
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          obj[nodeName].push(xml2json(item));
+        }
+      }
+    } else {
+      obj = xml.textContent;
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+  return obj;
 }

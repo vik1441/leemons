@@ -5,6 +5,10 @@ module.exports = {
     assignable: {
       type: 'string',
     },
+    launchUrl: {
+      type: 'string',
+      nullable: false,
+    },
   },
   primaryKey: {
     type: 'uuid',
