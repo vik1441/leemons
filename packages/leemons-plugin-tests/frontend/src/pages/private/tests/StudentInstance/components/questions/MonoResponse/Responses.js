@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, HtmlText, ImageLoader, Stack, Text } from '@bubbles-ui/components';
-import { LeebraryImage } from '@leebrary/components';
 import { numberToEncodedLetter } from '@common';
+import { LeebraryImage } from '@leebrary/components';
 import { find } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { getQuestionClues } from '../../../helpers/getQuestionClues';
 import { htmlToText } from '../../../helpers/htmlToText';
 
@@ -99,7 +99,7 @@ export default function Responses(props) {
       >
         {iconToShow ? (
           <Box className={styles.questionViewModeIcon}>
-            <ImageLoader src={iconToShow} />
+            <ImageLoader src={window.getUrl(iconToShow)} />
           </Box>
         ) : null}
 
@@ -107,11 +107,11 @@ export default function Responses(props) {
           <>
             <Box className={classDisableBg} />
             <Box className={classDisableIcon}>
-              <ImageLoader src={`/public/tests/clue-on.svg`} />
+              <ImageLoader src={window.getUrl(`/public/tests/clue-on.svg`)} />
             </Box>
             {question.withImages ? (
               <Box className={styles.disableResponseImage}>
-                <ImageLoader src={`/public/tests/hint-image.svg`} />
+                <ImageLoader src={window.getUrl(`/public/tests/hint-image.svg`)} />
               </Box>
             ) : null}
           </>
@@ -126,7 +126,10 @@ export default function Responses(props) {
                   : styles.questionResponseImageContent
               }
             >
-              <LeebraryImage className={styles.questionResponseImage} src={response.image} />
+              <LeebraryImage
+                className={styles.questionResponseImage}
+                src={window.getUrl(response.image)}
+              />
             </Box>
             <Box
               className={

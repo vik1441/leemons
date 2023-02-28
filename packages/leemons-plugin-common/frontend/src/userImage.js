@@ -1,6 +1,6 @@
-import React from 'react';
-import { useSession } from '@users/session';
 import { ImageLoader } from '@bubbles-ui/components';
+import { useSession } from '@users/session';
+import React from 'react';
 
 export function UserImage({ user: _user, size = 40, className }) {
   const user = _user || useSession();
@@ -11,7 +11,7 @@ export function UserImage({ user: _user, size = 40, className }) {
         <ImageLoader
           width={size}
           height={size}
-          src={user.image}
+          src={window.getUrl(user.image)}
           className={`rounded-full ${className}`}
         />
       );

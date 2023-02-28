@@ -1,12 +1,12 @@
-import React from 'react';
-import _ from 'lodash';
-import { LocaleDate, useCache } from '@common';
-import { Controller, useFormContext, useForm, useWatch } from 'react-hook-form';
-import { Box, createStyles, ImageLoader, Select, Switch, Text } from '@bubbles-ui/components';
-import ConditionalInput from '@tasks/components/Inputs/ConditionalInput';
 import useSearchAssignableInstances from '@assignables/hooks/assignableInstance/useSearchAssignableInstancesQuery';
 import useClassData from '@assignables/hooks/useClassDataQuery';
 import useInstances from '@assignables/requests/hooks/queries/useInstances';
+import { Box, createStyles, ImageLoader, Select, Switch, Text } from '@bubbles-ui/components';
+import { LocaleDate, useCache } from '@common';
+import ConditionalInput from '@tasks/components/Inputs/ConditionalInput';
+import _ from 'lodash';
+import React from 'react';
+import { Controller, useForm, useFormContext, useWatch } from 'react-hook-form';
 
 function useActivities() {
   const { data: assignableInstancesIds } = useSearchAssignableInstances(
@@ -141,7 +141,7 @@ function ActivityItem({ instance, class: klass, ...props }) {
           forceImage
           width={16}
           height={16}
-          src={klass?.icon}
+          src={window.getUrl(klass?.icon)}
         />
       </Box>
       <Box className={classes.textContainer}>

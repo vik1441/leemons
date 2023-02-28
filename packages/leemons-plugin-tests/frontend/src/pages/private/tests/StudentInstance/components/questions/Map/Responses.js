@@ -1,9 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, ImageLoader, Select, Stack, Text } from '@bubbles-ui/components';
-import { cloneDeep, find, forEach, isArray, isNil, isNumber, isObject, shuffle } from 'lodash';
 import { numberToEncodedLetter } from '@common';
+import { cloneDeep, find, forEach, isArray, isNil, isNumber, isObject, shuffle } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { getQuestionClues } from '../../../helpers/getQuestionClues';
 
 export default function Responses(props) {
@@ -103,14 +103,14 @@ export default function Responses(props) {
             <Box className={cx(styles.mapViewContent, styles.mapViewContentClue)}>
               {question.properties.markers.list[index].response}
               <Box className={styles.mapViewIcon}>
-                <ImageLoader src={`/public/tests/clue-on.svg`} />
+                <ImageLoader src={window.getUrl(`/public/tests/clue-on.svg`)} />
               </Box>
             </Box>
           ) : isDone ? (
             <Box className={cx(styles.mapViewContent, styles.mapViewContentDone)}>
               {question.properties.markers.list[currentValue].response}
               <Box className={styles.mapViewIcon}>
-                <ImageLoader src={`/public/tests/question-done.svg`} />
+                <ImageLoader src={window.getUrl(`/public/tests/question-done.svg`)} />
               </Box>
             </Box>
           ) : (
@@ -120,7 +120,7 @@ export default function Responses(props) {
                   ? t('selectResponse')
                   : question.properties.markers.list[currentValue].response}
                 <Box className={styles.mapViewIcon}>
-                  <ImageLoader src={`/public/tests/question-wrong.svg`} />
+                  <ImageLoader src={window.getUrl(`/public/tests/question-wrong.svg`)} />
                 </Box>
               </Box>
               <Box className={cx(styles.mapViewContent, styles.mapViewContentDone)}>
@@ -148,7 +148,7 @@ export default function Responses(props) {
               <Box
                 className={cx(styles.disableResponseIcon, styles.disableResponseIconWithOutImage)}
               >
-                <ImageLoader src={`/public/tests/clue-on.svg`} />
+                <ImageLoader src={window.getUrl(`/public/tests/clue-on.svg`)} />
               </Box>
             </>
           ) : null}
@@ -208,11 +208,11 @@ export default function Responses(props) {
           <>
             <Box className={classDisableBg} />
             <Box className={classDisableIcon}>
-              <ImageLoader src={`/public/tests/clue-on.svg`} />
+              <ImageLoader src={window.getUrl(`/public/tests/clue-on.svg`)} />
             </Box>
             {question.withImages ? (
               <Box className={styles.disableResponseImage}>
-                <ImageLoader src={`/public/tests/hint-image.svg`} />
+                <ImageLoader src={window.getUrl(`/public/tests/hint-image.svg`)} />
               </Box>
             ) : null}
           </>
@@ -221,7 +221,7 @@ export default function Responses(props) {
         {question.withImages ? (
           <>
             <Box className={styles.questionResponseImageContent}>
-              <LeebraryImage className={styles.questionResponseImage} src={response.image} />
+              <LeebraryImage className={styles.questionResponseImage} src={window.getUrl(response.image)} />
             </Box>
             <Box className={styles.questionResponseImageTextContent}>
               {response.image?.description ? (

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import prefixPN from '@admin/helpers/prefixPN';
+import { updateSettingsRequest } from '@admin/request/settings';
 import {
   Alert,
   Box,
@@ -11,11 +11,11 @@ import {
   Title,
 } from '@bubbles-ui/components';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@admin/helpers/prefixPN';
-import { logoutSession } from '@users/session';
 import constants from '@users/constants';
+import { logoutSession } from '@users/session';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { updateSettingsRequest } from '@admin/request/settings';
 
 const Styles = createStyles((theme) => ({
   container: {
@@ -38,7 +38,7 @@ const Finish = () => {
     <Box>
       <ContextContainer title={t('title')}>
         <Box className={styles.container}>
-          <ImageLoader src={`/public/admin/finish.png`} height={393} width={366} />
+          <ImageLoader src={window.getUrl(`/public/admin/finish.png`)} height={393} width={366} />
           <Box sx={(theme) => ({ paddingLeft: theme.spacing[4] })}>
             <ContextContainer>
               <Title order={2}>{t('readyToGo')}</Title>

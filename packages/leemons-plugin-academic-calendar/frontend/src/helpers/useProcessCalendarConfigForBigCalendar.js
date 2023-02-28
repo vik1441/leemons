@@ -1,14 +1,14 @@
-import _ from 'lodash';
-import React from 'react';
+import ColorBall from '@academic-calendar/components/ColorBall';
 import { Box, ImageLoader } from '@bubbles-ui/components';
 import useTranslateTitle from '@calendar/helpers/useTranslateTitle';
-import ColorBall from '@academic-calendar/components/ColorBall';
+import _ from 'lodash';
+import React from 'react';
 
 function Icon({ src }) {
   return (
     <Box sx={() => ({ position: 'relative', display: 'inline-block', verticalAlign: '' })}>
       <Box sx={() => ({ position: 'relative', width: '24px', height: '24px' })}>
-        <ImageLoader height="24px" src={src} />
+        <ImageLoader height="24px" src={window.getUrl(src)} />
       </Box>
     </Box>
   );

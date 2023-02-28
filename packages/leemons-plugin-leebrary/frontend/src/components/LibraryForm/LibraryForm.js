@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import _, { isEmpty, isFunction, isNil, isString, toLower } from 'lodash';
-import { Controller, useForm } from 'react-hook-form';
+import { useIsTeacher } from '@academic-portfolio/hooks';
+import { getUserProgramsRequest } from '@academic-portfolio/request';
 import {
   ActionButton,
   Box,
@@ -20,19 +19,20 @@ import {
   useViewportSize,
 } from '@bubbles-ui/components';
 import { CloudUploadIcon, CommonFileSearchIcon } from '@bubbles-ui/icons/outline';
-import { addErrorAlert } from '@layout/alert';
 import { TagsAutocomplete, useRequestErrorMessage, useStore } from '@common';
-import { getUserProgramsRequest } from '@academic-portfolio/request';
+import { addErrorAlert } from '@layout/alert';
 import SelectSubjects from '@leebrary/components/SelectSubjects';
-import { useIsTeacher } from '@academic-portfolio/hooks';
+import _, { isEmpty, isFunction, isNil, isString, toLower } from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { getFileUrl, prepareAsset } from '../../helpers/prepareAsset';
+import { window } from '../../request';
+import { AssetListDrawer } from '../AssetListDrawer';
 import {
   LIBRARY_FORM_DEFAULT_PROPS,
   LIBRARY_FORM_PROP_TYPES,
   LIBRARY_FORM_TYPES,
 } from './LibraryForm.constants';
-import { getUrlMetadataRequest } from '../../request';
-import { AssetListDrawer } from '../AssetListDrawer';
-import { getFileUrl, prepareAsset } from '../../helpers/prepareAsset';
 
 // -----------------------------------------------------------------------------
 // HELPERS
@@ -304,7 +304,14 @@ const LibraryForm = ({
   const getAssetIcon = useCallback(() => {
     if (type === LIBRARY_FORM_TYPES.BOOKMARKS && !isEmpty(urlMetadata.logo)) {
       return {
-        icon: <ImageLoader src={urlMetadata.logo} width={26} height={26} radius={'4px'} />,
+        icon: (
+          <ImageLoader
+            src={window.getUrl(urlMetadata.logo)}
+            width={26}
+            height={26}
+            radius={'4px'}
+          />
+        ),
       };
     }
 

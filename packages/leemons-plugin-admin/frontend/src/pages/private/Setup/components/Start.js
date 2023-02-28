@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import prefixPN from '@admin/helpers/prefixPN';
 import {
   Box,
   Button,
@@ -9,7 +8,8 @@ import {
   Stack,
 } from '@bubbles-ui/components';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@admin/helpers/prefixPN';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const Styles = createStyles((theme) => ({
   cardsContainer: {
@@ -73,7 +73,11 @@ function Card({ styles, headerColor, title, description, image, imageWidth, imag
     <Box className={styles.card}>
       <Box className={styles.cardHeader} style={{ backgroundColor: headerColor }}>
         <Box className={styles.cardNumber}>{number}</Box>
-        <ImageLoader src={`/public/admin/${image}`} height={imageHeight} width={imageWidth} />
+        <ImageLoader
+          src={window.getUrl(`/public/admin/${image}`)}
+          height={imageHeight}
+          width={imageWidth}
+        />
       </Box>
       <Box className={styles.cardTitle} style={{ backgroundColor: headerColor }}>
         <Box className={styles.cardTitleContainer}>{title}</Box>

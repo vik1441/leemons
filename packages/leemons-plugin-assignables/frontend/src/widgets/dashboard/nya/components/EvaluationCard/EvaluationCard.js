@@ -1,12 +1,12 @@
-import React from 'react';
-import { createStyles, Box, Text, TextClamp, ImageLoader } from '@bubbles-ui/components';
-import prefixPN from '@assignables/helpers/prefixPN';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import { unflatten } from '@common';
-import { get } from 'lodash';
 import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
-import ScoreFeedback from './components/ScoreFeedback';
+import prefixPN from '@assignables/helpers/prefixPN';
+import { Box, createStyles, ImageLoader, Text, TextClamp } from '@bubbles-ui/components';
+import { unflatten } from '@common';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import { get } from 'lodash';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import ScoreFeedback from './components/ScoreFeedback';
 
 function useRoleLocalization(role) {
   const localizationKey = prefixPN(`roles.${role}.singular`);
@@ -82,7 +82,9 @@ function SubjectItem({ subject }) {
           <ImageLoader
             width={16}
             height={16}
-            src={typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })}
+            src={window.getUrl(
+              typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })
+            )}
           />
         </Box>
       </Box>
@@ -99,7 +101,7 @@ function RoleName({ role }) {
   return (
     <Box className={classes.root}>
       <Box className={classes.icon}>
-        <ImageLoader src={role.icon} height={16} width={16} />
+        <ImageLoader src={window.getUrl(role.icon)} height={16} width={16} />
       </Box>
       <Text className={classes.text} transform="capitalize">
         {roleName}
@@ -172,7 +174,12 @@ export default function EvaluationCard({ assignation, showSubject, classData }) 
   const { classes } = useEvaluationCardStyles();
 
   return (
-    <Link to={roleDetails.evaluationDetailUrl?.replace(':id', instance.id)?.replace(':user', assignation.user)} style={{ textDecoration: 'none' }}>
+    <Link
+      to={roleDetails.evaluationDetailUrl
+        ?.replace(':id', instance.id)
+        ?.replace(':user', assignation.user)}
+      style={{ textDecoration: 'none' }}
+    >
       <Box className={classes.root}>
         <Box className={classes.leftContainer}>
           <Box className={classes.topLeftSection}>
@@ -198,6 +205,5 @@ export default function EvaluationCard({ assignation, showSubject, classData }) 
         </Box>
       </Box>
     </Link>
-
   );
 }

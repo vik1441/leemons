@@ -3,13 +3,13 @@ import React from 'react';
 import { Box, createStyles, ImageLoader, Text, TextClamp } from '@bubbles-ui/components';
 import { LocaleDate, unflatten } from '@common';
 
+import { useIsTeacher } from '@academic-portfolio/hooks';
+import getClassData from '@assignables/helpers/getClassData';
+import prefixPN from '@assignables/helpers/prefixPN';
+import prepareAsset from '@leebrary/helpers/prepareAsset';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import dayjs from 'dayjs';
 import { get, mapValues, pick } from 'lodash';
-import getClassData from '@assignables/helpers/getClassData';
-import prepareAsset from '@leebrary/helpers/prepareAsset';
-import { useIsTeacher } from '@academic-portfolio/hooks';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@assignables/helpers/prefixPN';
 
 const useActivityItemStyles = createStyles((theme, { activityColor }) => ({
   root: {
@@ -61,13 +61,13 @@ function ActivityItem({ instance }) {
     <Box className={classes.root}>
       <Box className={classes.cover}>
         {preparedAsset?.cover ? (
-          <ImageLoader src={preparedAsset?.cover} width={40} height={40} />
+          <ImageLoader src={window.getUrl(preparedAsset?.cover)} width={40} height={40} />
         ) : (
           <Box className={classes.coverFallback} />
         )}
         <Box className={classes.activityType}>
           <Box className={classes.activityTypeIcon}>
-            <ImageLoader src={activityTypeIcon} width={12} height={12} />
+            <ImageLoader src={window.getUrl(activityTypeIcon)} width={12} height={12} />
           </Box>
         </Box>
       </Box>
@@ -129,7 +129,9 @@ function SubjectItem({ classData, studentsLength, fullLength }) {
       <Box className={classes.row}>
         <Box className={classes.icon}>
           <Box className={classes.svg}>
-            {!!classData?.icon && <ImageLoader src={classData?.icon} width={12} height={12} />}
+            {!!classData?.icon && (
+              <ImageLoader src={window.getUrl(classData?.icon)} width={12} height={12} />
+            )}
           </Box>
         </Box>
         <TextClamp lines={1} strong>

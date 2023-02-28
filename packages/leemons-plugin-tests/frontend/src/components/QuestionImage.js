@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, colord, COLORS, createStyles } from '@bubbles-ui/components';
 import { numberToEncodedLetter } from '@common';
 import { LeebraryImage } from '@leebrary/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export const QuestionImageStyles = createStyles((theme, { isLight }) => ({
   root: {},
@@ -31,7 +31,7 @@ export function QuestionImage({ src, markers, values, clue }) {
   });
   return (
     <Box className={classes.imageContainer}>
-      <LeebraryImage className={classes.image} src={src} />
+      <LeebraryImage className={classes.image} src={window.getUrl(src)} />
       {markers && markers.list
         ? markers.list.map((marker, index) => {
             let { backgroundColor } = markers;

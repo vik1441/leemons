@@ -1,8 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import { cloneDeep, forEach, map, times } from 'lodash';
-import PropTypes from 'prop-types';
-import { useStore } from '@common';
 import {
   ActivityAccordion,
   ActivityAccordionPanel,
@@ -12,7 +8,6 @@ import {
   ContextContainer,
   createStyles,
   ImageLoader,
-  LoadingOverlay,
   PageContainer,
   Paper,
   Stack,
@@ -20,12 +15,16 @@ import {
   Text,
   Title,
 } from '@bubbles-ui/components';
-import { LibraryCardBasic } from '@bubbles-ui/leemons';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@dashboard/helpers/prefixPN';
-import { AnalyticsGraphBarIcon } from '@bubbles-ui/icons/solid';
 import { SchoolTeacherMaleIcon, SingleActionsGraduateIcon } from '@bubbles-ui/icons/outline';
+import { AnalyticsGraphBarIcon } from '@bubbles-ui/icons/solid';
+import { LibraryCardBasic } from '@bubbles-ui/leemons';
+import { useStore } from '@common';
+import prefixPN from '@dashboard/helpers/prefixPN';
 import { getLocalizations } from '@multilanguage/useTranslate';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import { cloneDeep, forEach, map, times } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { getAdminDashboardRealtimeRequest, getAdminDashboardRequest } from '../../../../request';
 import SkeletonDashboardLoader from './SkeletonDashboardLoader';
 
@@ -80,7 +79,7 @@ function Icon({ size = '23px', className, src }) {
         height: size,
       }}
     >
-      <ImageLoader className={className} src={src} />
+      <ImageLoader className={className} src={window.getUrl(src)} />
     </Box>
   );
 }
@@ -352,7 +351,7 @@ export default function AdminDashboard({ session }) {
                     icon={
                       <Icon
                         className="fill-current"
-                        src={'/public/assets/svgs/user-male-female.svg'}
+                        src={window.getUrl('/public/assets/svgs/user-male-female.svg')}
                       />
                     }
                     rightSection={
@@ -382,7 +381,12 @@ export default function AdminDashboard({ session }) {
                   <ActivityAccordionPanel
                     key={0}
                     label={t('createdTasks')}
-                    icon={<Icon className="stroke-current" src={'/public/assets/svgs/tasks.svg'} />}
+                    icon={
+                      <Icon
+                        className="stroke-current"
+                        src={window.getUrl('/public/assets/svgs/tasks.svg')}
+                      />
+                    }
                     rightSection={
                       <Box>
                         <Badge
@@ -421,7 +425,7 @@ export default function AdminDashboard({ session }) {
           <>
             <Stack>
               <Box sx={(theme) => ({ paddingRight: theme.spacing[4] })}>
-                <Icon size="18px" src={'/public/assets/svgs/cpu.svg'} />
+                <Icon size="18px" src={window.getUrl('/public/assets/svgs/cpu.svg')} />
               </Box>
               <Box sx={() => ({ width: '100%' })}>
                 <Box>
@@ -458,7 +462,7 @@ export default function AdminDashboard({ session }) {
             {/* --- RAM --- */}
             <Stack sx={(theme) => ({ marginTop: theme.spacing[6] })}>
               <Box sx={(theme) => ({ paddingRight: theme.spacing[4] })}>
-                <Icon size="18px" src={'/public/assets/svgs/ram.svg'} />
+                <Icon size="18px" src={window.getUrl('/public/assets/svgs/ram.svg')} />
               </Box>
               <Box sx={() => ({ width: '100%' })}>
                 <Box>
@@ -485,7 +489,7 @@ export default function AdminDashboard({ session }) {
               ? store.pc.diskLayout.map((disk, i) => (
                   <Stack key={i} sx={(theme) => ({ marginTop: theme.spacing[6] })}>
                     <Box sx={(theme) => ({ paddingRight: theme.spacing[4] })}>
-                      <Icon size="18px" src={'/public/assets/svgs/disk.svg'} />
+                      <Icon size="18px" src={window.getUrl('/public/assets/svgs/disk.svg')} />
                     </Box>
                     <Box sx={() => ({ width: '100%' })}>
                       <Box>
@@ -512,7 +516,7 @@ export default function AdminDashboard({ session }) {
             {/* --- INTERNET --- */}
             <Stack sx={(theme) => ({ marginTop: theme.spacing[6] })}>
               <Box sx={(theme) => ({ paddingRight: theme.spacing[4] })}>
-                <Icon size="18px" src={'/public/assets/svgs/internet-speed.svg'} />
+                <Icon size="18px" src={window.getUrl('/public/assets/svgs/internet-speed.svg')} />
               </Box>
               <Box sx={() => ({ width: '100%' })}>
                 <Box>

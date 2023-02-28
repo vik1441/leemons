@@ -76,7 +76,7 @@ function ClassItem({ class: klass, ...props }) {
             forceImage
             width={16}
             height={16}
-            src={getClassIcon(klass)}
+            src={window.getUrl(getClassIcon(klass))}
           />
         </Box>
         <Text>{`${klass.subject.name}${

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, ImageLoader, Button } from '@bubbles-ui/components';
+import { addClickRequest } from '@board-messages/request';
+import { Box, Button, ImageLoader } from '@bubbles-ui/components';
 import prepareAsset from '@leebrary/helpers/prepareAsset';
 import useCommonTranslate from '@multilanguage/helpers/useCommonTranslate';
-import { addClickRequest } from '@board-messages/request';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { ModalMessageStyles } from './ModalMessage.styles';
 
 const ModalMessage = ({ message, onClose }) => {
@@ -22,7 +22,7 @@ const ModalMessage = ({ message, onClose }) => {
     <Box className={classes.root}>
       {message.asset?.cover && (
         <Box>
-          <ImageLoader src={preparedAsset?.cover} width={'100%'} height={200} />
+          <ImageLoader src={window.getUrl(preparedAsset?.cover)} width={'100%'} height={200} />
         </Box>
       )}
       <Box className={classes.title}>{message.internalName}</Box>

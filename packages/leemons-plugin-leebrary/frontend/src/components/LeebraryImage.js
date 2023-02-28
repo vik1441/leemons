@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { isString } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { getAssetUrl, getFileUrl, prepareAsset } from '../helpers/prepareAsset';
 
 const LeebraryImage = ({ value, src, ...props }) => {
@@ -23,7 +23,7 @@ const LeebraryImage = ({ value, src, ...props }) => {
     return null;
   }, [value, src]);
 
-  return <img {...props} src={_src} />;
+  return <img {...props} src={window.getUrl(_src)} />;
 };
 
 LeebraryImage.defaultProps = {};

@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
-import dayjs from 'dayjs';
+import { useIsTeacher } from '@academic-portfolio/hooks';
 import { Box, ImageLoader } from '@bubbles-ui/components';
 import { LibraryCard } from '@bubbles-ui/leemons';
-import prepareAsset from '@leebrary/helpers/prepareAsset';
 import { LocaleRelativeTime, unflatten, useApi, useLocale } from '@common';
-import _ from 'lodash';
+import prepareAsset from '@leebrary/helpers/prepareAsset';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import dayjs from 'dayjs';
+import _ from 'lodash';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useIsTeacher } from '@academic-portfolio/hooks';
 import getClassData from '../../helpers/getClassData';
 import prefixPN from '../../helpers/prefixPN';
 import getStatus from '../Details/components/UsersList/helpers/getStatus';
@@ -444,7 +444,7 @@ export default function NYACard({ instance, showSubject, labels, classData }) {
                 }}
                 width={12}
                 height={12}
-                src={preparedInstance?.assignable?.roleDetails?.icon}
+                src={window.getUrl(preparedInstance?.assignable?.roleDetails?.icon)}
               />
             </Box>
           }

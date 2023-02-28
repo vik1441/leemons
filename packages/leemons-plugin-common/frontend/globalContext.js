@@ -1,6 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import { TextEditorContext, TextEditorProvider } from '@common/context';
+import PropTypes from 'prop-types';
+import React, { useMemo, useState } from 'react';
+
+global.getUrl = function (url) {
+  if (url.startsWith('/api')) return leemons.serverUrl + url;
+  return url;
+};
 
 export function Provider({ children }) {
   const [textEditorTools, setTextEditorTools] = useState({});

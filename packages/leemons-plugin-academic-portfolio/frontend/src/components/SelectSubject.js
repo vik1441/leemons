@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Select, ImageLoader, Text } from '@bubbles-ui/components';
 import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
+import { Box, ImageLoader, Select, Text } from '@bubbles-ui/components';
+import React from 'react';
 
 export function SubjectItem({ subject, isValueComponent, ...props }) {
   if (!subject) {
@@ -40,7 +40,9 @@ export function SubjectItem({ subject, isValueComponent, ...props }) {
             forceImage
             width={16}
             height={16}
-            src={typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })}
+            src={window.getUrl(
+              typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })
+            )}
           />
         </Box>
         <Text truncated>{subject.label}</Text>

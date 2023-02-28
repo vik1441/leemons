@@ -1,16 +1,16 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { find, forEach, isNumber } from 'lodash';
 import { Alert, Box, HtmlText, Text } from '@bubbles-ui/components';
-import QuestionTitle from '../../QuestionTitle';
-import QuestionNoteClues from '../../QuestionNoteClues';
-import { ButtonNavigation } from '../../ButtonNavigation';
+import { find, forEach, isNumber } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { QuestionImage } from '../../../../../../../components/QuestionImage';
-import Responses from './Responses';
 import { getQuestionClues } from '../../../helpers/getQuestionClues';
-import QuestionNotResponsedWarning from '../../QuestionNotResponsedWarning';
 import { htmlToText } from '../../../helpers/htmlToText';
+import { ButtonNavigation } from '../../ButtonNavigation';
+import QuestionNoteClues from '../../QuestionNoteClues';
+import QuestionNotResponsedWarning from '../../QuestionNotResponsedWarning';
+import QuestionTitle from '../../QuestionTitle';
+import Responses from './Responses';
 
 export default function Index(props) {
   const { styles, saveQuestion, store, question, t, isLast, cx } = props;
@@ -67,7 +67,7 @@ export default function Index(props) {
         <QuestionTitle {...props} />
         <Box className={styles.mapImageContainer}>
           <QuestionImage
-            src={question.properties.image}
+            src={window.getUrl(question.properties.image)}
             markers={question.properties.markers}
             values={
               store.viewMode ? store.questionResponses[question.id].properties?.responses : null

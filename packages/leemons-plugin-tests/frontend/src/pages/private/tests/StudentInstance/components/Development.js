@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Button, ImageLoader, Modal, Paragraph, Text, Title } from '@bubbles-ui/components';
+import { ChevronLeftIcon, ChevronRightIcon } from '@bubbles-ui/icons/outline';
+import { AlertInformationCircleIcon } from '@bubbles-ui/icons/solid';
+import { getLocaleDuration, LocaleDuration } from '@common';
+import { useSession } from '@users/session';
 import dayjs from 'dayjs';
 import * as duration from 'dayjs/plugin/duration';
-import { getLocaleDuration, LocaleDuration } from '@common';
-import { AlertInformationCircleIcon } from '@bubbles-ui/icons/solid';
-import { useSession } from '@users/session';
-import { ChevronLeftIcon, ChevronRightIcon } from '@bubbles-ui/icons/outline';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { find } from 'lodash';
 import InfoCard from './InfoCard';
@@ -146,7 +146,10 @@ export default function Development(props) {
           <Box className={styles.timeLimitInfo}>
             <Box>
               <Box sx={() => ({ position: 'relative', height: '24px', marginBottom: '24px' })}>
-                <ImageLoader className="stroke-current" src={'/public/tests/clock.svg'} />
+                <ImageLoader
+                  className="stroke-current"
+                  src={window.getUrl('/public/tests/clock.svg')}
+                />
               </Box>
               <Title order={4}>
                 {durationSeconds ? <LocaleDuration seconds={durationSeconds} /> : t('noTimeLimit')}
@@ -155,7 +158,10 @@ export default function Development(props) {
             {durationSeconds ? (
               <Box>
                 <Box sx={() => ({ position: 'relative', height: '32px', marginBottom: '16px' })}>
-                  <ImageLoader className="stroke-current" src={'/public/tests/pause.svg'} />
+                  <ImageLoader
+                    className="stroke-current"
+                    src={window.getUrl('/public/tests/pause.svg')}
+                  />
                 </Box>
                 <Title order={4}>{t('withoutPause')}</Title>
               </Box>

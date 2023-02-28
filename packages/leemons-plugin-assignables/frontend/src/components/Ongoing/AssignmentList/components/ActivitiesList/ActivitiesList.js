@@ -1,20 +1,18 @@
-import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Box, ImageLoader, Loader, PaginatedList, Text } from '@bubbles-ui/components';
-import _ from 'lodash';
-import { unflatten } from '@common';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import { useLayout } from '@layout/context';
 import { useIsStudent, useIsTeacher } from '@academic-portfolio/hooks';
-import { useHistory } from 'react-router-dom';
-import { getSessionConfig } from '@users/session';
-import searchOngoingActivities from '@assignables/requests/activities/searchOngoingActivities';
 import useSearchOngoingActivities from '@assignables/requests/hooks/queries/useSearchOngoingActivities';
-import useSearchAssignableInstances from '../../../../../hooks/assignableInstance/useSearchAssignableInstancesQuery';
-import useParseAssignations from '../../hooks/useParseAssignations';
-import useAssignationsByProfile from '../../../../../hooks/assignations/useAssignationsByProfile';
-import prefixPN from '../../../../../helpers/prefixPN';
+import { Box, ImageLoader, Loader, PaginatedList, Text } from '@bubbles-ui/components';
+import { unflatten } from '@common';
+import { useLayout } from '@layout/context';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import { getSessionConfig } from '@users/session';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React, { useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import EmptyState from '../../../../../assets/EmptyState.png';
+import prefixPN from '../../../../../helpers/prefixPN';
+import useAssignationsByProfile from '../../../../../hooks/assignations/useAssignationsByProfile';
+import useParseAssignations from '../../hooks/useParseAssignations';
 
 function useAssignmentsColumns() {
   const isTeacher = useIsTeacher();
@@ -264,7 +262,7 @@ export default function ActivitiesList({ filters, subjectFullLength = true }) {
         })}
       >
         {themeLayout.usePicturesEmptyStates && (
-          <ImageLoader src={EmptyState} width={142} height={149} />
+          <ImageLoader src={window.getUrl(EmptyState)} width={142} height={149} />
         )}
         <Text color="primary">{labels.activitiesList?.emptyState}</Text>
       </Box>

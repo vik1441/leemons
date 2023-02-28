@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useClassesSubjects } from '@academic-portfolio/hooks';
+import { useCurriculumVisibleValues } from '@assignables/components/Assignment/components/EvaluationType';
 import {
   Box,
   ContextContainer,
@@ -9,11 +9,11 @@ import {
   Title,
 } from '@bubbles-ui/components';
 import { CurriculumListContents } from '@curriculum/components/CurriculumListContents';
-import { useClassesSubjects } from '@academic-portfolio/hooks';
 import prepareAsset from '@leebrary/helpers/prepareAsset';
-import { useQuery } from '@tanstack/react-query';
 import { getAssetsByIdsRequest } from '@leebrary/request';
-import { useCurriculumVisibleValues } from '@assignables/components/Assignment/components/EvaluationType';
+import { useQuery } from '@tanstack/react-query';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 function CurriculumTab({ subjects, curriculumTab, labels }) {
   const subject = subjects[curriculumTab];
@@ -60,13 +60,13 @@ function CurriculumTab({ subjects, curriculumTab, labels }) {
                 {`
               <ul>
               ${curriculum?.objectives
-                    ?.map(
-                      (objective) =>
-                        `<li>
+                ?.map(
+                  (objective) =>
+                    `<li>
                     ${objective}
                   </li>`
-                    )
-                    ?.join('')}
+                )
+                ?.join('')}
               </ul>
             `}
               </HtmlText>
@@ -161,7 +161,7 @@ export default function StatementStep({ assignation, localizations: _labels }) {
           {isGradable ? labels?.statement : labels?.presentation}
         </Title>
         <HtmlText>{assignable?.statement}</HtmlText>
-        {!!supportImage && <ImageLoader src={supportImage.url} height="auto" />}
+        {!!supportImage && <ImageLoader src={window.getUrl(supportImage.url)} height="auto" />}
       </ContextContainer>
       <CurriculumRender
         assignation={assignation}

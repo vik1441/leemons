@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import PropTypes from 'prop-types';
+import getCourseName from '@academic-portfolio/helpers/getCourseName';
+import prefixPN from '@academic-portfolio/helpers/prefixPN';
 import {
   Box,
   createStyles,
@@ -12,15 +12,15 @@ import {
   TextClamp,
 } from '@bubbles-ui/components';
 import { useStore } from '@common';
-import prefixPN from '@academic-portfolio/helpers/prefixPN';
+import { addErrorAlert } from '@layout/alert';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { isArray } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import getCourseName from '@academic-portfolio/helpers/getCourseName';
-import { addErrorAlert } from '@layout/alert';
-import { listSessionClassesRequest } from '../../request';
-import { getClassImage } from '../../helpers/getClassImage';
 import { getClassIcon } from '../../helpers/getClassIcon';
+import { getClassImage } from '../../helpers/getClassImage';
+import { listSessionClassesRequest } from '../../request';
 
 const Styles = createStyles((theme) => ({
   root: {
@@ -187,7 +187,7 @@ function UserClassesSwiperWidget({ program }) {
                               top: '50%',
                               transform: 'translate(-50%, -50%)',
                             }}
-                            src={getClassIcon(classe)}
+                            src={window.getUrl(getClassIcon(classe))}
                             forceImage
                           />
                         </Box>

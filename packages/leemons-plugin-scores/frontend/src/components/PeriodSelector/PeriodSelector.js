@@ -1,5 +1,3 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   createStyles,
@@ -9,19 +7,21 @@ import {
   Paragraph,
   Text,
 } from '@bubbles-ui/components';
+import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 
+import { useCenterPrograms, useProgramDetail } from '@academic-portfolio/hooks';
 import { PluginScoresBasicIcon } from '@bubbles-ui/icons/outline';
 import { ScoresPeriodForm } from '@bubbles-ui/leemons';
 import { useUserCenters } from '@users/hooks';
-import { useCenterPrograms, useProgramDetail } from '@academic-portfolio/hooks';
 import { getCentersWithToken } from '@users/session';
 
-import _, { isFunction, uniqBy } from 'lodash';
+import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
+import useSessionClasses from '@academic-portfolio/hooks/useSessionClasses';
 import { unflatten } from '@common';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { prefixPN } from '@scores/helpers';
-import useSessionClasses from '@academic-portfolio/hooks/useSessionClasses';
-import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
+import _, { isFunction, uniqBy } from 'lodash';
 
 const useStyle = createStyles((theme, { isOpened }) => ({
   drawer: {
@@ -115,11 +115,12 @@ function ClassItem({ class: klass, ...props }) {
             forceImage
             width={16}
             height={16}
-            src={getClassIcon(klass)}
+            src={window.getUrl(getClassIcon(klass))}
           />
         </Box>
-        <Text>{`${klass.subject.name}${klass?.groups?.name ? ` - ${klass.groups.name}` : ''
-          }`}</Text>
+        <Text>{`${klass.subject.name}${
+          klass?.groups?.name ? ` - ${klass.groups.name}` : ''
+        }`}</Text>
       </Box>
     </Box>
   );

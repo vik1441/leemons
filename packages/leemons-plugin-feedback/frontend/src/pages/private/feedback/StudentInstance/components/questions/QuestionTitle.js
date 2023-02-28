@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, createStyles, HtmlText, ImageLoader, Text } from '@bubbles-ui/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export const Styles = createStyles((theme, { viewMode }) => ({
   questionStep: {
@@ -51,7 +51,10 @@ function QuestionTitle({ t, viewMode, question, currentValue }) {
   return (
     <Box className={classes.questionStep}>
       <Box className={classes.questionTitleIcon}>
-        <ImageLoader className="stroke-current" src={'/public/feedback/question.svg'} />
+        <ImageLoader
+          className="stroke-current"
+          src={window.getUrl('/public/feedback/question.svg')}
+        />
       </Box>
       <Box className={classes.questionTitleText}>
         <Text size="md" role="productive" color="primary" strong>

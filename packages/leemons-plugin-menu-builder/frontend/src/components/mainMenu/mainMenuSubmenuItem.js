@@ -115,7 +115,7 @@ export default function MainMenuSubmenuItem({
           }`}
           style={{ width: '10px', height: '5px' }}
         >
-          <ImageLoader className="stroke-current" src={'/public/assets/svgs/re-order.svg'} />
+          <ImageLoader className="stroke-current" src={window.getUrl('/public/assets/svgs/re-order.svg')} />
         </div>
       )}
       {editItemMode ? (
@@ -134,7 +134,7 @@ export default function MainMenuSubmenuItem({
             }`}
             style={{ width: '18px', height: '18px' }}
           >
-            <ImageLoader className="fill-current" src={'/public/assets/svgs/check.svg'} />
+            <ImageLoader className="fill-current" src={window.getUrl('/public/assets/svgs/check.svg')} />
           </div>
         </div>
       ) : (
@@ -153,7 +153,7 @@ export default function MainMenuSubmenuItem({
         >
           <ImageLoader
             className="stroke-current fill-current"
-            src={'/public/assets/svgs/remove.svg'}
+            src={window.getUrl('/public/assets/svgs/remove.svg')}
           />
         </div>
       )}

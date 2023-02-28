@@ -22,7 +22,7 @@ export default function MainMenuItem({ item, menuWidth, active, onClick }) {
                   ? 'stroke-current text-secondary-content'
                   : 'stroke-current text-secondary-content'
               }`}
-              src={active && item.activeIconSvg ? item.activeIconSvg : item.iconSvg}
+              src={window.getUrl(active && item.activeIconSvg ? item.activeIconSvg : item.iconSvg)}
               alt={item.iconAlt}
             />
           </div>

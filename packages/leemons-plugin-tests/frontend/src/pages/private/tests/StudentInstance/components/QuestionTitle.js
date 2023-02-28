@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, COLORS, HtmlText, ImageLoader, Text } from '@bubbles-ui/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function QuestionTitle(props) {
   const { styles, question, store, cx, t } = props;
@@ -19,7 +19,7 @@ export default function QuestionTitle(props) {
   return (
     <Box className={classNameQuestionTitle}>
       <Box className={styles.questionTitleIcon}>
-        <ImageLoader className="stroke-current" src={'/public/tests/question.svg'} />
+        <ImageLoader className="stroke-current" src={window.getUrl('/public/tests/question.svg')} />
       </Box>
       <Box className={styles.questionTitleText}>
         <Text size="md" role="productive" color="primary" strong>

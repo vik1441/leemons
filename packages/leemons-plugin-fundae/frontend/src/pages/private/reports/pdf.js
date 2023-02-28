@@ -108,7 +108,7 @@ export const Pdf = React.forwardRef(({ show, report, t }, ref) => {
               >
                 {!_.isEmpty(squareLogoUrl) ? (
                   <ImageLoader
-                    src={squareLogoUrl}
+                    src={window.getUrl(squareLogoUrl)}
                     forceImage
                     className={classes.logoUrl}
                     height="auto"

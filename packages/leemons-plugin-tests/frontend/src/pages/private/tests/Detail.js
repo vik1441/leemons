@@ -1,4 +1,5 @@
-import React from 'react';
+import { getProgramEvaluationSystemRequest } from '@academic-portfolio/request';
+import useLevelsOfDifficulty from '@assignables/components/LevelsOfDifficulty/hooks/useLevelsOfDifficulty';
 import {
   ActivityAccordion,
   ActivityAccordionPanel,
@@ -10,20 +11,19 @@ import {
   ImageLoader,
   PageContainer,
 } from '@bubbles-ui/components';
+import { ChevronRightIcon, PluginTestIcon } from '@bubbles-ui/icons/outline';
 import { AdminPageHeader } from '@bubbles-ui/leemons';
+import { useStore } from '@common';
+import { addErrorAlert } from '@layout/alert';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import prefixPN from '@tests/helpers/prefixPN';
-import { useStore } from '@common';
-import { useHistory, useParams } from 'react-router-dom';
-import { addErrorAlert } from '@layout/alert';
-import { ChevronRightIcon, PluginTestIcon } from '@bubbles-ui/icons/outline';
 import { forEach, keyBy } from 'lodash';
-import { getProgramEvaluationSystemRequest } from '@academic-portfolio/request';
-import useLevelsOfDifficulty from '@assignables/components/LevelsOfDifficulty/hooks/useLevelsOfDifficulty';
-import { getTestRequest } from '../../../request';
-import QuestionsTable from './components/QuestionsTable';
-import { questionTypeT } from '../questions-banks/components/QuestionForm';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import ViewModeQuestions from '../../../components/ViewModeQuestions';
+import { getTestRequest } from '../../../request';
+import { questionTypeT } from '../questions-banks/components/QuestionForm';
+import QuestionsTable from './components/QuestionsTable';
 import { ResultStyles } from './Result.style';
 import { calculeInfoValues } from './StudentInstance/helpers/calculeInfoValues';
 import { getConfigByInstance } from './StudentInstance/helpers/getConfigByInstance';
@@ -159,7 +159,10 @@ export default function Detail() {
         label={t('chartLabel')}
         icon={
           <Box style={{ position: 'relative', width: '23px', height: '23px' }}>
-            <ImageLoader className="stroke-current" src={'/public/tests/test-results-icon.svg'} />
+            <ImageLoader
+              className="stroke-current"
+              src={window.getUrl('/public/tests/test-results-icon.svg')}
+            />
           </Box>
         }
         color="solid"
@@ -187,7 +190,10 @@ export default function Detail() {
         }
         icon={
           <Box style={{ position: 'relative', width: '22px', height: '24px' }}>
-            <ImageLoader className="stroke-current" src={'/public/tests/questions-icon.svg'} />
+            <ImageLoader
+              className="stroke-current"
+              src={window.getUrl('/public/tests/questions-icon.svg')}
+            />
           </Box>
         }
       >

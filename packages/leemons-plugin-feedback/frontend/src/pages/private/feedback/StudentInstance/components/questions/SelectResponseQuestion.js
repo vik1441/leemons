@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, createStyles, Text } from '@bubbles-ui/components';
 import { useStore } from '@common';
 import QuestionButtons from '@feedback/pages/private/feedback/StudentInstance/components/questions/QuestionButtons';
 import { LeebraryImage } from '@leebrary/components';
 import { isArray, isNil } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export const Styles = createStyles((theme) => ({
   response: {
@@ -113,7 +113,10 @@ function SelectResponseQuestion(props) {
                 }}
               >
                 <Box className={classes.questionResponseImageContent}>
-                  <LeebraryImage className={classes.questionResponseImage} src={value.image} />
+                  <LeebraryImage
+                    className={classes.questionResponseImage}
+                    src={window.getUrl(value.image)}
+                  />
                 </Box>
                 {value.imageDescription ? (
                   <Box className={classes.questionResponseImageTextContent}>

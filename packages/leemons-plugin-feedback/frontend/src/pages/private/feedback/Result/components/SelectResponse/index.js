@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Stack, Text } from '@bubbles-ui/components';
 import { LeebraryImage } from '@leebrary/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 import SelectResponseStyles from './SelectResponse.styles';
 
 export default function OpenResponse(props) {
@@ -16,7 +16,9 @@ export default function OpenResponse(props) {
 
       return (
         <Box key={index} className={classes.question} style={{ marginBottom: !isLast && 40 }}>
-          {withImages && <LeebraryImage src={value.image.id} className={classes.questionImage} />}
+          {withImages && (
+            <LeebraryImage src={window.getUrl(value.image.id)} className={classes.questionImage} />
+          )}
           <Box style={{ width: '100%' }}>
             <Stack fullWidth alignItems="flex-end" skipFlex>
               <Text role="productive" color="primary" style={{ display: 'block', flex: 1 }}>

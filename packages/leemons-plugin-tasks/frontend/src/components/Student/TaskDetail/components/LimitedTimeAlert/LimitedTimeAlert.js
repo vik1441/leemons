@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import dayjs from 'dayjs';
-import dayjsDuration from 'dayjs/plugin/duration';
 import {
   Box,
   Button,
+  createStyles,
   ImageLoader,
   Modal,
-  Text,
   Paragraph,
+  Text,
   Title,
-  createStyles,
 } from '@bubbles-ui/components';
-import { LocaleDate, LocaleDuration } from '@common';
 import { AlertInformationCircleIcon } from '@bubbles-ui/icons/solid';
+import { LocaleDate, LocaleDuration } from '@common';
+import dayjs from 'dayjs';
+import dayjsDuration from 'dayjs/plugin/duration';
+import React, { useState } from 'react';
 
 dayjs.extend(dayjsDuration);
 
@@ -94,7 +94,10 @@ export default function LimitedTimeAlert({ assignation, labels, show }) {
             <Box className={classes.timeLimitInfo}>
               <Box>
                 <Box sx={() => ({ position: 'relative', height: '24px', marginBottom: '24px' })}>
-                  <ImageLoader className="stroke-current" src={'/public/tests/clock.svg'} />
+                  <ImageLoader
+                    className="stroke-current"
+                    src={window.getUrl('/public/tests/clock.svg')}
+                  />
                 </Box>
                 <Title order={4}>
                   {durationSeconds ? (
@@ -107,7 +110,10 @@ export default function LimitedTimeAlert({ assignation, labels, show }) {
               {durationSeconds ? (
                 <Box>
                   <Box sx={() => ({ position: 'relative', height: '32px', marginBottom: '16px' })}>
-                    <ImageLoader className="stroke-current" src={'/public/tests/pause.svg'} />
+                    <ImageLoader
+                      className="stroke-current"
+                      src={window.getUrl('/public/tests/pause.svg')}
+                    />
                   </Box>
                   <Title order={4}>{labels?.withoutPause}</Title>
                 </Box>

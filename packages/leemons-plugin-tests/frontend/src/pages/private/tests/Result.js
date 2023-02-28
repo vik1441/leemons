@@ -1,14 +1,6 @@
-import React from 'react';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@tests/helpers/prefixPN';
-import { useStore } from '@common';
-import { useHistory, useParams } from 'react-router-dom';
-import { addErrorAlert, addSuccessAlert } from '@layout/alert';
-import { find, forEach, map, orderBy } from 'lodash';
-import { TextEditorInput } from '@bubbles-ui/editors';
+import { getProgramEvaluationSystemRequest } from '@academic-portfolio/request';
 import getAssignableInstance from '@assignables/requests/assignableInstances/getAssignableInstance';
 import getAssignation from '@assignables/requests/assignations/getAssignation';
-import { getProgramEvaluationSystemRequest } from '@academic-portfolio/request';
 import {
   ActivityAccordion,
   ActivityAccordionPanel,
@@ -25,14 +17,22 @@ import {
   Text,
   Title,
 } from '@bubbles-ui/components';
+import { TextEditorInput } from '@bubbles-ui/editors';
 import { ChevronRightIcon, SendMessageIcon } from '@bubbles-ui/icons/outline';
+import { useStore } from '@common';
+import { addErrorAlert, addSuccessAlert } from '@layout/alert';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import prefixPN from '@tests/helpers/prefixPN';
+import { find, forEach, map, orderBy } from 'lodash';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { CutStarIcon, PluginComunicaIcon, StarIcon } from '@bubbles-ui/icons/solid';
-import useLevelsOfDifficulty from '@assignables/components/LevelsOfDifficulty/hooks/useLevelsOfDifficulty';
 import AssignableUserNavigator from '@assignables/components/AssignableUserNavigator';
-import ChatDrawer from '@comunica/components/ChatDrawer/ChatDrawer';
+import useLevelsOfDifficulty from '@assignables/components/LevelsOfDifficulty/hooks/useLevelsOfDifficulty';
+import { CutStarIcon, PluginComunicaIcon, StarIcon } from '@bubbles-ui/icons/solid';
 import ChatButton from '@comunica/components/ChatButton';
-import { calculeInfoValues } from './StudentInstance/helpers/calculeInfoValues';
+import ChatDrawer from '@comunica/components/ChatDrawer/ChatDrawer';
+import ViewModeQuestions from '../../../components/ViewModeQuestions';
 import {
   getFeedbackRequest,
   getQuestionByIdsRequest,
@@ -41,9 +41,9 @@ import {
   setInstanceTimestampRequest,
 } from '../../../request';
 import { ResultStyles } from './Result.style';
-import { htmlToText } from './StudentInstance/helpers/htmlToText';
-import ViewModeQuestions from '../../../components/ViewModeQuestions';
+import { calculeInfoValues } from './StudentInstance/helpers/calculeInfoValues';
 import { getConfigByInstance } from './StudentInstance/helpers/getConfigByInstance';
+import { htmlToText } from './StudentInstance/helpers/htmlToText';
 
 export default function Result() {
   const [t] = useTranslateLoader(prefixPN('testResult'));
@@ -235,7 +235,7 @@ export default function Result() {
               result = (
                 <Box style={{ minWidth: '100px' }} className={styles.tableCell}>
                   <Box style={{ width: '20px', height: '20px', position: 'relative' }}>
-                    <ImageLoader src={'/public/tests/question-done.svg'} />
+                    <ImageLoader src={window.getUrl('/public/tests/question-done.svg')} />
                   </Box>
                 </Box>
               );
@@ -243,7 +243,7 @@ export default function Result() {
               result = (
                 <Box style={{ minWidth: '100px' }} className={styles.tableCell}>
                   <Box style={{ width: '20px', height: '20px', position: 'relative' }}>
-                    <ImageLoader src={'/public/tests/question-error.svg'} />
+                    <ImageLoader src={window.getUrl('/public/tests/question-error.svg')} />
                   </Box>
                 </Box>
               );
@@ -303,7 +303,10 @@ export default function Result() {
         label={t('testResult')}
         icon={
           <Box style={{ position: 'relative', width: '23px', height: '23px' }}>
-            <ImageLoader className="stroke-current" src={'/public/tests/test-results-icon.svg'} />
+            <ImageLoader
+              className="stroke-current"
+              src={window.getUrl('/public/tests/test-results-icon.svg')}
+            />
           </Box>
         }
         color="solid"
@@ -327,7 +330,10 @@ export default function Result() {
         }
         icon={
           <Box style={{ position: 'relative', width: '22px', height: '24px' }}>
-            <ImageLoader className="stroke-current" src={'/public/tests/questions-icon.svg'} />
+            <ImageLoader
+              className="stroke-current"
+              src={window.getUrl('/public/tests/questions-icon.svg')}
+            />
           </Box>
         }
       >
@@ -357,7 +363,7 @@ export default function Result() {
           label={t('feedbackForStudent')}
           icon={
             <Box style={{ position: 'relative', width: '24px', height: '24px' }}>
-              <ImageLoader src={'/public/tests/feedback-for-student.svg'} />
+              <ImageLoader src={window.getUrl('/public/tests/feedback-for-student.svg')} />
             </Box>
           }
         >

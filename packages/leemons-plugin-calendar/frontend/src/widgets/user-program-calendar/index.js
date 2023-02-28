@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { listSessionClassesRequest } from '@academic-portfolio/request';
+import { BigCalendar } from '@bubbles-ui/calendars';
 import {
   Box,
   createStyles,
@@ -13,20 +13,20 @@ import {
   Title,
 } from '@bubbles-ui/components';
 import { AddIcon as PlusIcon, PluginCalendarIcon } from '@bubbles-ui/icons/outline';
-import { useStore } from '@common';
+import { useCalendarEventModal } from '@calendar/components/calendar-event-modal';
 import prefixPN from '@calendar/helpers/prefixPN';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import { BigCalendar } from '@bubbles-ui/calendars';
 import transformDBEventsToFullCalendarEvents from '@calendar/helpers/transformDBEventsToFullCalendarEvents';
+import { useStore } from '@common';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { getCentersWithToken } from '@users/session';
+import hooks from 'leemons-hooks';
 import * as _ from 'lodash';
 import { find, forEach, keyBy, map } from 'lodash';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useCalendarEventModal } from '@calendar/components/calendar-event-modal';
-import { listSessionClassesRequest } from '@academic-portfolio/request';
-import hooks from 'leemons-hooks';
-import { getCalendarsToFrontendRequest } from '../../request';
 import useTransformEvent from '../../helpers/useTransformEvent';
+import { getCalendarsToFrontendRequest } from '../../request';
 
 const Styles = createStyles((theme, { inTab }) => ({
   root: {
@@ -262,7 +262,7 @@ function UserProgramCalendar({ program, classe, session, inTab }) {
                   <Title order={2}>{tc('empty')}</Title>
                   <Box sx={(theme) => ({ display: 'flex', marginTop: theme.spacing[12] })}>
                     <ImageLoader
-                      src={'/public/calendar/no-events.png'}
+                      src={window.getUrl('/public/calendar/no-events.png')}
                       imageStyles={{ margin: '0px auto' }}
                       width={300}
                       height={240}

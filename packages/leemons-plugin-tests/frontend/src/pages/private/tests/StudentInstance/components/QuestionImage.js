@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Text, ModalZoom } from '@bubbles-ui/components';
+import { Box, ModalZoom, Text } from '@bubbles-ui/components';
 import { LeebraryImage } from '@leebrary/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function QuestionImage(props) {
   const { styles, question, cx, style = 1 } = props;
@@ -15,7 +15,7 @@ export default function QuestionImage(props) {
       return (
         <Box className={styles.questionImageContainer}>
           <ModalZoom>
-            <LeebraryImage className={classImage} src={question.questionImage} />
+            <LeebraryImage className={classImage} src={window.getUrl(question.questionImage)} />
           </ModalZoom>
           {question.questionImage.description ? (
             <Text role="productive" size="md" color="primary">

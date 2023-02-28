@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
-  Stack,
+  COLORS,
+  createStyles,
   FileIcon,
   ImageLoader,
-  createStyles,
+  Stack,
   Text,
-  COLORS,
 } from '@bubbles-ui/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { prepareAsset } from '../helpers/prepareAsset';
 
 const AssetThumbnailStyles = createStyles((theme, { selected }) => ({
@@ -42,7 +42,7 @@ const AssetThumbnail = ({ key, item, selected, headers, className, ...props }) =
     <Box key={key} {...props}>
       <Box className={cx(classes.root, { [classes.fileIcon]: !asset.cover })}>
         {asset.cover ? (
-          <ImageLoader src={asset.cover} height={170} />
+          <ImageLoader src={window.getUrl(asset.cover)} height={170} />
         ) : (
           <Stack direction="column" spacing={2}>
             <FileIcon

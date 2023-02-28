@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -15,9 +13,11 @@ import {
   Title,
 } from '@bubbles-ui/components';
 import { numberToEncodedLetter, useStore } from '@common';
+import { LeebraryImage } from '@leebrary/components';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import prefixPN from '@tests/helpers/prefixPN';
-import { LeebraryImage } from '@leebrary/components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export const QuestionImageMarkersModalStyles = createStyles((theme, { isLight }) => ({
   root: {},
@@ -161,7 +161,7 @@ export function QuestionImageMarkersModal({ src = '', value = {}, onChange, onCl
 
         <Box className={classes.imageContainer}>
           <Box className={classes.imageContainer} onClick={addMarker} onMouseMove={getPosition}>
-            <LeebraryImage className={classes.image} src={src} />
+            <LeebraryImage className={classes.image} src={window.getUrl(src)} />
           </Box>
 
           {store.list.map((marker, index) => {

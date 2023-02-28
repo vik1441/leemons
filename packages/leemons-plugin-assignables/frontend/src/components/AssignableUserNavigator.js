@@ -1,11 +1,7 @@
 // import getAssignation from '../requests/assignations/getAssignation';
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import { useStore } from '@common';
-import { addErrorAlert } from '@layout/alert';
+import getClassData from '@assignables/helpers/getClassData';
 import getAssignableInstance from '@assignables/requests/assignableInstances/getAssignableInstance';
-import { filter, isString, keyBy, map } from 'lodash';
 import {
   Box,
   COLORS,
@@ -15,12 +11,16 @@ import {
   Text,
   TextClamp,
 } from '@bubbles-ui/components';
-import getClassData from '@assignables/helpers/getClassData';
-import getUserAgentsInfo from '@users/request/getUserAgentsInfo';
-import SelectUserAgent from '@users/components/SelectUserAgent';
-import PropTypes from 'prop-types';
-import { findIndex } from 'lodash/array';
 import { ChevLeftIcon, ChevRightIcon } from '@bubbles-ui/icons/outline';
+import { useStore } from '@common';
+import { addErrorAlert } from '@layout/alert';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import SelectUserAgent from '@users/components/SelectUserAgent';
+import getUserAgentsInfo from '@users/request/getUserAgentsInfo';
+import { filter, isString, keyBy, map } from 'lodash';
+import { findIndex } from 'lodash/array';
+import PropTypes from 'prop-types';
+import React from 'react';
 import prefixPN from '../helpers/prefixPN';
 
 const Styles = createStyles((theme, { color }) => ({
@@ -170,7 +170,12 @@ export default function AssignableUserNavigator({ value, instance, onChange = ()
           })}
         >
           <Box className={style.colorIcon}>
-            <ImageLoader className={style.icon} src={taskHeaderProps.icon} height={14} width={14} />
+            <ImageLoader
+              className={style.icon}
+              src={window.getUrl(taskHeaderProps.icon)}
+              height={14}
+              width={14}
+            />
           </Box>
           <Text strong color="primary">
             {taskHeaderProps.subtitle}

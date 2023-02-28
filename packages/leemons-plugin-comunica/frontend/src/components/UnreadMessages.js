@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, createStyles, ImageLoader, Text } from '@bubbles-ui/components';
 import RoomService from '@comunica/RoomService';
+import PropTypes from 'prop-types';
+import React from 'react';
 import CommentIcon from '../icons/CommentIcon.svg';
 
 export const UnreadMessagesStyles = createStyles((theme) => ({
@@ -78,7 +78,7 @@ export function UnreadMessages({ rooms }) {
     <Box className={classes.root}>
       {!!unread && (
         <Box className={classes.icon}>
-          <ImageLoader width={30} height={24} src={CommentIcon} />
+          <ImageLoader width={30} height={24} src={window.getUrl(CommentIcon)} />
           <Box className={classes.unreadCount}>
             <Text strong className={classes.unreadCountText}>
               {unread > 99 ? '+99' : unread}

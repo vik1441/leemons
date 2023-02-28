@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   ActionButton,
   Box,
@@ -15,12 +13,14 @@ import {
 } from '@bubbles-ui/components';
 import { ViewOffIcon } from '@bubbles-ui/icons/outline';
 import { DeleteBinIcon } from '@bubbles-ui/icons/solid';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { Controller } from 'react-hook-form';
 import { TextEditorInput } from '@bubbles-ui/editors';
 import { useStore } from '@common';
-import { findIndex, forEach, map } from 'lodash';
 import ImagePicker from '@leebrary/components/ImagePicker';
+import { findIndex, forEach, map } from 'lodash';
+import { Controller } from 'react-hook-form';
 import { QuestionImage } from '../../../../../../components/QuestionImage';
 import { QuestionImageMarkersModal } from '../../../../../../components/QuestionImageMarkersModal';
 import { ListItemValueRender } from './components/ListItemValueRender';
@@ -81,7 +81,7 @@ export function Map({ form, t }) {
           <ContextContainer>
             <ContextContainer direction="row">
               <Box>
-                <QuestionImage src={image} markers={markers} />
+                <QuestionImage src={window.getUrl(image)} markers={markers} />
               </Box>
               <Box>
                 <ActionButton icon={<DeleteBinIcon />} onClick={() => removeImage()} />
@@ -97,7 +97,7 @@ export function Map({ form, t }) {
               render={({ field }) => (
                 <QuestionImageMarkersModal
                   {...field}
-                  src={image}
+                  src={window.getUrl(image)}
                   opened={store.showMarkersModal}
                   onClose={closeMarkersModal}
                 />

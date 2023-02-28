@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Button, COLORS, ImageLoader, Text } from '@bubbles-ui/components';
 import { forEach, keyBy } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { getQuestionClues } from '../helpers/getQuestionClues';
 
 export default function QuestionValue(props) {
@@ -107,7 +107,9 @@ export default function QuestionValue(props) {
           <Box className={cx(styles.questionValueCard, styles.questionCluesCard)}>
             {clues.map((value, index) => (
               <Box key={index} className={styles.questionClueIcon}>
-                <ImageLoader src={`/public/tests/clue-${index < usedClues ? 'off' : 'on'}.svg`} />
+                <ImageLoader
+                  src={window.getUrl(`/public/tests/clue-${index < usedClues ? 'off' : 'on'}.svg`)}
+                />
               </Box>
             ))}
 

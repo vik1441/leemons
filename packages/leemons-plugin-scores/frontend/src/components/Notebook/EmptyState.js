@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
 import { Box, createStyles, Paragraph, Title } from '@bubbles-ui/components';
-import _ from 'lodash';
 import { unflatten } from '@common';
+import { useLayout } from '@layout/context';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { prefixPN } from '@scores/helpers';
-import { useLayout } from '@layout/context';
+import _ from 'lodash';
+import React, { useMemo } from 'react';
 import noFilters from './assets/noFilters.png';
 
 const useEmptyStateStyles = createStyles((theme, {}) => ({
@@ -56,7 +56,9 @@ export function EmptyState({ isStudent }) {
 
   return (
     <Box className={classes.root}>
-      {theme.usePicturesEmptyStates && <img src={noFilters} className={classes.image} />}
+      {theme.usePicturesEmptyStates && (
+        <img src={window.getUrl(noFilters)} className={classes.image} />
+      )}
       <Box className={classes.text}>
         <Title>{labels.title}</Title>
         <Paragraph className={classes.textMargin}>{labels.description}</Paragraph>

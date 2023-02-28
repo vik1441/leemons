@@ -1,10 +1,10 @@
-import { capitalize, isEmpty, isNil, isString } from 'lodash';
 import { getAuthorizationTokenForAllCenters } from '@users/session';
+import { capitalize, isEmpty, isNil, isString } from 'lodash';
 import { prepareAssetType } from './prepareAssetType';
 
 function getAssetUrl(assetID) {
   const authTokens = getAuthorizationTokenForAllCenters();
-  return `${window.location.origin}/api/leebrary/img/${assetID}?authorization=${encodeURIComponent(
+  return `${leemons.serverUrl}/api/leebrary/img/${assetID}?authorization=${encodeURIComponent(
     `${authTokens}`
   )}`;
 }
@@ -16,7 +16,7 @@ function getFileUrl(fileID) {
     return fileID;
   }
 
-  return `${window.location.origin}/api/leebrary/file/${fileID}?authorization=${encodeURIComponent(
+  return `${leemons.serverUrl}/api/leebrary/file/${fileID}?authorization=${encodeURIComponent(
     `${authTokens}`
   )}`;
 }

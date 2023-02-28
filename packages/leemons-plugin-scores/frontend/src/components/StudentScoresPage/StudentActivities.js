@@ -1,26 +1,26 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Box,
-  Loader,
-  Select,
-  Switch,
-  ImageLoader,
-  createStyles,
-  ScoreFronstage,
-} from '@bubbles-ui/components';
-import useSearchAssignableInstances from '@assignables/hooks/assignableInstance/useSearchAssignableInstancesQuery';
-import _, { capitalize, map } from 'lodash';
 import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
 import { getClassImage } from '@academic-portfolio/helpers/getClassImage';
-import { unflatten } from '@common';
+import { useUserAgents } from '@assignables/components/Assignment/AssignStudents/hooks';
 import prefixPN from '@assignables/helpers/prefixPN';
+import useSearchAssignableInstances from '@assignables/hooks/assignableInstance/useSearchAssignableInstancesQuery';
+import useProgramEvaluationSystem from '@assignables/hooks/useProgramEvaluationSystem';
+import useAssignations from '@assignables/requests/hooks/queries/useAssignations';
+import useInstances from '@assignables/requests/hooks/queries/useInstances';
+import {
+  Box,
+  createStyles,
+  ImageLoader,
+  Loader,
+  ScoreFronstage,
+  Select,
+  Switch,
+} from '@bubbles-ui/components';
+import { unflatten } from '@common';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import { useScores } from '@scores/requests/hooks/queries';
-import { useUserAgents } from '@assignables/components/Assignment/AssignStudents/hooks';
-import useProgramEvaluationSystem from '@assignables/hooks/useProgramEvaluationSystem';
-import useInstances from '@assignables/requests/hooks/queries/useInstances';
-import useAssignations from '@assignables/requests/hooks/queries/useAssignations';
+import _, { capitalize, map } from 'lodash';
+import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 import EmptyState from '../Notebook/components/ActivitiesTab/EmptyState';
 
 function ClassIcon({ class: klass, dropdown = false }) {
@@ -47,7 +47,7 @@ function ClassIcon({ class: klass, dropdown = false }) {
         forceImage
         width={16}
         height={16}
-        src={getClassIcon(klass)}
+        src={window.getUrl(getClassIcon(klass))}
       />
     </Box>
   );
@@ -195,7 +195,7 @@ export default function StudentActivities({ klasses, filters, labels }) {
     if (periodScore) return { number: periodScore, letter: getLetterScore(periodScore) };
     const averageScore =
       classActivities.reduce((total, next) => total + next.score.number, 0) /
-      classActivities.length || 0;
+        classActivities.length || 0;
     return { number: averageScore, letter: getLetterScore(averageScore) };
   };
 

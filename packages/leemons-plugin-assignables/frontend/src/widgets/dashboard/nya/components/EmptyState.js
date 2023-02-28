@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Text, Box, ImageLoader, createStyles } from '@bubbles-ui/components';
-import { useLayout } from '@layout/context';
 import EmptyStatePicture from '@assignables/assets/EmptyState.png';
+import { Box, createStyles, ImageLoader, Text } from '@bubbles-ui/components';
+import { useLayout } from '@layout/context';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const useEmptyStateStyles = createStyles((theme) => ({
   root: {
@@ -26,7 +26,9 @@ function EmptyState({ label }) {
 
   return (
     <Box className={classes.root}>
-      {usePicturesEmptyStates && <ImageLoader src={EmptyStatePicture} width={142} height={149} />}
+      {usePicturesEmptyStates && (
+        <ImageLoader src={window.getUrl(EmptyStatePicture)} width={142} height={149} />
+      )}
       <Text color="primary">{label}</Text>
     </Box>
   );

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ActionButton,
   ActivityAccordion,
@@ -13,17 +12,18 @@ import {
   Stack,
   Table,
 } from '@bubbles-ui/components';
-import { AdminPageHeader } from '@bubbles-ui/leemons';
-import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import prefixPN from '@feedback/helpers/prefixPN';
-import { getQuestionForTable } from '@feedback/helpers/getQuestionForTable';
-import { useStore } from '@common';
-import { useHistory, useParams } from 'react-router-dom';
-import { addErrorAlert } from '@layout/alert';
 import { ChevronRightIcon, EditIcon, PluginFeedbackIcon } from '@bubbles-ui/icons/outline';
-import { getFeedbackRequest } from '@feedback/request';
-import { map } from 'lodash';
+import { AdminPageHeader } from '@bubbles-ui/leemons';
+import { useStore } from '@common';
+import { getQuestionForTable } from '@feedback/helpers/getQuestionForTable';
+import prefixPN from '@feedback/helpers/prefixPN';
 import QuestionsCard from '@feedback/pages/private/feedback/StudentInstance/components/QuestionsCard';
+import { getFeedbackRequest } from '@feedback/request';
+import { addErrorAlert } from '@layout/alert';
+import useTranslateLoader from '@multilanguage/useTranslateLoader';
+import { map } from 'lodash';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 const PreviewPageStyles = createStyles((theme, { viewMode }) => ({
   firstTableHeader: {
@@ -247,7 +247,7 @@ export default function Preview() {
                 <Box style={{ position: 'relative', width: '22px', height: '24px' }}>
                   <ImageLoader
                     className="stroke-current"
-                    src={'/public/feedback/questions-icon.svg'}
+                    src={window.getUrl('/public/feedback/questions-icon.svg')}
                   />
                 </Box>
               }

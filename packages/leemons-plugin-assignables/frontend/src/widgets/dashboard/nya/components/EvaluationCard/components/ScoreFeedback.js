@@ -1,8 +1,8 @@
-import React from 'react';
-import { Box, createStyles, ImageLoader, Text } from '@bubbles-ui/components';
 import useProgramEvaluationSystem from '@assignables/hooks/useProgramEvaluationSystem';
+import { Box, createStyles, ImageLoader, Text } from '@bubbles-ui/components';
 import { RatingStarIcon } from '@bubbles-ui/icons/solid';
 import { useRoomsMessageCount } from '@comunica/components';
+import React from 'react';
 import CommentIcon from './CommentIcon.svg';
 
 function findNearestFloorScore(score, scales) {
@@ -121,7 +121,7 @@ export default function ScoreFeedback({ score, program, rooms, isCalificable }) 
       {!!rooms?.length && (
         <Box className={cx(classes.container, classes.feedback, classes.text)}>
           <Box className={classes.icon}>
-            <ImageLoader src={CommentIcon} height="100%" />
+            <ImageLoader src={window.getUrl(CommentIcon)} height="100%" />
           </Box>
           <Text className={classes.iconText}>{count > 99 ? '+99' : count}</Text>
         </Box>

@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, ImageLoader, Text, TextClamp, ActionButton } from '@bubbles-ui/components';
-import { RemoveIcon } from '@bubbles-ui/icons/outline';
 import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
+import { Box, ImageLoader, Text, TextClamp } from '@bubbles-ui/components';
+import { RemoveIcon } from '@bubbles-ui/icons/outline';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const SelectItem = ({ subject, isValueComponent, onRemove, ...props }) => {
   if (!subject) {
@@ -42,7 +42,9 @@ const SelectItem = ({ subject, isValueComponent, onRemove, ...props }) => {
             forceImage
             width={16}
             height={16}
-            src={typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })}
+            src={window.getUrl(
+              typeof subject?.icon === 'string' ? subject.icon : getClassIcon({ subject })
+            )}
           />
         </Box>
         <TextClamp lines={1}>

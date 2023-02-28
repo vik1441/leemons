@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { Button, Box, Paper, ContextContainer, Stack, TagifyInput } from '@bubbles-ui/components';
+import { Box, Button, ContextContainer, Paper, Stack, TagifyInput } from '@bubbles-ui/components';
 import { AssetPlayer } from '@bubbles-ui/leemons';
+import ContentEditorInput from '@common/components/ContentEditorInput/ContentEditorInput';
+import { TextEditorInput } from '@common/components/TextEditorInput';
+import { LocaleDuration } from '@common/LocaleDate';
 import { useLayout } from '@layout/context';
 import SelectUserAgent from '@users/components/SelectUserAgent';
-import { LocaleDuration } from '@common/LocaleDate';
-import { TextEditorInput } from '@common/components/TextEditorInput';
-import ContentEditorInput from '@common/components/ContentEditorInput/ContentEditorInput';
-import selectFile from '../../../helpers/selectFile';
-import { listAllMyFilesRequest, uploadFilesRequest, removeFileRequest } from '../../../request';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import IconByMimeType from '../../../components/IconByMimeType';
 import { ImagePicker } from '../../../components/ImagePicker';
+import selectFile from '../../../helpers/selectFile';
+import { listAllMyFilesRequest, removeFileRequest, uploadFilesRequest } from '../../../request';
 
 export default function TestPage() {
   const [items, setItems] = useState([]);
@@ -59,7 +59,7 @@ export default function TestPage() {
                 if (item.type.indexOf('image') >= 0) {
                   return (
                     <div key={item.id}>
-                      <img style={{ width: '20%' }} src={item.localUrl} alt="" />
+                      <img style={{ width: '20%' }} src={window.getUrl(item.localUrl)} alt="" />
                       <Button onClick={() => remove(item.id)}>Borrar</Button>
                     </div>
                   );

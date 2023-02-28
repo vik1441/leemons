@@ -1,4 +1,4 @@
-import { Avatar, Box, ImageLoader } from '@bubbles-ui/components';
+import { Avatar, ImageLoader } from '@bubbles-ui/components';
 import { getAssetUrl } from '@leebrary/helpers/prepareAsset';
 import selectFile from '@leebrary/helpers/selectFile';
 import _ from 'lodash';
@@ -56,7 +56,7 @@ function RoomAvatar({ room, isHeader, onImageChange, size = 56 }) {
         result.image = (
           <ImageLoader
             className={classes.image}
-            src={`${imageIsUrl ? image : getAssetUrl(image)}&seed=${room.imageSeed}`}
+            src={window.getUrl(`${imageIsUrl ? image : getAssetUrl(image)}&seed=${room.imageSeed}`)}
             forceImage
             width={size}
             height={size}
@@ -67,7 +67,7 @@ function RoomAvatar({ room, isHeader, onImageChange, size = 56 }) {
     if (!image && icon) {
       result.icon = (
         <ImageLoader
-          src={room.metadata.iconIsUrl ? icon : getAssetUrl(icon)}
+          src={window.getUrl(room.metadata.iconIsUrl ? icon : getAssetUrl(icon))}
           forceImage
           width={result.image ? size * 0.2142 : size * 0.4642}
           height={result.image ? size * 0.2142 : size * 0.4642}

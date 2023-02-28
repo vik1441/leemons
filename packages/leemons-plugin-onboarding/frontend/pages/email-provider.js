@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import Router from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function EmailProvider() {
   const [providers, setProviders] = useState([]);
@@ -27,7 +27,7 @@ export default function EmailProvider() {
       <div className="grid grid-cols-4">
         {providers.map((value) => (
           <div key={value.providerName} onClick={() => selectProvider(value)}>
-            <img className="max-w-full" src={value.image} />
+            <img className="max-w-full" src={window.getUrl(value.image)} />
             <div className="text-center bg-red-50">{value.name}</div>
           </div>
         ))}

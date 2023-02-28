@@ -57,7 +57,9 @@ function RoomHeader({ room, t, onImageChange }) {
         <Box className={classes.icon} style={{ backgroundColor: room.bgColor }}>
           <ImageLoader
             forceImage
-            src={room.iconIsUrl || room.metadata?.iconIsUrl ? room.icon : getAssetUrl(room.icon)}
+            src={window.getUrl(
+              room.iconIsUrl || room.metadata?.iconIsUrl ? room.icon : getAssetUrl(room.icon)
+            )}
             width={14}
             height={14}
           />
