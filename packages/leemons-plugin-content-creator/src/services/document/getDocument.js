@@ -2,12 +2,12 @@
 const _ = require('lodash');
 const { table } = require('../tables');
 
-async function getDocument(id, { userSession, transacting } = {}, getAssets = true) {
+async function getDocument(id, { userSession, transacting } = {}) {
   const { assignables: assignableService } = leemons.getPlugin('assignables').services;
   const assetService = leemons.getPlugin('leebrary').services.assets;
 
   // Check is userSession is provided
-  if (getAssets && !userSession) throw new Error('User session is required (getDocument)');
+  if (!userSession) throw new Error('User session is required (getDocument)');
 
   const ids = _.isArray(id) ? id : [id];
 
@@ -58,7 +58,10 @@ async function getDocument(id, { userSession, transacting } = {}, getAssets = tr
       description: assignable.asset.description,
       introductoryText: assignable.statement,
       content: documentsById[assignable.id]?.content,
+      subjects: assignable.subjects,
+      published: assignable.published,
     };
+
     return toReturn;
   });
   return _.isArray(id) ? result : result[0];

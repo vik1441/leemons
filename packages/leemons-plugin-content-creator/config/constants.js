@@ -20,7 +20,7 @@ const menuItems = [
   {
     item: {
       key: 'content-creator',
-      order: 304,
+      order: 302,
       iconSvg: '/public/content-creator/menu-icon-active.svg',
       activeIconSvg: '/public/content-creator/menu-icon-active.svg',
       label: {
@@ -80,7 +80,7 @@ const assignableRoles = [
     role: 'content-creator',
     options: {
       teacherDetailUrl: '/private/content-creator/detail/:id',
-      studentDetailUrl: '/private/content-creator/student/:id/:user',
+      studentDetailUrl: '/private/content-creator/view/:id',
       evaluationDetailUrl: '/private/content-creator/result/:id/:user',
       dashboardUrl: '/private/content-creator/result/:id',
       creatable: true,

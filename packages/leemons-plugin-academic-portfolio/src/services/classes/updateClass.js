@@ -21,8 +21,11 @@ const { changeBySubject } = require('./knowledge/changeBySubject');
 const { setToAllClassesWithSubject } = require('./course/setToAllClassesWithSubject');
 const { isUsedInSubject } = require('./group/isUsedInSubject');
 const { getClassesProgramInfo } = require('./listSessionClasses');
+const { getProgramCourses } = require('../programs/getProgramCourses');
 
 async function updateClass(data, { userSession, transacting: _transacting } = {}) {
+  const roomService = leemons.getPlugin('comunica').services.room;
+
   return global.utils.withTransaction(
     async (transacting) => {
       await validateUpdateClass(data, { transacting });
@@ -36,7 +39,7 @@ async function updateClass(data, { userSession, transacting: _transacting } = {}
 
       const program = await table.programs.findOne(
         { id: cClass.program },
-        { columns: ['id', 'useOneStudentGroup'], transacting }
+        { columns: ['id', 'name', 'useOneStudentGroup'], transacting }
       );
 
       if (program.useOneStudentGroup) {
@@ -51,7 +54,7 @@ async function updateClass(data, { userSession, transacting: _transacting } = {}
         goodGroup = group.id;
       }
 
-      const { id, course, group, knowledge, substage, teachers, schedule, icon, image, ...rest } =
+      let { id, course, group, knowledge, substage, teachers, schedule, icon, image, ...rest } =
         data;
 
       if (!goodGroup && group) {
@@ -105,6 +108,11 @@ async function updateClass(data, { userSession, transacting: _transacting } = {}
           throw new Error('substage not in program');
         }
         promises.push(addSubstage(nClass.id, substage, { transacting }));
+      }
+
+      if (!course) {
+        const programCourses = await getProgramCourses(nClass.program, { transacting });
+        course = programCourses[0].id;
       }
 
       if (_.isNull(course) || course) {
@@ -171,6 +179,37 @@ async function updateClass(data, { userSession, transacting: _transacting } = {}
       );
 
       await leemons.events.emit('after-update-class', { class: classe, transacting });
+
+      let subName = program.name;
+      if (classe.groups?.abbreviation) {
+        subName += ` - ${classe.groups?.abbreviation}`;
+      }
+      const roomKey = leemons.plugin.prefixPN(`room.class.${nClass.id}`);
+      const roomExists = await roomService.exists(roomKey, { transacting });
+      const roomConfig = {
+        name: classe.subject.name,
+        type: leemons.plugin.prefixPN('class'),
+        bgColor: classe.subject.color,
+        subName,
+        image: null,
+        icon: null,
+        program: program.id,
+        transacting,
+      };
+      if (classe.subject.icon?.cover) {
+        roomConfig.icon = classe.subject.icon.id;
+      }
+      if (classe.subject.image?.cover) {
+        roomConfig.image = classe.subject.image.id;
+      }
+      if (assetImage.cover) {
+        roomConfig.image = assetImage.id;
+      }
+      if (roomExists) {
+        await roomService.update(roomKey, roomConfig);
+      } else {
+        await roomService.add(roomKey, roomConfig);
+      }
 
       return classe;
     },

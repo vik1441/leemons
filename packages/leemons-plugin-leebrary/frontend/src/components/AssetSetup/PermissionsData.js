@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import _, { find, isArray, isEmpty, isNil } from 'lodash';
-import { useParams } from 'react-router-dom';
+import { SelectProgram } from '@academic-portfolio/components';
+import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
+import usePrograms from '@academic-portfolio/hooks/usePrograms';
+import useSessionClasses from '@academic-portfolio/hooks/useSessionClasses';
 import {
   Alert,
   Box,
@@ -19,16 +19,16 @@ import {
   UserDisplayItem,
 } from '@bubbles-ui/components';
 import { LibraryItem } from '@bubbles-ui/leemons';
+import { unflatten, useRequestErrorMessage } from '@common';
+import { addErrorAlert, addSuccessAlert } from '@layout/alert';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
 import SelectUserAgent from '@users/components/SelectUserAgent';
-import { addErrorAlert, addSuccessAlert } from '@layout/alert';
-import { unflatten, useRequestErrorMessage } from '@common';
-import useSessionClasses from '@academic-portfolio/hooks/useSessionClasses';
-import usePrograms from '@academic-portfolio/hooks/usePrograms';
-import { getClassIcon } from '@academic-portfolio/helpers/getClassIcon';
 import useGetProfileSysName from '@users/helpers/useGetProfileSysName';
-import { SelectProgram } from '@academic-portfolio/components';
 import { getCentersWithToken } from '@users/session';
+import _, { find, isArray, isEmpty, isFunction, isNil } from 'lodash';
+import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import prefixPN from '../../helpers/prefixPN';
 import { prepareAsset } from '../../helpers/prepareAsset';
 import { getAssetRequest, setPermissionsRequest } from '../../request';
@@ -98,9 +98,18 @@ const RoleSelect = (props) => {
   return <Select {...props} />;
 };
 
-const PermissionsData = ({ asset: assetProp, sharing, onNext = () => {} }) => {
+const PermissionsData = ({
+  asset: assetProp,
+  sharing,
+  onNext = () => {},
+  onSavePermissions,
+  isDrawer,
+  drawerTranslations,
+}) => {
   const [asset, setAsset] = useState(assetProp);
-  const [t, translations] = useTranslateLoader(prefixPN('assetSetup'));
+  const [t, translations] = isDrawer
+    ? drawerTranslations
+    : useTranslateLoader(prefixPN('assetSetup'));
   const [loading, setLoading] = useState(false);
   const [usersData, setUsersData] = useState([]);
   const [selectedClasses, setSelectedClasses] = useState([]);
@@ -171,12 +180,22 @@ const PermissionsData = ({ asset: assetProp, sharing, onNext = () => {} }) => {
         role: klass.role,
       }));
 
-      await setPermissionsRequest(asset.id, {
-        canAccess,
-        programsCanAccess: isPublic ? adminPrograms : [],
-        classesCanAccess,
-        isPublic,
-      });
+      if (isFunction(onSavePermissions)) {
+        await onSavePermissions(asset.id, {
+          canAccess,
+          programsCanAccess: isPublic ? adminPrograms : [],
+          classesCanAccess,
+          isPublic,
+        });
+      } else {
+        await setPermissionsRequest(asset.id, {
+          canAccess,
+          programsCanAccess: isPublic ? adminPrograms : [],
+          classesCanAccess,
+          isPublic,
+        });
+      }
+
       setLoading(false);
       addSuccessAlert(
         sharing
@@ -466,6 +485,9 @@ PermissionsData.propTypes = {
   loading: PropTypes.bool,
   sharing: PropTypes.bool,
   onNext: PropTypes.func,
+  onSavePermissions: PropTypes.func,
+  isDrawer: PropTypes.bool,
+  drawerTranslations: PropTypes.array,
 };
 
 export default PermissionsData;

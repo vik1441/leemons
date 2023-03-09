@@ -5,14 +5,15 @@ import {
   ContextContainer,
   HtmlText,
   ImageLoader,
-  Title,
   SegmentedControl,
+  Title,
 } from '@bubbles-ui/components';
 import { CurriculumListContents } from '@curriculum/components/CurriculumListContents';
 import { useClassesSubjects } from '@academic-portfolio/hooks';
 import prepareAsset from '@leebrary/helpers/prepareAsset';
 import { useQuery } from '@tanstack/react-query';
 import { getAssetsByIdsRequest } from '@leebrary/request';
+import { useCurriculumVisibleValues } from '@assignables/components/Assignment/components/EvaluationType';
 
 function CurriculumTab({ subjects, curriculumTab, labels }) {
   const subject = subjects[curriculumTab];
@@ -59,13 +60,13 @@ function CurriculumTab({ subjects, curriculumTab, labels }) {
                 {`
               <ul>
               ${curriculum?.objectives
-                ?.map(
-                  (objective) =>
-                    `<li>
+                    ?.map(
+                      (objective) =>
+                        `<li>
                     ${objective}
                   </li>`
-                )
-                ?.join('')}
+                    )
+                    ?.join('')}
               </ul>
             `}
               </HtmlText>
@@ -76,16 +77,18 @@ function CurriculumTab({ subjects, curriculumTab, labels }) {
     </Box>
   );
 }
+
 function CurriculumRender({ assignation, showCurriculum: showCurriculumObj, labels }) {
+  const curriculum = useCurriculumVisibleValues({ assignation });
   const subjects = useClassesSubjects(assignation.instance.classes);
 
   const subjectsWithCurriculum = React.useMemo(
     () =>
-      assignation?.instance?.assignable?.subjects?.map((subject) => ({
+      curriculum?.map((subject) => ({
         ...subject,
         name: subjects.find((s) => s.id === subject.subject)?.name,
       })),
-    [subjects, assignation?.instance?.assignable?.subjects]
+    [subjects, curriculum]
   );
 
   const [curriculumTab, setCurriculumTab] = React.useState(0);
@@ -148,7 +151,6 @@ export default function StatementStep({ assignation, localizations: _labels }) {
   const { assignable } = instance;
 
   const { data: supportImage } = useSupportImage(assignable);
-
   const showCurriculum = instance.curriculum;
   const isGradable = assignable.gradable;
 

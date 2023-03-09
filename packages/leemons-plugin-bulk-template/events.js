@@ -85,6 +85,7 @@ async function events(isInstalled) {
         'plugins.scores:init-permissions',
         'plugins.academic-calendar:init-permissions',
         'plugins.content-creator:init-permissions',
+        'plugins.comunica:init-permissions',
         'plugins.leebrary:pluginDidLoadServices',
         'plugins.admin:pluginDidLoadServices',
         'plugins.bulk-template:init-providers',
@@ -229,6 +230,7 @@ async function events(isInstalled) {
         'plugins.assignables:init-plugin',
         'plugins.bulk-template:init-academic-portfolio',
         'plugins.bulk-template:init-leebrary',
+        'plugins.bulk-template:init-tests',
       ],
       async () => {
         try {

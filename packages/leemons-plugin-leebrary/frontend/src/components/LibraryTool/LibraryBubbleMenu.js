@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, createStyles, getBoxShadowFromToken, ActionButton } from '@bubbles-ui/components';
 import {
@@ -9,7 +9,7 @@ import {
   EditorRightAlignIcon,
   EditorCenterAlignIcon,
 } from '@bubbles-ui/icons/solid';
-import { LayoutAgendaIcon, LayoutTwoColumsIcon } from '@bubbles-ui/icons/outline';
+import { LayoutAgendaIcon, LayoutTwoColumsIcon, FloatImageIcon } from '@bubbles-ui/icons/outline';
 import { LibraryIcon } from './LibraryIcon';
 
 const LibraryBubbleMenuStyles = createStyles((theme) => {
@@ -55,6 +55,10 @@ export const LibraryBubbleMenu = ({
     handleOnChange({ ...data, [propertyKey]: propertyValue });
   };
 
+  useEffect(() => {
+    if (data.isFloating && data.align === 'center') handleChangeData({ align: 'left' });
+  }, [data.isFloating]);
+
   const { classes } = LibraryBubbleMenuStyles({}, { name: 'LibraryBubbleMenu' });
   const actionButtonStyles = { height: '100%' };
   return (
@@ -66,12 +70,20 @@ export const LibraryBubbleMenu = ({
           onClick={() => handleChangeData({ width: '100%' })}
           tooltip={bubbleMenu.fullWidth}
           active={data.width === '100%'}
+          disabled={data.isFloating}
         />
         <ActionButton
           icon={<LayoutTwoColumsIcon height={20} width={20} />}
           onClick={() => handleChangeData({ width: '50%' })}
           tooltip={bubbleMenu.twoColumns}
           active={data.width === '50%'}
+        />
+        <ActionButton
+          icon={<FloatImageIcon height={20} width={20} />}
+          onClick={() => handleChangeData({ isFloating: !data.isFloating })}
+          tooltip={'Float image'}
+          active={data.isFloating}
+          disabled={data.width === '100%'}
         />
       </Box>
       {/* Align */}
@@ -87,6 +99,7 @@ export const LibraryBubbleMenu = ({
           onClick={() => handleChangeData({ align: 'center' })}
           tooltip={alignLabels.center}
           active={data.align === 'center'}
+          disabled={data.isFloating}
         />
         {/* <ActionButton icon={<EditorJustifiedAlignIcon height={20} width={20} />} /> */}
         <ActionButton

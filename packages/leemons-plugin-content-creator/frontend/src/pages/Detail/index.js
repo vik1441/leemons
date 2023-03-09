@@ -7,17 +7,26 @@ import {
   useDebouncedCallback,
 } from '@bubbles-ui/components';
 import useTranslateLoader from '@multilanguage/useTranslateLoader';
-import { useStore } from '@common';
+import { useStore, useProcessTextEditor } from '@common';
 import { useHistory, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { addErrorAlert, addSuccessAlert } from '@layout/alert';
 import { DocumentIcon, SetupContent } from '@content-creator/components/icons';
 import prefixPN from '@content-creator/helpers/prefixPN';
 import ContentEditorInput from '@common/components/ContentEditorInput/ContentEditorInput';
-import { saveDocumentRequest, getDocumentRequest } from '@content-creator/request';
+import {
+  saveDocumentRequest,
+  getDocumentRequest,
+  // shareDocumentRequest,
+} from '@content-creator/request';
+import { AssetFormInput } from '@leebrary/components';
+// import { PermissionsDataDrawer } from '@leebrary/components/AssetSetup';
+// import prepareAsset from '@leebrary/helpers/prepareAsset';
+import { PageContent } from './components/PageContent/PageContent';
 
 export default function Index() {
   const [t, , , tLoading] = useTranslateLoader(prefixPN('contentCreatorDetail'));
+  const processTextEditor = useProcessTextEditor();
 
   // ----------------------------------------------------------------------
   // SETTINGS
@@ -26,9 +35,11 @@ export default function Index() {
   const [store, render] = useStore({
     loading: true,
     isNew: false,
-    headerHeight: null,
     titleValue: '',
     document: {},
+    preparedAsset: {},
+    isConfigPage: false,
+    openShareDrawer: false,
   });
 
   const history = useHistory();
@@ -41,9 +52,14 @@ export default function Index() {
     try {
       store.saving = 'duplicate';
       render();
-      await saveDocumentRequest({ ...formValues, published: false });
+
+      const content = await processTextEditor(formValues.content, store.document.content, {
+        force: !!store.published,
+      });
+
+      await saveDocumentRequest({ ...formValues, content, published: false });
       addSuccessAlert(t('savedAsDraft'));
-      history.push('/private/content-creator');
+      history.push('/private/content-creator/?fromDraft=1');
     } catch (error) {
       addErrorAlert(error);
     }
@@ -51,23 +67,47 @@ export default function Index() {
     render();
   }
 
-  async function saveAsPublish(goAssign) {
+  async function saveAsPublish() {
     try {
       store.saving = 'edit';
       render();
-      // const { document } = await saveDocumentRequest({ ...formValues, published: true });
-      // addSuccessAlert(t('published'));
-      addSuccessAlert('TODO');
-      // if (goAssign) {
-      //   history.push(`/private/content-creator/assign/${document.id}`);
-      // } else {
-      //   history.push('/private/content-creator');
-      // }
+
+      const content = await processTextEditor(formValues.content, store.document.content, {
+        force: !!store.published,
+      });
+
+      const { document: documentRequest } = await saveDocumentRequest({
+        ...formValues,
+        content,
+        published: true,
+      });
+      store.document = documentRequest;
+      addSuccessAlert(t('published'));
     } catch (error) {
       addErrorAlert(error);
+    } finally {
+      store.saving = null;
+      render();
     }
-    store.saving = null;
-    render();
+  }
+
+  async function onlyPublish() {
+    await saveAsPublish();
+    history.push('/private/content-creator');
+  }
+
+  // async function publishAndShare() {
+  //   await saveAsPublish();
+  //   const { document } = await getDocumentRequest(store.document.assignable);
+  //   store.preparedAsset = prepareAsset(document.asset);
+
+  //   store.openShareDrawer = true;
+  //   render();
+  // }
+
+  async function publishAndAssign() {
+    await saveAsPublish();
+    history.push(`/private/content-creator/assign/${store.document.assignable}`);
   }
 
   async function init() {
@@ -78,12 +118,15 @@ export default function Index() {
       if (!store.isNew) {
         const {
           // eslint-disable-next-line camelcase
-          document: { deleted, deleted_at, created_at, updated_at, ...props },
+          document: { deleted, deleted_at, created_at, updated_at, published, ...document },
         } = await getDocumentRequest(params.id);
 
-        store.titleValue = props.name;
-        store.document = { ...props };
-        form.reset(props);
+        // eslint-disable-next-line react/prop-types
+        store.titleValue = document.name;
+        document.program = document.subjects?.[0]?.program;
+        store.published = published;
+        store.document = { ...document };
+        form.reset(document);
       }
       store.idLoaded = params.id;
       store.loading = false;
@@ -93,11 +136,19 @@ export default function Index() {
     }
   }
 
-  const setTitleIfItsUndefined = (value, forceTitle) => {
+  // const savePermissions = async (assetId, { canAccess }) => {
+  //   const permissions = await shareDocumentRequest(store.document.assignable, { canAccess });
+  //   return permissions;
+  // };
+
+  const setTitleIfItsUndefined = (value) => {
+    if (store.titleValue) return;
     const parser = new DOMParser();
-    const htmlContent = parser.parseFromString(value, 'text/html').body.getElementsByTagName('*');
-    const firstElement = htmlContent[0]?.textContent;
-    if (!store.titleValue || forceTitle) form.setValue('name', firstElement);
+    const htmlContent = Array.from(
+      parser.parseFromString(value, 'text/html').body.getElementsByTagName('*')
+    );
+    const firstElementWithText = htmlContent.find((element) => element.textContent)?.textContent;
+    form.setValue('name', firstElementWithText);
   };
 
   const onTitleChangeHandler = (value) => {
@@ -110,6 +161,16 @@ export default function Index() {
     setTitleIfItsUndefined(value);
     form.setValue('content', value);
   };
+
+  // const handleDrawerClose = () => {
+  //   store.openShareDrawer = false;
+  //   render();
+  // };
+
+  async function goToConfig() {
+    store.isConfigPage = true;
+    render();
+  }
 
   React.useEffect(() => {
     if (params?.id && store.idLoaded !== params?.id) init();
@@ -126,11 +187,15 @@ export default function Index() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleOnHeaderResize = (size) => {
-    store.headerHeight = size?.height - 1;
-    render();
-  };
   if (store.loading || tLoading) return <LoadingOverlay visible />;
+
+  const advancedConfig = {
+    alwaysOpen: true,
+    fileToRight: true,
+    colorToRight: true,
+    program: { show: true, required: true },
+    subjects: { show: true, required: true, showLevel: true, maxOne: false },
+  };
 
   return (
     <Box style={{ height: '100vh' }}>
@@ -138,35 +203,64 @@ export default function Index() {
         <PageHeader
           placeholders={{ title: t('titlePlaceholder') }}
           values={{
-            // eslint-disable-next-line no-nested-ternary
             title: formValues.name,
           }}
           buttons={{
             duplicate: t('saveDraft'),
-            edit: t('publish'),
+            edit: !store.isConfigPage && t('publish'),
+            dropdown: store.isConfigPage && t('publishOptions'),
           }}
           buttonsIcons={{
             edit: <SetupContent size={16} />,
           }}
-          isEditMode
-          icon={<DocumentIcon />}
+          isEditMode={!store.isConfigPage}
+          icon={!store.isConfigPage ? <DocumentIcon /> : null}
           onChange={onTitleChangeHandler}
-          onEdit={() => saveAsPublish()}
+          onEdit={() => goToConfig()}
           onDuplicate={() => saveAsDraft()}
+          onDropdown={[
+            { label: t('onlyPublish'), onClick: () => onlyPublish() },
+            // { label: t('publishAndShare'), onClick: () => publishAndShare() },
+            { label: t('publishAndAssign'), onClick: () => publishAndAssign() },
+          ]}
           loading={store.saving}
-          onResize={handleOnHeaderResize}
           fullWidth
         />
-        <ContentEditorInput
-          useSchema
-          schemaLabel={t('schemaLabel')}
-          labels={{
-            format: t('formatLabel'),
-          }}
-          onChange={onContentChangeHandler}
-          value={formValues.content}
-          openLibraryModal={false}
-        />
+        {!store.isConfigPage ? (
+          <ContentEditorInput
+            useSchema
+            schemaLabel={t('schemaLabel')}
+            labels={{
+              format: t('formatLabel'),
+            }}
+            onChange={onContentChangeHandler}
+            value={formValues.content}
+            openLibraryModal={false}
+          />
+        ) : (
+          <PageContent title={t('config')}>
+            <Box style={{ padding: '48px 32px' }}>
+              <AssetFormInput
+                preview
+                form={form}
+                category="assignables.content-creator"
+                previewVariant="document"
+                advancedConfig={advancedConfig}
+                tagsPluginName="content-creator"
+              />
+            </Box>
+          </PageContent>
+        )}
+        {/* {store.isConfigPage && (
+          <PermissionsDataDrawer
+            opened={store.openShareDrawer}
+            asset={store.preparedAsset}
+            onClose={handleDrawerClose}
+            sharing
+            size={720}
+            onSavePermissions={savePermissions}
+          />
+        )} */}
       </Stack>
     </Box>
   );

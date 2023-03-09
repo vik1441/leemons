@@ -51,7 +51,7 @@ const ContentEditorInput = ({
 
     if (textEditorTools) {
       keys(textEditorTools).forEach((key) => {
-        if (textEditorTools[key].tool) {
+        if (textEditorTools[key].tool && toolbars[key]) {
           tools.push({ id: key, tool: textEditorTools[key].tool });
         }
       });
@@ -95,6 +95,7 @@ const ContentEditorInput = ({
           editorContainerClassname={classes.editorContainer}
           acceptedTags={CONTENT_EDITOR_ACCEPTED_TAGS}
           useSchema
+          toolbarPosition={'center'}
         >
           {toolbars.heading && <HeadingsTool labels={editorLabels.headingsTool} />}
           {toolbars.color && <ColorTool label={editorLabels.colorTool} />}
