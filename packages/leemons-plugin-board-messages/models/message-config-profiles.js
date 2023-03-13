@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     messageConfig: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_board-messages::message-config',
       },
+      */
     },
     profile: {
       type: 'string',

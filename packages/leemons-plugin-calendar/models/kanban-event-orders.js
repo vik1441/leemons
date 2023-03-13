@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     userAgent: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::user-agent',
       },
+      */
     },
     column: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_calendar::kanban-columns',
       },
+      */
     },
     events: {
       type: 'text',

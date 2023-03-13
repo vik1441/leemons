@@ -73,7 +73,7 @@ module.exports = {
       textType: 'mediumText',
     },
     event: {
-      type: 'uuid',
+      type: 'string',
       /*
       references: {
         collection: 'plugins_calendar::events',

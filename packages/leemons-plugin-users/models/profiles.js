@@ -23,9 +23,12 @@ module.exports = {
       },
     },
     role: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::roles',
       },
+      */
     },
     indexable: {
       type: 'boolean',

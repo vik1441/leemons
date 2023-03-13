@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     user: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::users',
       },
+      */
     },
     gender: {
       type: 'string',

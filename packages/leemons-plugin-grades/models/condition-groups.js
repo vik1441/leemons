@@ -13,9 +13,12 @@ module.exports = {
       },
     },
     rule: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::rules',
       },
+      */
     },
   },
   primaryKey: {

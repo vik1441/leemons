@@ -34,9 +34,12 @@ module.exports = {
       textType: 'mediumText',
     },
     category: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_tests::question-bank-categories',
       },
+      */
     },
     // ES: Aqui se almacena toda la configuración adicional segun el tipo de pregunta
     properties: {

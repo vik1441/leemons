@@ -32,24 +32,36 @@ module.exports = {
       scale: 4,
     },
     targetGradeScale: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grade-scales',
       },
+      */
     },
     rule: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::rules',
       },
+      */
     },
     childGroup: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::condition-groups',
       },
+      */
     },
     parentGroup: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::condition-groups',
       },
+      */
     },
   },
   primaryKey: {

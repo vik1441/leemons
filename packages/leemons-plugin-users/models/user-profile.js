@@ -6,19 +6,28 @@ module.exports = {
   },
   attributes: {
     user: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::users',
       },
+      */
     },
     profile: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::profiles',
       },
+      */
     },
     role: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::roles',
       },
+      */
     },
   },
   primaryKey: {

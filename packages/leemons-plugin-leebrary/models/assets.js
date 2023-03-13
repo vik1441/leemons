@@ -21,25 +21,34 @@ module.exports = {
       type: 'string',
     },
     cover: {
-      type: 'uuid',
+      type: 'string',
     },
     fromUser: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::users',
       },
+      */
     },
     fromUserAgent: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::user-agent',
       },
+      */
     },
     public: {
       type: 'boolean',
     },
     category: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_leebrary::categories',
       },
+      */
     },
     indexable: {
       type: 'boolean',
@@ -48,13 +57,13 @@ module.exports = {
       },
     },
     center: {
-      type: 'uuid',
+      type: 'string',
     },
     program: {
-      type: 'uuid',
+      type: 'string',
     },
   },
   primaryKey: {
-    specificType: 'varchar(255)',
+    type: 'uuid',
   },
 };

@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     event: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_calendar::events',
       },
+      */
     },
     date: {
       type: 'datetime',
@@ -17,7 +20,7 @@ module.exports = {
       },
     },
     state: {
-      type: 'enum',
+      type: 'string',
       enum: ['active', 'sending', 'sended', 'error'],
       options: {
         notNull: true,

@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
   },
   primaryKey: {

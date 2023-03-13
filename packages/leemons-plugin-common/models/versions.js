@@ -2,7 +2,7 @@ module.exports = {
   modelName: 'versions',
   attributes: {
     uuid: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
         index: true,

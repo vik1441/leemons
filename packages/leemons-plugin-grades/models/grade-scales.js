@@ -19,9 +19,12 @@ module.exports = {
       type: 'string',
     },
     grade: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grades',
       },
+      */
     },
   },
   primaryKey: {

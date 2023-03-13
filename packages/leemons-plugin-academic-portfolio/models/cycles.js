@@ -9,9 +9,12 @@ module.exports = {
       type: 'string',
     },
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     courses: {
       type: 'text',

@@ -15,9 +15,12 @@ module.exports = {
       type: 'integer',
     },
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     // course / group / substage
     type: {

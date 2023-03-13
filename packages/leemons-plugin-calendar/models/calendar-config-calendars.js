@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     calendar: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_calendar::calendars',
       },
+      */
     },
     config: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_calendar::calendar-configs',
       },
+      */
     },
   },
   primaryKey: {

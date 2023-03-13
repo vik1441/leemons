@@ -14,9 +14,12 @@ module.exports = {
       */
     },
     question: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_tests::questions',
       },
+      */
     },
     userAgent: {
       type: 'string',

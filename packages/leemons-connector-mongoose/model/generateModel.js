@@ -13,6 +13,7 @@ function generateModel(models, ctx) {
       ..._.cloneDeep(model),
       ODM: ctx.ODM,
       // ODM model
+      config: ctx.config,
       model: Model,
     };
 

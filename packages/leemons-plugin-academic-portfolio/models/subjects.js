@@ -12,14 +12,20 @@ module.exports = {
       },
     },
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     course: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::groups',
       },
+      */
     },
     image: {
       type: 'string',

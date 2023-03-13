@@ -25,6 +25,9 @@ async function registerAdmin(
         sysName: profileSettings.sysName,
       });
 
+      console.log('profile:');
+      console.dir(profile, { depth: null });
+
       await userService.users.add(
         {
           email,

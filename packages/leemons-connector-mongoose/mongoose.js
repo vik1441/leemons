@@ -73,7 +73,12 @@ async function initMongooseConnections(connector, connections) {
         const dbConnection = await getMongoConnection(connection);
 
         // Save the connection
-        _.set(connector, `connections.${connection.name}`, dbConnection);
+        _.set(connector, `connections.${connection.name}`, {
+          connection: dbConnection,
+          config: {
+            useCustomRollback: _.get(connection, 'useCustomRollback', false),
+          },
+        });
       } catch (e) {
         throw new Error(
           `Can't connect to database in ${connection.name} connection. Check if the database is running. (${e.code} - ${e.codeName})`

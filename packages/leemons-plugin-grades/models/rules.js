@@ -12,14 +12,20 @@ module.exports = {
       },
     },
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
     grade: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grades',
       },
+      */
     },
     program: {
       type: 'string',
@@ -32,9 +38,12 @@ module.exports = {
     // ES: Grupo desde el que empezar a evaluar las condiciones
     // EN: Group from which start to evaluate the conditions
     group: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::condition-groups',
       },
+      */
     },
     isDependency: {
       type: 'boolean',

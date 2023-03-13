@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     defaultCategory: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_leebrary::categories',
       },
+      */
     },
     providerName: {
       type: 'string',

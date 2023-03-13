@@ -18,14 +18,20 @@ module.exports = {
       },
     },
     scale: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grade-scales',
       },
+      */
     },
     grade: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grades',
       },
+      */
     },
   },
   primaryKey: {

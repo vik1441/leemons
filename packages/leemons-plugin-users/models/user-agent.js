@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     user: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::users',
       },
+      */
     },
     role: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::roles',
       },
+      */
     },
     reloadPermissions: {
       type: 'boolean',

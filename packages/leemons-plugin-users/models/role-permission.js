@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     role: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::roles',
       },
+      */
     },
     permissionName: {
       type: 'string',

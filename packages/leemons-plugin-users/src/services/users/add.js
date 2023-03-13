@@ -36,6 +36,10 @@ async function add(
   { sendWellcomeEmail, transacting: _transacting } = {}
 ) {
   if (await exist({ email })) throw new Error(`"${email}" email already exists`);
+
+  console.log('roles:');
+  console.dir(roles, { depth: null });
+
   if (!(await existManyRoles(roles, { transacting: _transacting })))
     throw new Error('One of the ids specified as profile does not exist.');
 

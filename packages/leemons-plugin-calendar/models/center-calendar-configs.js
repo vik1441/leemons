@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
     config: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_calendar::calendar-configs',
       },
+      */
     },
   },
   primaryKey: {

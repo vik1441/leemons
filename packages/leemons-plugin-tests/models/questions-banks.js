@@ -10,9 +10,12 @@ module.exports = {
       required: true,
     },
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     published: {
       type: 'boolean',

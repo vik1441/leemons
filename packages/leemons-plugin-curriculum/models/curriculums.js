@@ -27,9 +27,12 @@ module.exports = {
       },
     },
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
     program: {
       type: 'string',

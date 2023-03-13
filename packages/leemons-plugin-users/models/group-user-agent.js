@@ -6,14 +6,20 @@ module.exports = {
   },
   attributes: {
     group: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::groups',
       },
+      */
     },
     userAgent: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::user-agent',
       },
+      */
     },
   },
   primaryKey: {

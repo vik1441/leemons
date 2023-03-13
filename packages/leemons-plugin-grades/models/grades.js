@@ -24,14 +24,20 @@ module.exports = {
       },
     },
     minScaleToPromote: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_grades::grade-scales',
       },
+      */
     },
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
   },
   primaryKey: {

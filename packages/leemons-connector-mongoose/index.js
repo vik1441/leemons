@@ -28,10 +28,13 @@ class Connector {
 
     return Promise.all(
       mongooseConnections.map((connection) => {
+        const { connection: ORMConnection, config } = this.connections[connection.name];
+
         const ctx = {
-          ODM: this.connections[connection.name],
+          ODM: ORMConnection,
           schemas: new Map(),
           connection,
+          config,
           connector: this,
         };
 

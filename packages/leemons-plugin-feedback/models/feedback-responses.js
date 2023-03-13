@@ -23,9 +23,11 @@ module.exports = {
     },
     question: {
       type: 'string',
+      /*
       references: {
         collection: 'plugins_feedback::feedback-questions',
       },
+      */
     },
     response: {
       type: 'text',

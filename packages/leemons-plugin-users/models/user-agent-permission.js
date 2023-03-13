@@ -6,9 +6,12 @@ module.exports = {
   },
   attributes: {
     userAgent: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::user-agent',
       },
+      */
     },
     permissionName: {
       type: 'text',
@@ -34,14 +37,20 @@ module.exports = {
       },
     },
     role: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::roles',
       },
+      */
     },
     center: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_users::centers',
       },
+      */
     },
   },
   primaryKey: {

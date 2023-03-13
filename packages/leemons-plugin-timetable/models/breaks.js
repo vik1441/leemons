@@ -2,9 +2,12 @@ module.exports = {
   attributes: {
     // The reference to the timetable this break belongs to
     timetable: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_timetable::config',
       },
+      */
     },
     name: {
       type: 'string',

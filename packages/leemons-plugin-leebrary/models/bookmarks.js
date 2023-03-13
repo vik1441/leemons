@@ -3,15 +3,18 @@ module.exports = {
   collectionName: 'bookmarks',
   attributes: {
     asset: {
-      specificType: 'varchar(255)',
+      type: 'string',
     },
     url: {
       type: 'string',
     },
     icon: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_leebrary::files',
       },
+      */
     },
   },
   primaryKey: {

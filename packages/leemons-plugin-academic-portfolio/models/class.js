@@ -6,24 +6,36 @@ module.exports = {
   },
   attributes: {
     program: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::programs',
       },
+      */
     },
     subjectType: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::subject-types',
       },
+      */
     },
     subject: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::subjects',
       },
+      */
     },
     class: {
+      type: 'string',
+      /*
       references: {
         collection: 'plugins_academic-portfolio::class',
       },
+      */
     },
     classroom: {
       type: 'string',
