@@ -51,7 +51,7 @@ const assignableInstanceValidationObject = {
       type: 'array',
       items: {
         type: 'string',
-        format: 'uuid',
+        // format: 'uuid',
       },
     },
     sendMail: {

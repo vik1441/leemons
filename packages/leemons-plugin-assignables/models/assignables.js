@@ -23,7 +23,7 @@ module.exports = {
       },
     },
     center: {
-      type: 'uuid',
+      type: 'string',
     },
     statement: {
       type: 'richtext',

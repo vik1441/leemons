@@ -208,6 +208,7 @@ async function events(isInstalled) {
         'plugins.assignables:init-plugin',
         'plugins.bulk-template:init-academic-portfolio',
         'plugins.bulk-template:init-leebrary',
+        'plugins.bulk-template:init-calendar',
       ],
       async () => {
         try {

@@ -5,10 +5,10 @@ module.exports = {
   },
   attributes: {
     instance: {
-      type: 'uuid',
+      type: 'string',
     },
     teacher: {
-      type: 'uuid',
+      type: 'string',
     },
   },
 };

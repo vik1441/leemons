@@ -65,7 +65,7 @@ const assignableValidationObject = {
     },
     center: {
       type: 'string',
-      format: 'uuid',
+      // format: 'uuid',
       nullable: true,
     },
     subjects: subjectsValidationObject,

@@ -5,7 +5,7 @@ const assignationObject = {
   properties: {
     instance: {
       type: 'string',
-      format: 'uuid',
+      // format: 'uuid',
       nullable: false,
     },
     indexable: {
@@ -16,7 +16,7 @@ const assignationObject = {
       type: 'array',
       items: {
         type: 'string',
-        format: 'uuid',
+        // format: 'uuid',
         nullable: false,
       },
     },
@@ -24,7 +24,7 @@ const assignationObject = {
       type: 'array',
       items: {
         type: 'string',
-        format: 'uuid',
+        // format: 'uuid',
       },
       nullable: false,
     },
@@ -39,7 +39,7 @@ const assignationObject = {
         properties: {
           subject: {
             type: 'string',
-            format: 'uuid',
+            // format: 'uuid',
             nullable: true,
           },
           type: {

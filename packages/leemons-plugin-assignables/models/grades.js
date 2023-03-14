@@ -2,13 +2,13 @@ module.exports = {
   modelName: 'grades',
   attributes: {
     assignation: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },
     },
     subject: {
-      type: 'uuid',
+      type: 'string',
     },
     type: {
       type: 'string',

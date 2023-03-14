@@ -14,7 +14,7 @@ module.exports = {
       },
     },
     subject: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },

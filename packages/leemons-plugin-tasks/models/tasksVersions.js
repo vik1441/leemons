@@ -2,7 +2,7 @@ module.exports = {
   modelName: 'tasksVersions',
   attributes: {
     task: {
-      type: 'uuid',
+      type: 'string',
     },
     major: {
       type: 'integer',

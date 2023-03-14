@@ -38,7 +38,7 @@ module.exports = {
     uri: {
       type: 'string',
       options: {
-        notNull: true,
+        // notNull: true,
       },
     },
     metadata: {

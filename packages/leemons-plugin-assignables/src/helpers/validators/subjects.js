@@ -5,11 +5,11 @@ const subjectsValidationObject = {
     properties: {
       program: {
         type: 'string',
-        format: 'uuid',
+        // format: 'uuid',
       },
       subject: {
         type: 'string',
-        format: 'uuid',
+        // format: 'uuid',
       },
       level: {
         type: 'string',

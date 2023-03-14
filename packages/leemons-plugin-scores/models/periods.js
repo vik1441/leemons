@@ -2,19 +2,19 @@ module.exports = {
   modelName: 'periods',
   attributes: {
     center: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },
     },
     program: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },
     },
     course: {
-      type: 'uuid',
+      type: 'string',
     },
     name: {
       type: 'string',
@@ -26,7 +26,7 @@ module.exports = {
       type: 'datetime',
     },
     createdBy: {
-      type: 'uuid',
+      type: 'string',
     },
     public: {
       type: 'boolean',

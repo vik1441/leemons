@@ -2,7 +2,7 @@ module.exports = {
   modelName: 'tags',
   attributes: {
     task: {
-      type: 'uuid',
+      type: 'string',
     },
     tag: {
       type: 'string',

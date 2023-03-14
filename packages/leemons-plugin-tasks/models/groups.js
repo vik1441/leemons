@@ -8,7 +8,7 @@ module.exports = {
       type: 'string',
     },
     subject: {
-      type: 'uuid',
+      type: 'string',
     },
   },
 };

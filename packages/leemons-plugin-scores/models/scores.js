@@ -6,7 +6,7 @@ module.exports = {
       length: 36 * 2 + 1, // uuid.uuid
     },
     student: {
-      type: 'uuid',
+      type: 'string',
       options: { notNull: true },
     },
     period: {
@@ -22,7 +22,7 @@ module.exports = {
       },
     },
     gradedBy: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },

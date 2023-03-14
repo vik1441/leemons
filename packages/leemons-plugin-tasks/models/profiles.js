@@ -5,7 +5,7 @@ module.exports = {
       type: 'string',
     },
     profile: {
-      type: 'uuid',
+      type: 'string',
     },
   },
 };

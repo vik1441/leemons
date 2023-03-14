@@ -1,6 +1,6 @@
 const {
   Schema: {
-    Types: { Mixed, Decimal128, ObjectId },
+    Types: { Mixed, ObjectId, Number },
   },
   Schema: MongoSchema,
 } = require('mongoose');
@@ -68,7 +68,7 @@ function getType(property, ctx) {
     case 'decimal':
     case 'float':
     case 'double':
-      return { type: Decimal128 };
+      return { type: Number };
     // case 'map':
     default:
       if (ctx.schemas.has(property.type)) {

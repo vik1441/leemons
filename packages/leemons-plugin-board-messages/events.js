@@ -23,7 +23,11 @@ async function events(isInstalled) {
 
   if (!isInstalled) {
     leemons.events.once(
-      ['plugins.dashboard:init-widget-zones', 'plugins.academic-portfolio:init-widget-zones'],
+      [
+        'plugins.dashboard:init-widget-zones',
+        'plugins.academic-portfolio:init-widget-zones',
+        'plugins.assignables:init-widget-zones',
+      ],
       async () => {
         await Promise.all(
           _.map(widgets.zones, (config) =>

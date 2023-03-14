@@ -56,10 +56,10 @@ module.exports = {
       type: 'richtext',
     },
     center: {
-      type: 'uuid',
+      type: 'string',
     },
     program: {
-      type: 'uuid',
+      type: 'string',
     },
     // Track the current state, including setup steps
     state: {

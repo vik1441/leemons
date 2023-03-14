@@ -5,10 +5,10 @@ module.exports = {
   },
   attributes: {
     instance: {
-      type: 'uuid',
+      type: 'string',
     },
     user: {
-      type: 'uuid',
+      type: 'string',
     },
     opened: {
       type: 'datetime',
@@ -20,7 +20,7 @@ module.exports = {
       type: 'datetime',
     },
     grade: {
-      type: 'uuid',
+      type: 'string',
     },
     teacherFeedback: {
       type: 'richtext',

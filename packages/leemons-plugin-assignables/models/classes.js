@@ -8,7 +8,7 @@ module.exports = {
       type: 'string',
     },
     class: {
-      type: 'uuid',
+      type: 'string',
     },
     date: {
       type: 'datetime',

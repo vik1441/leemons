@@ -2,10 +2,10 @@ module.exports = {
   modelName: 'userDeliverables',
   attributes: {
     instance: {
-      type: 'uuid',
+      type: 'string',
     },
     user: {
-      type: 'uuid',
+      type: 'string',
     },
     deliverable: {
       type: 'text',

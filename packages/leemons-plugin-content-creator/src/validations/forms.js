@@ -42,7 +42,7 @@ const saveDocumentSchema = {
         properties: {
           subject: {
             type: 'string',
-            format: 'uuid',
+            // format: 'uuid',
           },
           level: {
             type: 'string',

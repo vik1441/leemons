@@ -2,7 +2,7 @@ module.exports = {
   modelName: 'timetable',
   attributes: {
     class: {
-      type: 'uuid',
+      type: 'string',
       options: {
         required: true,
       },

@@ -5,7 +5,7 @@ module.exports = {
   },
   attributes: {
     instance: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },
@@ -17,7 +17,7 @@ module.exports = {
       },
     },
     user: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },

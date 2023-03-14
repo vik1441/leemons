@@ -5,7 +5,7 @@ module.exports = {
       type: 'string',
     },
     attachment: {
-      type: 'uuid',
+      type: 'string',
     },
   },
 };

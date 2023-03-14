@@ -2,13 +2,13 @@ module.exports = {
   modelName: 'teachers',
   attributes: {
     assignableInstance: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },
     },
     teacher: {
-      type: 'uuid',
+      type: 'string',
       options: {
         notNull: true,
       },

@@ -8,7 +8,6 @@ const specialVersions = ['latest', 'current', 'published', 'draft'];
 
 async function getVersionMany(ids, { published, transacting, ignoreMissing = false } = {}) {
   const parsedIds = await parseId(ids, { verifyVersion: false, transacting });
-
   const uuids = parsedIds.map((id) => id.uuid);
 
   // EN: Verify ownership (get throws an error if not owned)
