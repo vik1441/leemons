@@ -5,6 +5,9 @@ module.exports = {
     useTimestamps: true,
   },
   attributes: {
+    _id: {
+      type: 'string',
+    },
     name: {
       type: 'string',
       required: true,

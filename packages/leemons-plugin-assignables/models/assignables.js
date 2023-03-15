@@ -4,6 +4,9 @@ module.exports = {
     useTimestamps: true,
   },
   attributes: {
+    _id: {
+      type: 'string',
+    },
     asset: {
       type: 'string',
       options: {

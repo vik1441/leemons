@@ -204,7 +204,13 @@ function generateQueries(model) {
     if (!transactingHasError(transacting)) {
       try {
         addPendingTransacting(transacting);
-        const item = new MongooseModel(transformId(newItem));
+
+        if (newItem.id) {
+          // eslint-disable-next-line no-param-reassign
+          newItem._id = newItem.id;
+        }
+
+        const item = new MongooseModel(newItem);
         const response = await item.save();
         const result = transformId(response);
         addToRollbacks(transacting, 'removeOne', result.id);

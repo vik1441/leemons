@@ -57,7 +57,7 @@ module.exports = async function listVersionOfType(
   const result = await getVersion.call(
     this,
     parsedIds.map((id) => id.fullId),
-    { transacting }
+    { transacting, ignoreMissing: true }
   );
 
   return _.compact(result);

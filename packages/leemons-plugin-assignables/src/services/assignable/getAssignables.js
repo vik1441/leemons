@@ -10,6 +10,10 @@ const getRoles = require('../roles/getRoles');
 // TODO: Allow user to select fields
 
 async function getAssignablesPublishState(ids, { transacting }) {
+  if (!ids.length) {
+    return {};
+  }
+
   const versions = await versionControl.getVersion(ids, { transacting });
 
   return Object.fromEntries(versions.map((version) => [version.fullId, version.published]));
@@ -127,10 +131,10 @@ module.exports = async function getAssignables(
       // EN: Parse database info
       // ES: Parsear info de la base de datos
       gradable: Boolean(assignable.gradable),
-      relatedAssignables: JSON.parse(assignable.relatedAssignables),
-      submission: JSON.parse(assignable.submission),
-      metadata: JSON.parse(assignable.metadata),
-      resources: JSON.parse(assignable.resources) || [],
+      relatedAssignables: JSON.parse(assignable.relatedAssignables ?? null),
+      submission: JSON.parse(assignable.submission ?? null),
+      metadata: JSON.parse(assignable.metadata ?? null),
+      resources: JSON.parse(assignable.resources ?? null) || [],
     }));
 
     return returnValues;

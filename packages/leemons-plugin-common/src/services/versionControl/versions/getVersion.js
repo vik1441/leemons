@@ -17,46 +17,50 @@ async function getVersionMany(ids, { published, transacting, ignoreMissing = fal
   const query = {};
 
   // TODO: Add more difficult searches (between versions, greather than, etc)
-  query.$or = parsedIds.map(({ version, uuid }) => {
-    const subQuery = {
-      uuid,
-    };
+  let versionsFound = [];
 
-    if (published !== undefined) {
-      subQuery.published = published;
-    }
+  if (parsedIds.length) {
+    query.$or = parsedIds.map(({ version, uuid }) => {
+      const subQuery = {
+        uuid,
+      };
 
-    if (['latest', 'published', 'draft'].includes(version)) {
-      query.$sort = 'major:DESC,minor:DESC,patch:DESC';
-
-      if (version === 'published') {
-        subQuery.published = true;
-      } else if (version === 'draft') {
-        subQuery.published = false;
-      }
-    } else {
-      let v = version;
-
-      if (version === 'current') {
-        const { current } = uuidsInfo.find((info) => info.uuid === uuid);
-
-        v = current;
+      if (published !== undefined) {
+        subQuery.published = published;
       }
 
-      const { major, minor, patch } = parseVersion(v);
+      if (['latest', 'published', 'draft'].includes(version)) {
+        query.$sort = 'major:DESC,minor:DESC,patch:DESC';
 
-      subQuery.major = major;
-      subQuery.minor = minor;
-      subQuery.patch = patch;
-    }
+        if (version === 'published') {
+          subQuery.published = true;
+        } else if (version === 'draft') {
+          subQuery.published = false;
+        }
+      } else {
+        let v = version;
 
-    return subQuery;
-  });
+        if (version === 'current') {
+          const { current } = uuidsInfo.find((info) => info.uuid === uuid);
 
-  const versionsFound = (await versions.find(query, { transacting })).map((version) => ({
-    ...version,
-    version: stringifyVersion(version),
-  }));
+          v = current;
+        }
+
+        const { major, minor, patch } = parseVersion(v);
+
+        subQuery.major = major;
+        subQuery.minor = minor;
+        subQuery.patch = patch;
+      }
+
+      return subQuery;
+    });
+
+    versionsFound = (await versions.find(query, { transacting })).map((version) => ({
+      ...version,
+      version: stringifyVersion(version),
+    }));
+  }
 
   if (!versionsFound?.length && !ignoreMissing) {
     throw new Error('Versions not found');

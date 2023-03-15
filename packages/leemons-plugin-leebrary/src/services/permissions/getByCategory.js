@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const {
   isEmpty,
   sortBy,
@@ -53,7 +54,7 @@ async function getByCategory(
     }
 
     if (!providerQuery?.program && programs) {
-      providerQuery.program = programs[0];
+      [providerQuery.program] = programs;
     }
     if (!providerQuery?.subjects && subjects) {
       providerQuery.subjects = subjects;

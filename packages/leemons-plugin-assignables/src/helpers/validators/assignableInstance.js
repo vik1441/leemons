@@ -5,7 +5,7 @@ const assignableInstanceValidationObject = {
   properties: {
     assignable: {
       type: 'string',
-      minLength: 36,
+      minLength: 1,
       maxLength: 255,
     },
     isAllDay: {

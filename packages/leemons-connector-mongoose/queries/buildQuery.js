@@ -35,6 +35,10 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
         })
         .filter((_q) => _q);
 
+      if (!q.length) {
+        break;
+      }
+
       if (negated) {
         parentQuery.and({ $nor: q });
         break;
