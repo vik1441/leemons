@@ -381,8 +381,8 @@ async function getAssignations(
 
     const assignationObject = {
       ...assignation,
-      classes: JSON.parse(assignation.classes),
-      metadata: JSON.parse(assignation.metadata),
+      classes: JSON.parse(assignation.classes ?? '[]'),
+      metadata: JSON.parse(assignation.metadata ?? null),
       instance: instances?.[assignation.instance] || assignation.instance,
 
       relatedAssignableInstances: {
@@ -390,7 +390,6 @@ async function getAssignations(
       },
       grades: grades[assignation.id] || [],
       timestamps: timestamps[assignation.id] || {},
-
       chatKeys,
 
       ...status,
