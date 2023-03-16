@@ -18,6 +18,7 @@ function getType(property, ctx) {
     case 'biginteger':
       return { type: Number };
     case 'date':
+    case 'datetime':
       return { type: Date };
     case 'buffer':
       return { type: Buffer };
