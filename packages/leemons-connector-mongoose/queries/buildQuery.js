@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 
+function escapeRegex(pattern) {
+  return pattern.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
 function parseQuery(filter, { query: parentQuery = null, negated = false } = {}) {
   const { operator, value } = filter;
   let { field } = filter;
@@ -108,7 +112,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(value, 'i'),
+          $regex: new RegExp(escapeRegex(value), 'i'),
         },
       });
       break;
@@ -120,7 +124,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(value, 'i'),
+            $regex: new RegExp(escapeRegex(value), 'i'),
           },
         },
       });
@@ -133,7 +137,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(value),
+          $regex: new RegExp(escapeRegex(value)),
         },
       });
       break;
@@ -146,7 +150,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(value),
+            $regex: new RegExp(escapeRegex(value)),
           },
         },
       });
@@ -158,7 +162,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(`^${value}`, 'i'),
+          $regex: new RegExp(`^${escapeRegex(value)}`, 'i'),
         },
       });
       break;
@@ -170,7 +174,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`^${value}`, 'i'),
+            $regex: new RegExp(`^${escapeRegex(value)}`, 'i'),
           },
         },
       });
@@ -182,7 +186,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       }
       useParent.and({
         [field]: {
-          $regex: new RegExp(`${value}$`, 'i'),
+          $regex: new RegExp(`${escapeRegex(value)}$`, 'i'),
         },
       });
       break;
@@ -194,7 +198,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`${value}$`, 'i'),
+            $regex: new RegExp(`${escapeRegex(value)}$`, 'i'),
           },
         },
       });
@@ -207,7 +211,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(`^${value}`),
+          $regex: new RegExp(`^${escapeRegex(value)}`),
         },
       });
       break;
@@ -220,7 +224,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`^${value}`),
+            $regex: new RegExp(`^${escapeRegex(value)}`),
           },
         },
       });
@@ -233,7 +237,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       // Case sensitive
       useParent.and({
         [field]: {
-          $regex: new RegExp(`${value}$`),
+          $regex: new RegExp(`${escapeRegex(value)}$`),
         },
       });
       break;
@@ -246,7 +250,7 @@ function parseQuery(filter, { query: parentQuery = null, negated = false } = {})
       useParent.and({
         [field]: {
           $not: {
-            $regex: new RegExp(`${value}$`),
+            $regex: new RegExp(`${escapeRegex(value)}$`),
           },
         },
       });
